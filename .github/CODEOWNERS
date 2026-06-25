@@ -1,22 +1,20 @@
 # CODEOWNERS — define quem precisa APROVAR um Pull Request que altera cada caminho.
-# Só tem efeito de verdade se a branch "main" estiver protegida em:
-#   Settings > Branches > Branch protection rules > main
-#     [x] Require a pull request before merging
-#     [x] Require review from Code Owners
-#     [x] Do not allow bypassing the above settings (inclui admins, se quiser)
-#     [x] Restrict deletions
-#     [x] Block force pushes
+# Só tem efeito de verdade porque a branch "main" está protegida com:
+#   Require a pull request before merging + Require review from Code Owners
+#   (configurado via API — ver repositorio_turma.md)
 #
-# Regra padrão: qualquer arquivo fora de alunos/<pasta-do-aluno>/ exige aprovação
-# do professor antes do merge.
+# IMPORTANTE: o GitHub nunca deixa o autor de um Pull Request aprovar o próprio
+# PR. Ou seja, "dar a pasta de um aluno para ele mesmo" (ex.: /alunos/joao/ @joao)
+# NÃO permite que o João aprove sozinho as próprias mudanças — alguém diferente
+# dele sempre precisa revisar. Por isso a regra padrão abaixo é o professor para
+# TUDO, inclusive dentro de alunos/<pasta>/.
 * @cfneves
 
-# Conforme cada aluno for adicionado como colaborador do repositório, adicione
-# uma linha abaixo apontando a pasta dele para o usuário dele no GitHub.
-# Isso permite que o próprio aluno aprove (e faça merge) de mudanças DENTRO
-# da própria pasta, sem depender do professor a cada Pull Request — mas
-# continua exigindo aprovação para qualquer mudança fora da pasta dele.
+# Opcional — revisão em pares: se quiser que os alunos se revisem entre si (em
+# vez de depender só do professor), cadastre a pasta de cada aluno para OUTRO
+# aluno (nunca para o próprio dono da pasta). Exemplo:
+# /alunos/joao-silva/    @usuario-github-da-maria
+# /alunos/maria-souza/   @usuario-github-do-joao
 #
-# Exemplo (substitua pelos dados reais conforme os alunos forem entrando):
-# /alunos/joao-silva/    @usuario-github-do-joao
-# /alunos/maria-souza/   @usuario-github-da-maria
+# Sem essas linhas, todo Pull Request (de qualquer pasta) precisa de aprovação
+# do professor — é o comportamento padrão e mais simples de manter.

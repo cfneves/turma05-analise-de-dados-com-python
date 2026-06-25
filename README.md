@@ -85,7 +85,7 @@ Veja também `alunos/LEIA-ME.txt`.
 | Sugerir melhorias via Pull Request/Issue | Fazer push direto na branch `main` (sempre via Pull Request) |
 | Pedir revisão/ajuda ao professor ou colegas | Forçar push (`--force`) ou apagar branches de outras pessoas |
 
-> A aprovação de Pull Requests segue o arquivo `.github/CODEOWNERS`: mudanças dentro da sua pasta podem ser aprovadas por você mesmo (uma vez configurado); qualquer mudança fora da sua pasta precisa de aprovação do professor.
+> A branch `main` é protegida: **todo Pull Request precisa da aprovação do professor** antes do merge (o GitHub nunca permite que o autor aprove o próprio PR, então a aprovação sempre vem de outra pessoa — por padrão, o professor).
 
 ---
 
