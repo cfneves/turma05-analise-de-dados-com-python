@@ -173,6 +173,53 @@
     margin:14px 0;
   }
   pre.codeblock .c{ color:#8a8aa0; }
+  .caminho{
+    background:#fff;
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:6px 22px 22px;
+    margin:18px 0 28px;
+  }
+  .caminho > h3{
+    background:var(--ink);
+    color:#fff;
+    margin:0 -22px 18px;
+    padding:12px 22px;
+    border-radius:10px 10px 0 0;
+  }
+  ol.passos{ list-style:none; padding:0; margin:0; counter-reset:passo; }
+  ol.passos > li{
+    counter-increment:passo;
+    position:relative;
+    background:#fafafa;
+    border:1px solid #eee;
+    border-left:4px solid var(--red);
+    border-radius:8px;
+    padding:14px 18px 14px 54px;
+    margin:14px 0;
+  }
+  ol.passos > li::before{
+    content:counter(passo);
+    position:absolute;
+    left:14px;
+    top:16px;
+    width:26px;
+    height:26px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    font-weight:bold;
+    font-size:.85rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  ol.passos h4{ margin:0 0 6px; color:var(--ink); font-size:1.02rem; }
+  ol.passos .porque{ color:#555; font-size:.88rem; margin:4px 0; }
+  ol.passos .porque strong{ color:var(--red-dark); }
+  ol.passos pre.codeblock{ margin:8px 0 0; font-size:.82rem; }
+  .glossario dt{ font-weight:bold; color:var(--red-dark); margin-top:10px; }
+  .glossario dd{ margin:2px 0 0; color:#333; }
   footer{
     background:var(--ink);
     color:#ccc;
@@ -362,6 +409,184 @@ print("5. Comunicação:", "quem cancela assiste 70% menos conteúdo no 1º mês
     </table>
     <div class="box tip">
       <strong>🗣️ Depois das apresentações:</strong> debata com a turma — qual cenário teve a etapa de Limpeza mais difícil? Em qual a Comunicação seria mais delicada? O que todos os cenários têm em comum?
+    </div>
+  </section>
+
+  <section>
+    <h2>5. Configurando o GitHub — Sua Pasta no Repositório da Turma</h2>
+    <p>A partir de hoje, toda a turma vai trabalhar dentro de um <strong>repositório compartilhado</strong>: <code>t5-analise-de-dados-com-python</code>. É lá que você vai encontrar o material de cada semana e onde vai guardar (e enviar para o professor revisar) os seus próprios exercícios. Este tutorial é 100% passo a passo — siga na ordem, sem pular etapas.</p>
+
+    <div class="box">
+      <strong>📖 Antes de começar, alguns nomes que você vai ver o tempo todo:</strong>
+      <dl class="glossario">
+        <dt>Git</dt>
+        <dd>O programa que guarda o "histórico de versões" dos seus arquivos — como um Ctrl+Z gigante, que lembra de cada mudança feita, por quem e quando.</dd>
+        <dt>GitHub</dt>
+        <dd>O site que guarda esse histórico na internet (na nuvem) e permite que várias pessoas trabalhem no mesmo projeto, cada uma na sua parte.</dd>
+        <dt>Repositório ("repo")</dt>
+        <dd>A "pasta do projeto" versionada — no nosso caso, o repositório da Turma T5.</dd>
+        <dt>Branch</dt>
+        <dd>Uma "cópia paralela" do repositório, só sua, onde você trabalha sem risco de estragar o trabalho dos colegas.</dd>
+        <dt>Commit</dt>
+        <dd>Um "ponto de salvamento" das suas mudanças, com uma mensagem curta explicando o que mudou.</dd>
+        <dt>Push</dt>
+        <dd>Enviar os seus commits do seu computador para o GitHub (a nuvem) — antes do push, suas mudanças existem só na sua máquina.</dd>
+        <dt>Pull Request (PR)</dt>
+        <dd>Um pedido formal: "professor, pode revisar e aceitar essa mudança que eu fiz?" — nada entra na pasta oficial da turma sem passar por um PR aprovado.</dd>
+      </dl>
+    </div>
+
+    <h3>Pré-requisitos</h3>
+    <div class="box tip">
+      <strong>✅ Antes de iniciar, confirme:</strong>
+      <ul>
+        <li>Computador com acesso à internet</li>
+        <li>Uma conta no GitHub (gratuita — se ainda não tem, o Passo 1 abaixo ensina a criar)</li>
+        <li>Ter enviado seu nome de usuário do GitHub para o professor no Discord, para ser adicionado como colaborador do repositório (sem isso, nenhum dos dois caminhos abaixo funciona)</li>
+        <li>Escolher um caminho: <strong>Caminho A — GitHub Desktop</strong> (programa com botões, recomendado para quem nunca usou Git) ou <strong>Caminho B — Terminal/Git Bash</strong> (digitando comandos)</li>
+      </ul>
+    </div>
+
+    <div class="caminho">
+      <h3>Caminho A — GitHub Desktop (recomendado para iniciantes)</h3>
+      <ol class="passos">
+        <li>
+          <h4>Criar sua conta no GitHub</h4>
+          <p class="porque"><strong>O que é:</strong> o GitHub funciona como uma "rede social" para projetos de código — você precisa de uma conta lá, assim como tem uma conta de e-mail.</p>
+          <p><strong>Como fazer:</strong> acesse <code>github.com/join</code>, informe e-mail, senha e escolha um nome de usuário (ex.: <code>joao-silva</code>). Esse nome de usuário é o que você vai mandar para o professor.</p>
+        </li>
+        <li>
+          <h4>Avisar o professor o seu usuário do GitHub e aceitar o convite</h4>
+          <p class="porque"><strong>Por quê:</strong> o professor precisa te adicionar como "colaborador" do repositório da turma. Sem isso, mesmo fazendo tudo certo nos próximos passos, você recebe erro de permissão.</p>
+          <p><strong>Como fazer:</strong> mande seu usuário (@seu-usuario) no Discord da turma. Você vai receber um e-mail/notificação do GitHub com um convite — abra e clique em <strong>"Accept invitation"</strong>.</p>
+        </li>
+        <li>
+          <h4>Instalar o GitHub Desktop</h4>
+          <p class="porque"><strong>O que é:</strong> um programa com botões e telas (sem precisar digitar comandos) que conversa com o Git e o GitHub por trás dos panos.</p>
+          <p><strong>Como fazer:</strong> acesse <code>desktop.github.com</code>, baixe a versão para o seu sistema (Windows/Mac), abra o instalador e siga as opções padrão.</p>
+        </li>
+        <li>
+          <h4>Fazer login no GitHub Desktop</h4>
+          <p class="porque"><strong>Por quê:</strong> o programa precisa saber que é você, para associar tudo que você fizer à sua conta do GitHub.</p>
+          <p><strong>Como fazer:</strong> abra o GitHub Desktop → na tela inicial, clique em <strong>"Sign in to GitHub.com"</strong> → faça login com a conta criada no Passo 1.</p>
+        </li>
+        <li>
+          <h4>Clonar (baixar) o repositório da turma</h4>
+          <p class="porque"><strong>O que é "clonar":</strong> baixar uma cópia completa do repositório da turma para o seu computador, já conectada ao GitHub — é a partir dessa cópia que você vai trabalhar.</p>
+          <p><strong>Como fazer:</strong> File → <strong>Clone Repository</strong> → aba "GitHub.com" → procure <code>t5-analise-de-dados-com-python</code> → escolha uma pasta no seu PC → <strong>Clone</strong>.</p>
+        </li>
+        <li>
+          <h4>Criar a sua branch</h4>
+          <p class="porque"><strong>Por quê:</strong> trabalhar direto na <code>main</code> (a pasta "oficial") é bloqueado de propósito — toda mudança precisa passar por revisão. Criando sua própria branch, você tem liberdade total para trabalhar sem afetar ninguém.</p>
+          <p><strong>Como fazer:</strong> clique em <strong>"Current Branch"</strong> (topo) → <strong>"New Branch"</strong> → nome: <code>alunos/seu-nome</code> (ex.: <code>alunos/joao-silva</code>, sem espaços ou acentos) → <strong>Create Branch</strong>.</p>
+        </li>
+        <li>
+          <h4>Criar sua pasta e colocar seus arquivos</h4>
+          <p class="porque"><strong>Por quê:</strong> cada aluno trabalha isolado dentro da própria pasta em <code>alunos/</code> — isso evita que um aluno sobrescreva o material de outro.</p>
+          <p><strong>Como fazer:</strong> no GitHub Desktop, Repository → <strong>Show in Explorer</strong> (abre a pasta clonada). Dentro de <code>alunos/</code>, crie uma pasta com o seu nome (igual ao usado na branch). Copie para lá os arquivos que quiser guardar.</p>
+        </li>
+        <li>
+          <h4>Commit — salvar uma versão com explicação</h4>
+          <p class="porque"><strong>O que é um commit:</strong> um "ponto de salvamento" das suas mudanças, junto com uma mensagem curta dizendo o que foi feito — assim, qualquer pessoa (inclusive você, no futuro) entende o histórico.</p>
+          <p><strong>Como fazer:</strong> volte ao GitHub Desktop — a aba <strong>"Changes"</strong> já mostra os arquivos novos. Escreva uma frase no campo "Summary" (ex.: <em>"Adiciona meus primeiros materiais"</em>) e clique em <strong>"Commit to alunos/seu-nome"</strong>.</p>
+        </li>
+        <li>
+          <h4>Push — enviar para o GitHub</h4>
+          <p class="porque"><strong>Por quê:</strong> até aqui, tudo ficou só no seu computador. O push é o que efetivamente manda suas mudanças para a nuvem, onde o professor e a turma conseguem ver.</p>
+          <p><strong>Como fazer:</strong> clique no botão <strong>"Push origin"</strong> no topo do GitHub Desktop.</p>
+        </li>
+        <li>
+          <h4>Abrir o Pull Request</h4>
+          <p class="porque"><strong>O que é:</strong> o pedido formal para o professor revisar e aprovar sua mudança antes dela entrar de fato na pasta oficial (<code>main</code>) da turma.</p>
+          <p><strong>Como fazer:</strong> depois do push, aparece um botão <strong>"Create Pull Request"</strong> — clique (abre o navegador), escreva um título/descrição curtos e clique em <strong>"Create pull request"</strong>.</p>
+        </li>
+        <li>
+          <h4>Aguardar a aprovação</h4>
+          <p class="porque"><strong>Isso é normal:</strong> sua PR vai aparecer marcada como <em>"Review required"</em> — não é erro, é a proteção que existe para todo o material da turma. O professor revisa, e só depois disso seu conteúdo entra na pasta oficial.</p>
+        </li>
+      </ol>
+    </div>
+
+    <div class="caminho">
+      <h3>Caminho B — Terminal / Git Bash</h3>
+      <ol class="passos">
+        <li>
+          <h4>Instalar o Git</h4>
+          <p class="porque"><strong>O que é:</strong> o "motor" por trás de tudo isso — o programa que de fato versiona os arquivos (o GitHub Desktop é só uma interface bonita por cima dele).</p>
+          <p><strong>Como fazer:</strong> acesse <code>git-scm.com/downloads</code>, baixe para o seu sistema, abra o instalador e siga com as opções padrão (Next, Next... Install).</p>
+        </li>
+        <li>
+          <h4>Abrir o Git Bash</h4>
+          <p><strong>Como fazer:</strong> depois de instalar, procure "Git Bash" no menu Iniciar do Windows e abra — é nele que você vai digitar os comandos dos próximos passos.</p>
+        </li>
+        <li>
+          <h4>Configurar seu nome e e-mail (uma única vez)</h4>
+          <p class="porque"><strong>Por quê:</strong> toda vez que você salva uma versão (commit), o Git anota quem fez aquela mudança. Esse passo configura essa "assinatura" — só precisa fazer uma vez por computador.</p>
+          <pre class="codeblock">git config --global user.name "Seu Nome"
+git config --global user.email "seu-email@exemplo.com"</pre>
+        </li>
+        <li>
+          <h4>Clonar o repositório</h4>
+          <p class="porque"><strong>O que é "clonar":</strong> baixar uma cópia completa do repositório da turma para o seu computador.</p>
+          <pre class="codeblock">git clone https://github.com/cfneves/t5-analise-de-dados-com-python.git
+cd t5-analise-de-dados-com-python</pre>
+        </li>
+        <li>
+          <h4>Criar sua branch</h4>
+          <p class="porque"><strong>Por quê:</strong> a <code>main</code> é protegida de propósito — criar sua própria branch te dá um espaço livre para trabalhar sem afetar ninguém.</p>
+          <pre class="codeblock">git checkout -b alunos/seu-nome</pre>
+          <p>(troque <code>seu-nome</code> pelo seu nome, sem espaços/acentos — ex.: <code>alunos/joao-silva</code>)</p>
+        </li>
+        <li>
+          <h4>Criar sua pasta e adicionar arquivos</h4>
+          <p class="porque"><strong>Por quê:</strong> cada aluno trabalha isolado na própria pasta dentro de <code>alunos/</code>.</p>
+          <pre class="codeblock">mkdir alunos/seu-nome</pre>
+          <p>Copie seus arquivos para dentro dessa pasta (pelo Explorador de Arquivos mesmo, ou pelo terminal).</p>
+        </li>
+        <li>
+          <h4>Commit</h4>
+          <p class="porque"><strong>O que faz:</strong> <code>add</code> seleciona o que vai entrar no "ponto de salvamento"; <code>commit</code> de fato salva essa versão, com uma mensagem explicando o que foi feito.</p>
+          <pre class="codeblock">git add alunos/seu-nome
+git commit -m "Adiciona meus primeiros materiais"</pre>
+        </li>
+        <li>
+          <h4>Push</h4>
+          <p class="porque"><strong>O que faz:</strong> envia sua branch (com os commits) do seu computador para o GitHub — antes disso, tudo existia só na sua máquina.</p>
+          <pre class="codeblock">git push -u origin alunos/seu-nome</pre>
+        </li>
+        <li>
+          <h4>Abrir o Pull Request</h4>
+          <p class="porque"><strong>O que é:</strong> o pedido formal para o professor revisar e aprovar sua mudança antes dela entrar na <code>main</code> oficial.</p>
+          <p><strong>Como fazer:</strong> o terminal mostra um link parecido com <code>https://github.com/.../pull/new/alunos/seu-nome</code> — copie e cole no navegador. Ou acesse o repositório no GitHub: vai aparecer um aviso amarelo <strong>"Compare &amp; pull request"</strong> — clique nele. Escreva um título/descrição curtos e clique em <strong>"Create pull request"</strong>.</p>
+        </li>
+        <li>
+          <h4>Aguardar a aprovação</h4>
+          <p class="porque"><strong>Isso é normal:</strong> sua PR aparece marcada como <em>"Review required"</em> — é a proteção que existe para o material de toda a turma. Aguarde a revisão do professor.</p>
+        </li>
+      </ol>
+    </div>
+
+    <h3>Erros comuns</h3>
+    <table>
+      <tr><th>Mensagem / Situação</th><th>O que significa</th><th>O que fazer</th></tr>
+      <tr><td>"Permission denied" / "Repository not found" ao clonar ou dar push</td><td>Você ainda não foi adicionado como colaborador</td><td>Avise seu usuário do GitHub no Discord da turma</td></tr>
+      <tr><td>Pediu usuário/senha e não aceitou</td><td>O GitHub não usa mais senha simples para Git — precisa logar pelo navegador</td><td>Siga o fluxo de login que aparecer na tela (GitHub Desktop) ou pelo navegador (terminal)</td></tr>
+      <tr><td>Sua Pull Request mostra "Review required" e não tem botão de merge</td><td>Normal! É a proteção da branch principal</td><td>Aguardar o professor revisar — não é erro</td></tr>
+      <tr><td>Não aparece nada para "commitar" no GitHub Desktop</td><td>Os arquivos não foram salvos dentro de <code>alunos/seu-nome/</code></td><td>Confirme o caminho da pasta com Repository → Show in Explorer</td></tr>
+    </table>
+
+    <div class="box tip">
+      <strong>✅ Checklist final:</strong>
+      <ul>
+        <li>Tenho conta no GitHub</li>
+        <li>Fui adicionado como colaborador (recebi e aceitei o convite)</li>
+        <li>Instalei o GitHub Desktop OU o Git</li>
+        <li>Clonei o repositório da turma</li>
+        <li>Criei minha branch <code>alunos/&lt;meu-nome&gt;</code></li>
+        <li>Criei minha pasta dentro de <code>alunos/</code></li>
+        <li>Fiz commit e push</li>
+        <li>Abri o Pull Request e vi a mensagem "Review required" (sei que isso é normal)</li>
+      </ul>
     </div>
   </section>
 
