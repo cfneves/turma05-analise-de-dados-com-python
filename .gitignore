@@ -1,0 +1,27 @@
+# Materiais internos do professor (planos, exercícios, atividades avaliativas com
+# gabarito, guias de instrutor, mapas, rubricas) NÃO vão para o repositório da turma.
+# Só o material do aluno (HTML teórico + notebook) e o README do repositório são enviados.
+*.md
+!README.md
+!alunos/**/README.md
+
+# Calendário/planejamento interno (capturas de tela do cronograma)
+*.png
+*.jpg
+*.jpeg
+
+# Ficha de produto e demais PDFs internos
+*.pdf
+
+# Checkpoints e cache do Jupyter/Colab
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+
+# Python
+__pycache__/
+*.pyc
+
+# Sistema operacional / editores
+.DS_Store
+Thumbs.db
+.vscode/

@@ -1,0 +1,19 @@
+PASTA DOS ALUNOS — Turma T5 (Análise de Dados com Python)
+
+Como usar esta pasta:
+
+1. Crie AQUI DENTRO uma pasta com o seu nome (sem espaços e sem acentos).
+   Exemplo: alunos/joao-silva/
+
+2. Dentro da sua pasta, adicione os materiais que quiser: exercícios resolvidos,
+   notebooks próprios, anotações, projetos, etc.
+
+3. Você só pode alterar, mover ou excluir arquivos DENTRO DA SUA PRÓPRIA PASTA.
+   Não edite, mova nem exclua arquivos de pastas de outros colegas, nem arquivos
+   fora da pasta "alunos/" (esses são os materiais oficiais do curso).
+
+4. Sempre que possível, trabalhe em uma branch própria e abra um Pull Request
+   para enviar suas mudanças — combine com o professor o fluxo de envio.
+
+Em caso de dúvida, fale no Discord da turma antes de alterar qualquer arquivo
+que não seja seu.

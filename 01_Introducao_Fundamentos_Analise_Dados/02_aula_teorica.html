@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 01 — Introdução e Fundamentos da Análise de Dados</title>
+<style>
+  :root{
+    --red:#CC0000;
+    --red-dark:#990000;
+    --ink:#1a1a2e;
+    --bg:#f7f7fa;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Segoe UI', Roboto, Arial, sans-serif;
+    background:var(--bg);
+    color:#222;
+    line-height:1.6;
+  }
+  .hero{
+    background:linear-gradient(135deg,#0d1b2a,#1b263b,var(--red));
+    color:#fff;
+    padding:60px 24px;
+    text-align:center;
+  }
+  .hero h1{
+    margin:0 0 10px;
+    font-size:2.2rem;
+  }
+  .hero h1 span{ color:#FFD60A; }
+  .hero p{
+    max-width:760px;
+    margin:14px auto 0;
+    font-size:1.05rem;
+    opacity:.92;
+  }
+  .badge{
+    display:inline-block;
+    background:rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.4);
+    border-radius:20px;
+    padding:6px 16px;
+    margin-top:18px;
+    font-size:.9rem;
+  }
+  main{
+    max-width:980px;
+    margin:0 auto;
+    padding:40px 20px 80px;
+  }
+  section{ margin-bottom:48px; }
+  h2{
+    color:var(--red-dark);
+    border-bottom:3px solid var(--red);
+    padding-bottom:8px;
+    font-size:1.5rem;
+  }
+  h3{ color:var(--ink); }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:18px 0;
+    box-shadow:0 1px 4px rgba(0,0,0,.08);
+  }
+  th, td{
+    border:1px solid #ddd;
+    padding:10px 12px;
+    text-align:left;
+    font-size:.95rem;
+  }
+  th{
+    background:var(--red);
+    color:#fff;
+  }
+  tr:nth-child(even){ background:#fafafa; }
+  .box{
+    background:#fff3f3;
+    border-left:5px solid var(--red);
+    padding:16px 20px;
+    border-radius:6px;
+    margin:18px 0;
+  }
+  .box.tip{
+    background:#F0F7FF;
+    border-left-color:#1565C0;
+  }
+  .ciclo{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    margin:24px 0;
+  }
+  .ciclo .etapa{
+    flex:1 1 160px;
+    background:var(--ink);
+    color:#fff;
+    border-radius:10px;
+    padding:18px 14px;
+    text-align:center;
+    position:relative;
+  }
+  .ciclo .etapa .num{
+    display:block;
+    font-size:1.6rem;
+    font-weight:bold;
+    color:#FFD60A;
+  }
+  .ciclo .etapa.coleta{ background:#1b263b; }
+  .ciclo .etapa.limpeza{ background:#3a0a5e; }
+  .ciclo .etapa.analise{ background:#0f3460; }
+  .ciclo .etapa.visualizacao{ background:#7b2d8b; }
+  .ciclo .etapa.comunicacao{ background:var(--red-dark); }
+  .qs{
+    background:var(--ink);
+    color:#eee;
+    border-radius:10px;
+    padding:20px 22px;
+    margin:16px 0;
+  }
+  .qs code{
+    background:rgba(255,255,255,.15);
+    color:#E0E0E0;
+    padding:2px 6px;
+    border-radius:4px;
+    font-family:Consolas, monospace;
+  }
+  .qs label{
+    display:block;
+    background:rgba(255,255,255,.06);
+    padding:8px 12px;
+    margin:6px 0;
+    border-radius:6px;
+    cursor:pointer;
+  }
+  .qs label:hover{ background:rgba(255,255,255,.12); }
+  .qs button{
+    background:var(--red);
+    color:#fff;
+    border:none;
+    padding:8px 18px;
+    border-radius:6px;
+    cursor:pointer;
+    margin-top:10px;
+    font-weight:bold;
+  }
+  .qs button:hover{ background:var(--red-dark); }
+  .feedback{
+    margin-top:10px;
+    padding:10px 14px;
+    border-radius:6px;
+    display:none;
+    font-weight:bold;
+  }
+  .feedback.correct{ background:#1b5e20; display:block; }
+  .feedback.wrong{ background:#7a1f1f; display:block; }
+  .ex{
+    background:#F0F7FF;
+    border:1px solid #BBDEFB;
+    border-radius:8px;
+    padding:16px 20px;
+    margin:14px 0;
+  }
+  pre.codeblock{
+    background:var(--ink);
+    color:#E0E0E0;
+    padding:16px 20px;
+    border-radius:8px;
+    overflow-x:auto;
+    font-family:Consolas, monospace;
+    font-size:.9rem;
+    margin:14px 0;
+  }
+  pre.codeblock .c{ color:#8a8aa0; }
+  footer{
+    background:var(--ink);
+    color:#ccc;
+    text-align:center;
+    padding:26px 16px;
+    font-size:.9rem;
+  }
+  footer strong{ color:#fff; }
+  @media (max-width:768px){
+    .hero h1{ font-size:1.6rem; }
+    .ciclo{ flex-direction:column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Semana 01 · <span>Introdução e Fundamentos da Análise de Dados</span></h1>
+  <p>Unidade Curricular: <strong>Manipulação de Dados com Python e SQL</strong> (150h) — Bloco 1, Semanas 01 e 02. Antes de programar, vamos entender o ambiente do curso, o mercado de trabalho e os conceitos que sustentam tudo o que vem a seguir.</p>
+  <span class="badge">3 encontros · 9h · Ambientação + primeiro contato com código (variável + print)</span>
+</div>
+
+<main>
+
+  <section>
+    <h2>Competência da Unidade Curricular</h2>
+    <div class="box tip">
+      "Desenvolver competências em lógica de programação com Python, modelagem de dados com SQL e NoSQL e utilização de bibliotecas específicas para manipulação, transformação e visualização de dados, apoiando processos de análise de dados."
+    </div>
+    <p>Esta semana constrói a base conceitual — o que é dado, qual o papel do analista, em qual ambiente vamos trabalhar — sobre a qual essa competência será desenvolvida nas próximas semanas.</p>
+  </section>
+
+  <section>
+    <h2>Objetivos da Semana</h2>
+    <ul>
+      <li>Conhecer o funcionamento do curso e configurar as ferramentas (Discord, e-mail/Meet, AVA, Espaço do Estudante, Laboratório Virtual)</li>
+      <li>Entender onde o analista de dados atua no mercado de trabalho</li>
+      <li>Diferenciar <strong>dado</strong>, <strong>informação</strong>, <strong>conhecimento</strong> e <strong>tipo</strong></li>
+      <li>Descrever as 5 etapas da <strong>análise de dados</strong></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Avaliação Diagnóstica</h2>
+    <p>Antes de começar, reflita e marque suas respostas (sem certo ou errado — é só para o professor entender o ponto de partida da turma):</p>
+    <div class="box">
+      <label style="display:block;margin:6px 0;"><input type="checkbox"> Já escrevi algum código ou fórmula (mesmo que simples, como no Excel) antes</label>
+      <label style="display:block;margin:6px 0;"><input type="checkbox"> Já ouvi falar em Python, SQL ou Pandas</label>
+      <label style="display:block;margin:6px 0;"><input type="checkbox"> Já usei o Google Colab ou Jupyter Notebook</label>
+      <label style="display:block;margin:6px 0;"><input type="checkbox"> Já participei de algum curso ou trabalho que envolvesse análise de dados</label>
+      <label style="display:block;margin:6px 0;"><input type="checkbox"> Sei o que é Git/GitHub</label>
+    </div>
+  </section>
+
+  <section>
+    <h2>1. Funcionamento do Curso e Ferramentas</h2>
+    <p>O curso é organizado em <strong>semanas</strong>, cada uma com 3 encontros síncronos: <strong>Terça</strong> e <strong>Quinta</strong> trazem conteúdo novo, e <strong>Sexta</strong> é sempre um treino ativo em squads (não uma revisão passiva). Além disso, toda <strong>segunda</strong> há aula de inglês e toda <strong>quarta</strong> aula de carreira.</p>
+
+    <table>
+      <tr><th>Ferramenta</th><th>Para que serve</th></tr>
+      <tr><td>Discord</td><td>Comunicação da turma, dúvidas entre encontros, avisos da coordenação</td></tr>
+      <tr><td>E-mail / Google Meet</td><td>Comunicação formal e encontros remotos quando necessário</td></tr>
+      <tr><td>AVA (Ambiente Virtual de Aprendizagem)</td><td>Materiais da semana, listas de exercícios autocorrigíveis, entrega de atividades</td></tr>
+      <tr><td>Espaço do Estudante</td><td>Acompanhamento de frequência, notas e dados cadastrais do aluno</td></tr>
+      <tr><td>Laboratório Virtual (Google Colab)</td><td>Onde vamos programar a partir da Semana 02 — hoje, só um primeiro contato</td></tr>
+      <tr><td>YouTube</td><td>Aula inaugural e gravações de apoio</td></tr>
+    </table>
+
+    <div class="box">
+      <strong>📺 Aula Inaugural:</strong> segunda 29/06 às 19h, via YouTube — apresentação do modelo de curso, cronograma, equipe e combinados.<br>
+      Link: <a href="https://www.youtube.com/watch?v=zmMRCS4DzmQ" target="_blank">youtube.com/watch?v=zmMRCS4DzmQ</a>
+    </div>
+
+    <p>Ao abrir o Laboratório Virtual (Google Colab) pela primeira vez, vamos rodar juntos o primeiro código do curso:</p>
+    <pre class="codeblock">print("Bem-vindo(a) ao curso de Análise de Dados com Python!")
+print("A partir da próxima semana, vamos aprender lógica de programação de verdade.")</pre>
+    <div class="ex">
+      <strong>✏️ Agora é sua vez:</strong> no notebook (<code>03_notebook_colab.ipynb</code>), execute essa célula com <code>Ctrl+Enter</code>.
+    </div>
+
+    <h3>Mercado de trabalho para o Analista de Dados</h3>
+    <p>A análise de dados deixou de ser exclusividade de grandes empresas de tecnologia. Hoje, qualquer negócio que coleta dados — vendas, atendimento, redes sociais, sensores — precisa de alguém que transforme esses dados em decisão.</p>
+    <table>
+      <tr><th>Onde a análise de dados é usada</th><th>Benefício direto</th></tr>
+      <tr><td>Varejo e e-commerce</td><td>Entender quais produtos vendem mais e por quê</td></tr>
+      <tr><td>Saúde</td><td>Identificar padrões em diagnósticos e otimizar atendimentos</td></tr>
+      <tr><td>Indústria (Indústria 4.0)</td><td>Monitorar máquinas e prever falhas antes que aconteçam</td></tr>
+      <tr><td>Marketing</td><td>Direcionar campanhas para o público certo</td></tr>
+      <tr><td>Setor público</td><td>Planejar políticas com base em dados reais da população</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>2. Conceitos Fundamentais: Dado, Informação, Conhecimento e Tipo</h2>
+    <p>Antes de qualquer ferramenta, é preciso entender a matéria-prima com a qual vamos trabalhar.</p>
+    <table>
+      <tr><th>Conceito</th><th>Definição</th><th>Exemplo</th></tr>
+      <tr><td><strong>Dado</strong></td><td>Registro bruto, sem contexto</td><td><code>37</code></td></tr>
+      <tr><td><strong>Tipo</strong></td><td>A natureza desse dado (número, texto, data...)</td><td><code>37</code> é um número (temperatura)</td></tr>
+      <tr><td><strong>Informação</strong></td><td>Dado organizado, com contexto</td><td>"A temperatura do paciente é 37°C"</td></tr>
+      <tr><td><strong>Conhecimento</strong></td><td>Informação aplicada a uma decisão</td><td>"37°C é febre? Não — está dentro do normal, não preciso agir"</td></tr>
+    </table>
+    <div class="box tip">
+      <strong>💡 Pense assim:</strong> dado é a matéria-prima; informação é o produto organizado; conhecimento é a decisão que você toma com ele.
+    </div>
+    <p>Veja isso em código — o <strong>dado</strong> vira uma <strong>variável</strong>, e o <code>print()</code> mostra a <strong>informação</strong>:</p>
+    <pre class="codeblock"><span class="c"># DADO: um número guardado em uma variável</span>
+temperatura = 37
+
+<span class="c"># INFORMAÇÃO: o dado organizado, com contexto</span>
+print(f"A temperatura do paciente é {temperatura}°C")
+
+<span class="c"># CONHECIMENTO: a decisão que tomamos a partir da informação</span>
+print("37°C está dentro do normal — não preciso agir.")</pre>
+
+    <h3>Exemplo 2 — Vendas do dia em uma loja</h3>
+    <table>
+      <tr><th>Conceito</th><th>Exemplo</th></tr>
+      <tr><td>Dado</td><td><code>152</code> (tipo: número)</td></tr>
+      <tr><td>Informação</td><td>"Vendemos 152 unidades hoje, 20% acima da média das últimas 4 semanas"</td></tr>
+      <tr><td>Conhecimento</td><td>"Como estamos 20% acima da média, vamos repor o estoque antes do fim de semana"</td></tr>
+    </table>
+    <pre class="codeblock">vendas_hoje = 152
+
+print(f"Vendemos {vendas_hoje} unidades hoje, 20% acima da média das últimas 4 semanas")
+print("Como estamos 20% acima da média, vamos repor o estoque antes do fim de semana.")</pre>
+
+    <div class="ex">
+      <strong>✏️ Atividade Prática 1 (no notebook):</strong> substitua <code>...</code> pelos seus próprios valores e execute — <code>meu_dado = ...</code>, <code>minha_informacao = "..."</code>, <code>meu_conhecimento = "..."</code>.
+    </div>
+  </section>
+
+  <section>
+    <h2>3. O Ciclo de Vida da Análise de Dados</h2>
+    <p>Toda análise de dados — simples ou complexa — passa por 5 etapas. Esse ciclo vai se repetir, semana após semana, em tudo que faremos no curso.</p>
+    <div class="ciclo">
+      <div class="etapa coleta"><span class="num">1</span>Coleta</div>
+      <div class="etapa limpeza"><span class="num">2</span>Limpeza</div>
+      <div class="etapa analise"><span class="num">3</span>Análise</div>
+      <div class="etapa visualizacao"><span class="num">4</span>Visualização</div>
+      <div class="etapa comunicacao"><span class="num">5</span>Comunicação</div>
+    </div>
+    <h3>Exemplo 1 (resolvido) — Loja de roupas com queda de vendas</h3>
+    <table>
+      <tr><th>Etapa</th><th>O que acontece</th><th>Aplicado ao cenário</th></tr>
+      <tr><td>1. Coleta</td><td>Reunir os dados de diferentes fontes</td><td>Exportar dados do sistema de vendas dos últimos 6 meses</td></tr>
+      <tr><td>2. Limpeza</td><td>Corrigir erros, remover duplicatas e dados ausentes</td><td>Remover vendas duplicadas e corrigir preços negativos</td></tr>
+      <tr><td>3. Análise</td><td>Buscar padrões, comparações e causas</td><td>Comparar vendas por região e por vendedor</td></tr>
+      <tr><td>4. Visualização</td><td>Transformar números em gráficos compreensíveis</td><td>Gráfico de linha mostrando a queda mês a mês</td></tr>
+      <tr><td>5. Comunicação</td><td>Apresentar o resultado e a recomendação</td><td>"As vendas caíram 18% na região Sul após a saída de um vendedor-chave"</td></tr>
+    </table>
+    <pre class="codeblock">print("1. Coleta:", "exportar os dados de vendas dos últimos 6 meses do sistema da loja")
+print("2. Limpeza:", "remover vendas duplicadas e corrigir preços negativos ou nulos")
+print("3. Análise:", "comparar vendas por região, por vendedor e por mês")
+print("4. Visualização:", "gráfico de linha mostrando a queda mês a mês por região")
+print("5. Comunicação:", "as vendas caíram 18% na região Sul após a saída de um vendedor-chave")</pre>
+
+    <h3>Exemplo 2 (resolvido) — Streaming de vídeo com aumento de cancelamentos</h3>
+    <table>
+      <tr><th>Etapa</th><th>Aplicado ao cenário</th></tr>
+      <tr><td>1. Coleta</td><td>Reunir dados de assinaturas, cancelamentos e horas de uso da plataforma</td></tr>
+      <tr><td>2. Limpeza</td><td>Remover contas de teste e datas de cancelamento inconsistentes</td></tr>
+      <tr><td>3. Análise</td><td>Comparar tempo de uso de quem cancelou com o de quem permaneceu</td></tr>
+      <tr><td>4. Visualização</td><td>Gráfico de barras comparando horas assistidas por mês entre os dois grupos</td></tr>
+      <tr><td>5. Comunicação</td><td>"Quem cancela assiste 70% menos conteúdo no 1º mês — melhorar recomendações para novos assinantes"</td></tr>
+    </table>
+    <pre class="codeblock">print("1. Coleta:", "reunir dados de assinaturas, cancelamentos e horas de uso da plataforma")
+print("2. Limpeza:", "remover contas de teste e datas de cancelamento inconsistentes")
+print("3. Análise:", "comparar tempo de uso de quem cancelou com o de quem permaneceu")
+print("4. Visualização:", "gráfico de barras comparando horas assistidas por mês entre os dois grupos")
+print("5. Comunicação:", "quem cancela assiste 70% menos conteúdo no 1º mês — melhorar recomendações")</pre>
+
+    <div class="ex">
+      <strong>✏️ Atividade Prática 2 (no notebook):</strong> escolha um cenário seu (trabalho, estudo ou vida pessoal) e complete o código substituindo os <code>"..."</code> por cada uma das 5 etapas.
+    </div>
+  </section>
+
+  <section>
+    <h2>4. Treino em Squads — Sexta-feira (Encontro 3)</h2>
+    <p>Na sexta-feira, a turma se divide em squads (presencial ou em salas remotas/breakout no Discord/Meet). Cada squad recebe <strong>um cenário diferente</strong> e tem 20–25 min para mapear as 5 etapas antes de apresentar em até 3 minutos.</p>
+    <table>
+      <tr><th>Squad</th><th>Cenário</th></tr>
+      <tr><td>B</td><td>E-commerce: 1 em cada 5 pedidos está sendo devolvido nos últimos 2 meses</td></tr>
+      <tr><td>C</td><td>Hospital: tempo de espera no pronto-atendimento aumentou</td></tr>
+      <tr><td>D</td><td>Indústria: uma máquina específica quebra com mais frequência</td></tr>
+      <tr><td>E</td><td>Prefeitura: moradores reclamam de buracos nas ruas nas redes sociais</td></tr>
+    </table>
+    <div class="box tip">
+      <strong>🗣️ Depois das apresentações:</strong> debata com a turma — qual cenário teve a etapa de Limpeza mais difícil? Em qual a Comunicação seria mais delicada? O que todos os cenários têm em comum?
+    </div>
+  </section>
+
+  <section>
+    <h2>Quiz de Fixação</h2>
+    <p>Responda e clique em <strong>Verificar</strong> para ver o feedback de cada questão.</p>
+
+    <div class="qs" data-correct="b">
+      <p><strong>1.</strong> Qual dia da semana é sempre dedicado ao treino ativo em squads, segundo o modelo deste curso?</p>
+      <label><input type="radio" name="q1" value="a"> Segunda-feira</label>
+      <label><input type="radio" name="q1" value="b"> Sexta-feira</label>
+      <label><input type="radio" name="q1" value="c"> Quarta-feira</label>
+      <button onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="c">
+      <p><strong>2.</strong> O valor <code>37</code>, isolado e sem contexto, representa:</p>
+      <label><input type="radio" name="q2" value="a"> Conhecimento</label>
+      <label><input type="radio" name="q2" value="b"> Informação</label>
+      <label><input type="radio" name="q2" value="c"> Dado</label>
+      <button onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="b">
+      <p><strong>3.</strong> Qual destas é a sequência correta do ciclo de vida da análise de dados?</p>
+      <label><input type="radio" name="q3" value="a"> Análise → Coleta → Limpeza → Comunicação → Visualização</label>
+      <label><input type="radio" name="q3" value="b"> Coleta → Limpeza → Análise → Visualização → Comunicação</label>
+      <label><input type="radio" name="q3" value="c"> Visualização → Comunicação → Coleta → Limpeza → Análise</label>
+      <button onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="a">
+      <p><strong>4.</strong> Qual ferramenta do curso é usada para acompanhar frequência e notas do aluno?</p>
+      <label><input type="radio" name="q4" value="a"> Espaço do Estudante</label>
+      <label><input type="radio" name="q4" value="b"> Discord</label>
+      <label><input type="radio" name="q4" value="c"> Google Meet</label>
+      <button onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="c">
+      <p><strong>5.</strong> "As vendas caíram 18% na região Sul após a saída de um vendedor-chave" é um exemplo da etapa de:</p>
+      <label><input type="radio" name="q5" value="a"> Coleta</label>
+      <label><input type="radio" name="q5" value="b"> Limpeza</label>
+      <label><input type="radio" name="q5" value="c"> Comunicação</label>
+      <button onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Exercícios da Semana</h2>
+    <div class="ex">
+      <strong>Fácil:</strong> Liste 3 exemplos de dados que você gera no seu dia a dia (pessoal ou profissional).
+    </div>
+    <div class="ex">
+      <strong>Médio:</strong> Escolha um cenário do seu trabalho ou estudo e descreva como as 5 etapas do ciclo de análise de dados se aplicariam a ele.
+    </div>
+    <div class="ex">
+      <strong>Avançado:</strong> Pesquise uma vaga real de Analista de Dados Jr. (LinkedIn, Catho, Gupy) e identifique 3 competências exigidas que você ainda não tem — e que este curso vai te ajudar a desenvolver.
+    </div>
+    <p>Lista completa em <code>04_exercicios.md</code>.</p>
+  </section>
+
+</main>
+
+<footer>
+  Curso: Análise de Dados com Python — SENAI (Turma T5) · Semana 01<br>
+  <strong>Prof. Especialista Cláudio F. Neves</strong>
+</footer>
+
+<script>
+function check(btn){
+  const qs = btn.closest('.qs');
+  const correct = qs.getAttribute('data-correct');
+  const name = qs.querySelector('input').name;
+  const selected = qs.querySelector('input[name="' + name + '"]:checked');
+  const fb = qs.querySelector('.feedback');
+
+  if(!selected){
+    fb.className = 'feedback wrong';
+    fb.textContent = '⚠️ Selecione uma alternativa antes de verificar.';
+    return;
+  }
+
+  if(selected.value === correct){
+    fb.className = 'feedback correct';
+    fb.textContent = '✅ Correto! Muito bem.';
+  } else {
+    const correctLabel = qs.querySelector('input[value="' + correct + '"]').closest('label').textContent.trim();
+    fb.className = 'feedback wrong';
+    fb.textContent = '❌ Incorreto. A resposta certa é: ' + correctLabel;
+  }
+}
+</script>
+
+</body>
+</html>

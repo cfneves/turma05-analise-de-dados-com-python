@@ -1,0 +1,22 @@
+# CODEOWNERS — define quem precisa APROVAR um Pull Request que altera cada caminho.
+# Só tem efeito de verdade se a branch "main" estiver protegida em:
+#   Settings > Branches > Branch protection rules > main
+#     [x] Require a pull request before merging
+#     [x] Require review from Code Owners
+#     [x] Do not allow bypassing the above settings (inclui admins, se quiser)
+#     [x] Restrict deletions
+#     [x] Block force pushes
+#
+# Regra padrão: qualquer arquivo fora de alunos/<pasta-do-aluno>/ exige aprovação
+# do professor antes do merge.
+* @cfneves
+
+# Conforme cada aluno for adicionado como colaborador do repositório, adicione
+# uma linha abaixo apontando a pasta dele para o usuário dele no GitHub.
+# Isso permite que o próprio aluno aprove (e faça merge) de mudanças DENTRO
+# da própria pasta, sem depender do professor a cada Pull Request — mas
+# continua exigindo aprovação para qualquer mudança fora da pasta dele.
+#
+# Exemplo (substitua pelos dados reais conforme os alunos forem entrando):
+# /alunos/joao-silva/    @usuario-github-do-joao
+# /alunos/maria-souza/   @usuario-github-da-maria
