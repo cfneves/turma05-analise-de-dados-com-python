@@ -20,6 +20,10 @@
 # Ficha de produto e demais PDFs internos
 *.pdf
 
+# Apresentações de slide (template oficial e decks gerados por semana) -
+# material de apoio do professor para a aula em vivo, nao publicado ao aluno
+*.pptx
+
 # Checkpoints e cache do Jupyter/Colab
 .ipynb_checkpoints/
 **/.ipynb_checkpoints/
