@@ -69,9 +69,59 @@ turma05-analise-de-dados-com-python/
 
 ---
 
-## Como usar (alunos)
+## Como usar o material de cada semana
 
-Primeira vez configurando seu acesso? Siga o passo a passo completo (com dois caminhos — programa com botões ou terminal) em **[`GUIA_GITHUB.md`](GUIA_GITHUB.md)**. Resumo para quem já tem experiência com Git:
+### Aula teórica (HTML)
+
+1. Clique no arquivo `aula_teorica.html` na pasta da semana
+2. Clique no ícone de download (↓ no canto superior direito da visualização do arquivo)
+3. Abra o arquivo baixado no navegador — a aula com quiz interativo funciona completamente offline
+
+### Notebook prático — Google Colab (Blocos 1 a 4)
+
+Os notebooks `.ipynb` foram feitos para o **Google Colab** e não exigem nada instalado no computador. Três formas de abrir:
+
+**Opção A — link direto** (mais rápido):
+
+[![Abrir no Colab — Semana 01](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/01_Introducao_Fundamentos_Analise_Dados/notebook_colab.ipynb)
+
+*(Semana 01 — as demais semanas terão seus próprios links ao serem liberadas ao longo do curso)*
+
+**Opção B — pelo próprio Colab**:
+1. Acesse [colab.research.google.com](https://colab.research.google.com)
+2. **Arquivo → Abrir notebook → aba GitHub**
+3. Busque: `cfneves/turma05-analise-de-dados-com-python`
+4. Clique no `notebook_colab.ipynb` da semana desejada
+
+**Opção C — clonar o repositório dentro do Colab**:
+```python
+# Cole numa célula do Colab e execute (Shift+Enter):
+!git clone https://github.com/cfneves/turma05-analise-de-dados-com-python.git
+%cd turma05-analise-de-dados-com-python
+!ls          # lista as pastas disponíveis
+```
+O repositório aparece no painel de arquivos (ícone de pasta, à esquerda). Navegue até a semana desejada e clique no `notebook_colab.ipynb` para abrir em uma nova aba.
+
+> ⚠️ **Importante:** ao abrir via Opção A ou B, o notebook é somente leitura — é a versão oficial do professor. Faça **Arquivo → Salvar uma cópia no Drive** imediatamente para ter a sua versão editável no Google Drive.
+
+---
+
+## Como enviar seus exercícios para o repositório
+
+Para o setup completo (criar conta no GitHub, aceitar convite, criar sua pasta), veja o **[GUIA_GITHUB.md](GUIA_GITHUB.md)**. Resumo:
+
+### Pelo navegador — sem Git instalado (Blocos 1 e 2, Google Colab)
+
+Ideal para quem trabalha no Google Colab e ainda não configurou o Git localmente:
+
+1. No Colab, faça **Arquivo → Fazer download → Fazer download do .ipynb**
+2. Acesse o repositório no GitHub → navegue até `alunos/seu-nome/`
+3. Clique em **"Add file → Upload files"** → selecione o arquivo baixado
+4. Em "Commit changes", selecione **"Create a new branch and start a pull request"** e use `alunos/seu-nome` como nome da branch
+5. Clique em **"Propose changes"** → **"Create pull request"**
+6. Aguarde a aprovação do professor (*"Review required"* é normal — não é erro)
+
+### Via Git local (a partir do Bloco 2, Semana 03)
 
 ```bash
 git clone https://github.com/cfneves/turma05-analise-de-dados-com-python.git
@@ -85,7 +135,7 @@ git push -u origin alunos/seu-nome
 # depois, abra um Pull Request da sua branch para a main
 ```
 
-Veja também `alunos/LEIA-ME.txt`.
+Veja também `alunos/LEIA-ME.txt` e o [GUIA_GITHUB.md](GUIA_GITHUB.md) completo.
 
 ---
 
