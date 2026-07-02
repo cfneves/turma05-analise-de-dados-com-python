@@ -65,8 +65,6 @@ turma05-analise-de-dados-com-python/
     └── ...
 ```
 
-> Cada semana publica aqui apenas os 2 arquivos de uso do aluno (`aula_teorica.html` e `notebook_colab.ipynb`, sem numeração — para não confundir quem espera ver um arquivo "01"). Planos de aula, listas de exercícios, atividades avaliativas e gabaritos são materiais internos do professor (numerados 01/04/05/06) e não são publicados neste repositório.
-
 ---
 
 ## Notebooks do curso
