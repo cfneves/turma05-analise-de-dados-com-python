@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -205,7 +205,7 @@
       <strong>💡 Atenção:</strong> <code>=</code> guarda um valor (atribuição). <code>==</code> compara dois valores. Confundir os dois é o erro mais comum desta semana!
     </div>
 
-    <h3>Exemplo 1 (resolvido) — Cadastro simples</h3>
+    <h3>Exemplo 1 — Cadastro simples</h3>
     <pre class="codeblock">nome = "Mariana"
 idade = 28
 altura = 1.68
@@ -214,7 +214,7 @@ esta_matriculada = True
 print(nome, idade, altura, esta_matriculada)
 print(type(nome), type(idade), type(altura), type(esta_matriculada))</pre>
 
-    <h3>Exemplo 2 (resolvido) — Trocando o tipo de um dado</h3>
+    <h3>Exemplo 2 — Trocando o tipo de um dado</h3>
     <p>Às vezes você recebe um número como texto (ex.: digitado em um formulário) e precisa converter para poder calcular com ele:</p>
     <pre class="codeblock">idade_texto = "25"          <span class="c"># chegou como texto</span>
 idade_numero = int(idade_texto)   <span class="c"># convertendo para número</span>
@@ -243,7 +243,7 @@ print(idade_numero + 1)     <span class="c"># agora dá para somar: 26</span></p
       <tr><td><code>**</code></td><td>Potência</td><td><code>5 ** 2</code> → 25</td></tr>
     </table>
 
-    <h3>Exemplo 1 (resolvido) — Conta dividida entre amigos</h3>
+    <h3>Exemplo 1 — Conta dividida entre amigos</h3>
     <pre class="codeblock">conta_total = 150.0
 numero_de_amigos = 4
 
@@ -253,7 +253,7 @@ print(f"Cada um paga R$ {valor_por_pessoa}")</pre>
       <strong>💡 E se a conta não dividir certo?</strong> Tente trocar <code>numero_de_amigos</code> para <code>3</code> e rodar de novo: o resultado vira <code>33.333333333333336</code>, em vez de um número redondo. Isso é normal — é assim que computadores representam números decimais, em qualquer linguagem, não é um erro seu nem do Python. Se quiser um valor mais "limpo" para mostrar, use <code>round(valor_por_pessoa, 2)</code> (arredonda para 2 casas decimais).
     </div>
 
-    <h3>Exemplo 2 (resolvido) — Par ou ímpar com módulo</h3>
+    <h3>Exemplo 2 — Par ou ímpar com módulo</h3>
     <pre class="codeblock">numero = 17
 resto = numero % 2
 
@@ -279,11 +279,11 @@ print("É par" if resto == 0 else "É ímpar")</pre>
       <tr><td><code>not</code></td><td>Lógico</td><td>Inverte o valor (verdadeiro vira falso)</td></tr>
     </table>
 
-    <h3>Exemplo 1 (resolvido) — Verificando maioridade</h3>
+    <h3>Exemplo 1 — Verificando maioridade</h3>
     <pre class="codeblock">idade = 16
 print(idade >= 18)   <span class="c"># False</span></pre>
 
-    <h3>Exemplo 2 (resolvido) — Combinando condições com "and"</h3>
+    <h3>Exemplo 2 — Combinando condições com "and"</h3>
     <pre class="codeblock">idade = 20
 tem_carteira = True
 
@@ -316,7 +316,7 @@ SyntaxError: expected ':'</pre>
       Isso não significa que você "quebrou" o código — é o Python te avisando exatamente onde e o que está errado. Leia sempre a <strong>última linha</strong> da mensagem primeiro: ela quase sempre diz o problema (aqui, <code>expected ':'</code> = "faltou o dois-pontos"). Tente provocar esse erro de propósito no notebook — é mais fácil aprender a ler um erro quando você sabe exatamente o que causou ele.
     </div>
 
-    <h3>Exemplo 1 (resolvido) — Classificando uma nota</h3>
+    <h3>Exemplo 1 — Classificando uma nota</h3>
     <pre class="codeblock">nota = 7.5
 
 if nota >= 9:
@@ -328,7 +328,7 @@ elif nota >= 5:
 else:
     print("Insuficiente")</pre>
 
-    <h3>Exemplo 2 (resolvido) — Calculando e depois classificando</h3>
+    <h3>Exemplo 2 — Calculando e depois classificando</h3>
     <p>No Exemplo 1 a condição comparava uma variável já pronta (<code>nota</code>). Mas você também pode <strong>calcular um valor primeiro</strong> e só depois classificá-lo — esse é o padrão que você vai usar com frequência em análise de dados:</p>
     <pre class="codeblock">estoque_maximo = 500
 estoque_atual = 80
@@ -352,11 +352,11 @@ else:
     <p>Com <code>if</code>/<code>elif</code>/<code>else</code> (seção 4) seu programa já decide um caminho — mas só uma vez. Agora você vai aprender a repetir uma ação várias vezes, sem copiar e colar o mesmo código.</p>
     <p>Use <code>for</code> quando você já sabe quantas vezes quer repetir (ex.: "para cada número de 1 a 10"). Use <code>while</code> quando a repetição depende de uma condição que pode mudar (ex.: "enquanto o saldo for maior que zero").</p>
 
-    <h3>Exemplo 1 (resolvido) — Contando com for</h3>
+    <h3>Exemplo 1 — Contando com for</h3>
     <pre class="codeblock">for numero in range(1, 6):
     print(f"Contando: {numero}")</pre>
 
-    <h3>Exemplo 2 (resolvido) — Contagem regressiva com while</h3>
+    <h3>Exemplo 2 — Contagem regressiva com while</h3>
     <pre class="codeblock">contador = 5
 
 while contador > 0:
