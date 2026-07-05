@@ -26,6 +26,10 @@
 # material de apoio do professor para a aula em vivo, nao publicado ao aluno
 *.pptx
 
+# Gabaritos e cadernos internos do professor em formato notebook
+# (ficam só na máquina do professor, nunca no repositório da turma)
+gabarito_professor_*.ipynb
+
 # Checkpoints e cache do Jupyter/Colab
 .ipynb_checkpoints/
 **/.ipynb_checkpoints/

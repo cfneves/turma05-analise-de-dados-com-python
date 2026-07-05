@@ -213,6 +213,7 @@ esta_matriculada = True
 
 print(nome, idade, altura, esta_matriculada)
 print(type(nome), type(idade), type(altura), type(esta_matriculada))</pre>
+    <img src="img/1.variaveis/a.png" alt="" style="max-width:100%;margin:1.2rem 0;display:block;border-radius:6px;">
 
     <h3>Exemplo 2 — Trocando o tipo de um dado</h3>
     <p>Às vezes você recebe um número como texto (ex.: digitado em um formulário) e precisa converter para poder calcular com ele:</p>
@@ -220,6 +221,7 @@ print(type(nome), type(idade), type(altura), type(esta_matriculada))</pre>
 idade_numero = int(idade_texto)   <span class="c"># convertendo para número</span>
 
 print(idade_numero + 1)     <span class="c"># agora dá para somar: 26</span></pre>
+    <img src="img/1.variaveis/b.png" alt="" style="max-width:100%;margin:1.2rem 0;display:block;border-radius:6px;">
 
     <div class="ex">
       <strong>✏️ Atividade Prática 1 (no notebook):</strong> crie 3 variáveis suas (uma <code>int</code>, uma <code>float</code> e uma <code>str</code>) e confirme o tipo de cada uma com <code>type()</code>.
@@ -249,6 +251,7 @@ numero_de_amigos = 4
 
 valor_por_pessoa = conta_total / numero_de_amigos
 print(f"Cada um paga R$ {valor_por_pessoa}")</pre>
+    <img src="img/2.operadores_aritmeticos/c.png" alt="" style="max-width:100%;margin:1.2rem 0;display:block;border-radius:6px;">
     <div class="box tip">
       <strong>💡 E se a conta não dividir certo?</strong> Tente trocar <code>numero_de_amigos</code> para <code>3</code> e rodar de novo: o resultado vira <code>33.333333333333336</code>, em vez de um número redondo. Isso é normal — é assim que computadores representam números decimais, em qualquer linguagem, não é um erro seu nem do Python. Se quiser um valor mais "limpo" para mostrar, use <code>round(valor_por_pessoa, 2)</code> (arredonda para 2 casas decimais).
     </div>
@@ -259,6 +262,7 @@ resto = numero % 2
 
 print(f"O resto da divisão de {numero} por 2 é {resto}")
 print("É par" if resto == 0 else "É ímpar")</pre>
+    <img src="img/2.operadores_aritmeticos/d.png" alt="" style="max-width:100%;margin:1.2rem 0;display:block;border-radius:6px;">
 
     <div class="ex">
       <strong>✏️ Atividade Prática 2 (no notebook):</strong> dado um <code>preco</code> de sua escolha, calcule o preço com 10% de desconto usando os operadores aritméticos.
@@ -282,6 +286,7 @@ print("É par" if resto == 0 else "É ímpar")</pre>
     <h3>Exemplo 1 — Verificando maioridade</h3>
     <pre class="codeblock">idade = 16
 print(idade >= 18)   <span class="c"># False</span></pre>
+    <img src="img/3.operadores_relacionais_logicos/e.png" alt="" style="max-width:100%;margin:1.2rem 0;display:block;border-radius:6px;">
 
     <h3>Exemplo 2 — Combinando condições com "and"</h3>
     <pre class="codeblock">idade = 20
@@ -289,6 +294,7 @@ tem_carteira = True
 
 pode_dirigir = idade >= 18 and tem_carteira
 print(f"Pode dirigir? {pode_dirigir}")</pre>
+    <img src="img/3.operadores_relacionais_logicos/f.png" alt="" style="max-width:100%;margin:1.2rem 0;display:block;border-radius:6px;">
 
     <div class="ex">
       <strong>✏️ Atividade Prática 3 (no notebook):</strong> crie variáveis <code>nota1</code> e <code>nota2</code> e use <code>and</code> para verificar se a pessoa passou em <strong>ambas</strong> (nota ≥ 7 nas duas).
@@ -327,6 +333,7 @@ elif nota >= 5:
     print("Regular")
 else:
     print("Insuficiente")</pre>
+    <img src="img/4.estrutura_condicional/g.png" alt="" style="max-width:100%;margin:1.2rem 0;display:block;border-radius:6px;">
 
     <h3>Exemplo 2 — Calculando e depois classificando</h3>
     <p>No Exemplo 1 a condição comparava uma variável já pronta (<code>nota</code>). Mas você também pode <strong>calcular um valor primeiro</strong> e só depois classificá-lo — esse é o padrão que você vai usar com frequência em análise de dados:</p>
@@ -341,6 +348,7 @@ elif nivel_estoque >= 0.2:
     print("Estoque baixo — fazer pedido de reposição")
 else:
     print("Estoque crítico — reposição urgente!")</pre>
+    <img src="img/4.estrutura_condicional/h.png" alt="" style="max-width:100%;margin:1.2rem 0;display:block;border-radius:6px;">
 
     <div class="ex">
       <strong>✏️ Atividade Prática 4 (no notebook):</strong> dada uma <code>idade</code>, use <code>if</code>/<code>elif</code>/<code>else</code> para classificar em "Criança" (até 12), "Adolescente" (13–17) ou "Adulto" (18+).
@@ -355,6 +363,7 @@ else:
     <h3>Exemplo 1 — Contando com for</h3>
     <pre class="codeblock">for numero in range(1, 6):
     print(f"Contando: {numero}")</pre>
+    <img src="img/5.estrutura_repeticao/i.png" alt="" style="max-width:100%;margin:1.2rem 0;display:block;border-radius:6px;">
 
     <h3>Exemplo 2 — Contagem regressiva com while</h3>
     <pre class="codeblock">contador = 5
@@ -364,6 +373,7 @@ while contador > 0:
     contador = contador - 1
 
 print("Lançamento!")</pre>
+    <img src="img/5.estrutura_repeticao/j.png" alt="" style="max-width:100%;margin:1.2rem 0;display:block;border-radius:6px;">
 
     <div class="ex">
       <strong>✏️ Atividade Prática 5 (no notebook):</strong> use <code>for</code> para percorrer os números de 1 a 10 e imprimir apenas os números pares (use o operador <code>%</code> que você já conhece).
