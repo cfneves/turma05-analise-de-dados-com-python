@@ -74,7 +74,7 @@ Clique em **Open in Colab** para abrir o notebook da semana diretamente no Googl
 | Semana | Tema | Notebook |
 |:------:|------|:--------:|
 | 01 | Introdução e Fundamentos da Análise de Dados | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/01_Introducao_Fundamentos_Analise_Dados/notebook_colab.ipynb) |
-| 02 | Lógica de Programação | *em breve* |
+| 02 | Lógica de Programação | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/02_Logica_de_Programacao/notebook_colab.ipynb) |
 | 03 | Versionamento e Python Local | *em breve* |
 | 04 | Manipulação de Arquivos e Modularização | *em breve* |
 | 05 | Pandas e NumPy | *em breve* |
