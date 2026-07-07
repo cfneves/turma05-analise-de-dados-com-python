@@ -117,12 +117,40 @@ drive.mount('/content/drive')
 !pwd
 ```
 
-**Quando uma nova semana for liberada — baixar o conteúdo:**
+---
+
+### Atualizar o repositório — faça toda vez que o professor liberar material novo
+
+Quando uma semana nova for liberada (ou quando o professor atualizar o conteúdo já publicado), siga os passos abaixo **antes de abrir o notebook da semana**.
+
+> **⚠️ Salve seu trabalho primeiro!** Se você já preencheu exercícios no notebook desta semana, salve uma cópia em `alunos/seu-nome/` antes de continuar. O Passo 2 descarta alterações locais — incluindo suas respostas.
+
+**Passo 1 — Monte o Drive e vá para o repositório:**
 
 ```python
+from google.colab import drive
+drive.mount('/content/drive')
+
 %cd "/content/drive/MyDrive/Turma05/turma05-analise-de-dados-com-python"
+```
+
+**Passo 2 — Descarte as alterações automáticas do Colab na pasta da semana:**
+
+> Substitua `02_Logica_de_Programacao` pelo nome da pasta da semana que você quer atualizar (ex.: `01_Introducao_Fundamentos_Analise_Dados`, `03_Versionamento_e_Python_Local`, etc.)
+
+```python
+!git checkout -- 02_Logica_de_Programacao
+```
+
+*Por que esse passo é necessário?* Quando você abre um notebook no Colab, ele modifica automaticamente o arquivo (contagens de execução, saídas das células). Isso cria um conflito que impede o `git pull` de funcionar. Esse comando desfaz essas alterações automáticas — sem apagar seus arquivos em `alunos/`.
+
+**Passo 3 — Baixe as atualizações do repositório:**
+
+```python
 !git pull
 ```
+
+Ao final, você verá as pastas e arquivos novos listados no terminal. Abra o notebook da semana normalmente.
 
 > Passo a passo detalhado com explicações no [GUIA_GITHUB.md](GUIA_GITHUB.md) — Caminho C.
 
