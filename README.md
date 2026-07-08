@@ -68,15 +68,16 @@ Escolha a forma que preferir para acessar o material de cada semana:
 
 | Semana | Tema | Abrir no Colab | Baixar Notebook | Baixar Aula Teórica |
 |:------:|------|:--------------:|:---------------:|:-------------------:|
-| 01 | Introdução e Fundamentos da Análise de Dados | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/01_Introducao_Fundamentos_Analise_Dados/notebook_colab.ipynb) | [⬇ .ipynb](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/01_Introducao_Fundamentos_Analise_Dados/notebook_colab.ipynb) | [⬇ .html](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/01_Introducao_Fundamentos_Analise_Dados/aula_teorica.html) |
-| 02 | Lógica de Programação | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/02_Logica_de_Programacao/notebook_colab.ipynb) | [⬇ .ipynb](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/02_Logica_de_Programacao/notebook_colab.ipynb) | [⬇ .html](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/02_Logica_de_Programacao/aula_teorica.html) |
+| 01 | Introdução e Fundamentos da Análise de Dados | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/01_Introducao_Fundamentos_Analise_Dados/notebook_colab.ipynb) | [⬇ .ipynb](https://raw.githubusercontent.com/cfneves/turma05-analise-de-dados-com-python/main/01_Introducao_Fundamentos_Analise_Dados/notebook_colab.ipynb) | [⬇ .html](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/01_Introducao_Fundamentos_Analise_Dados/aula_teorica.html) |
+| 02 | Lógica de Programação | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/02_Logica_de_Programacao/notebook_colab.ipynb) | [⬇ .ipynb](https://raw.githubusercontent.com/cfneves/turma05-analise-de-dados-com-python/main/02_Logica_de_Programacao/notebook_colab.ipynb) | [⬇ .html](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/02_Logica_de_Programacao/aula_teorica.html) |
 | 03 | Versionamento e Python Local | *em breve* | *em breve* | *em breve* |
 | 04 | Manipulação de Arquivos e Modularização | *em breve* | *em breve* | *em breve* |
 | 05 | Pandas e NumPy | *em breve* | *em breve* | *em breve* |
 | 06 | Limpeza e Transformação de Dados | *em breve* | *em breve* | *em breve* |
 | 07 | Visualização e Pipelines | *em breve* | *em breve* | *em breve* |
 
-> **⬇ .ipynb / ⬇ .html:** os links abrem a página do arquivo no GitHub. Para baixar, clique no ícone **⬇** (*Download raw file*) no canto superior direito da página. O notebook pode ser aberto no Colab, Jupyter ou VS Code. O HTML funciona offline — basta abrir no navegador.
+> **⬇ .ipynb** — baixa o arquivo direto para o seu computador. Abra depois no Colab, Jupyter ou VS Code.
+> **⬇ .html** — abre a página do arquivo no GitHub. Para salvar: clique no ícone **⬇** (*Download raw file*) no **canto superior direito** da página. Depois abra o arquivo baixado no navegador — funciona completamente offline.
 >
 > Para trabalho persistente no Colab entre sessões, configure o ambiente abaixo (faça uma vez).
 
