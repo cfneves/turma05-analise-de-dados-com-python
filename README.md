@@ -68,87 +68,17 @@ Escolha a forma que preferir para acessar o material de cada semana:
 
 | Semana | Tema | Abrir no Colab | Baixar Notebook | Baixar Aula Teórica |
 |:------:|------|:--------------:|:---------------:|:-------------------:|
-| 01 | Introdução e Fundamentos da Análise de Dados | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/01_Introducao_Fundamentos_Analise_Dados/notebook_colab.ipynb) | [⬇ .ipynb](https://raw.githubusercontent.com/cfneves/turma05-analise-de-dados-com-python/main/01_Introducao_Fundamentos_Analise_Dados/notebook_colab.ipynb) | [⬇ .html](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/01_Introducao_Fundamentos_Analise_Dados/aula_teorica.html) |
-| 02 | Lógica de Programação | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/02_Logica_de_Programacao/notebook_colab.ipynb) | [⬇ .ipynb](https://raw.githubusercontent.com/cfneves/turma05-analise-de-dados-com-python/main/02_Logica_de_Programacao/notebook_colab.ipynb) | [⬇ .html](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/02_Logica_de_Programacao/aula_teorica.html) |
+| 01 | Introdução e Fundamentos da Análise de Dados | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/01_Introducao_Fundamentos_Analise_Dados/notebook_colab.ipynb) | [⬇ .ipynb](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/01_Introducao_Fundamentos_Analise_Dados/notebook_colab.ipynb) | [⬇ .html](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/01_Introducao_Fundamentos_Analise_Dados/aula_teorica.html) |
+| 02 | Lógica de Programação | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/02_Logica_de_Programacao/notebook_colab.ipynb) | [⬇ .ipynb](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/02_Logica_de_Programacao/notebook_colab.ipynb) | [⬇ .html](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/02_Logica_de_Programacao/aula_teorica.html) |
 | 03 | Versionamento e Python Local | *em breve* | *em breve* | *em breve* |
 | 04 | Manipulação de Arquivos e Modularização | *em breve* | *em breve* | *em breve* |
 | 05 | Pandas e NumPy | *em breve* | *em breve* | *em breve* |
 | 06 | Limpeza e Transformação de Dados | *em breve* | *em breve* | *em breve* |
 | 07 | Visualização e Pipelines | *em breve* | *em breve* | *em breve* |
 
-> **⬇ Baixar Notebook (.ipynb):** salva o arquivo direto no computador — abra depois no Colab, Jupyter ou VS Code.
-> **⬇ Baixar Aula Teórica (.html):** abre a página do arquivo no GitHub; clique no ícone **⬇** (canto superior direito) para salvar. Abra o arquivo baixado no navegador — funciona completamente offline.
+> **⬇ .ipynb / ⬇ .html:** os links abrem a página do arquivo no GitHub. Para baixar, clique no ícone **⬇** (*Download raw file*) no canto superior direito da página. O notebook pode ser aberto no Colab, Jupyter ou VS Code. O HTML funciona offline — basta abrir no navegador.
 >
 > Para trabalho persistente no Colab entre sessões, configure o ambiente abaixo (faça uma vez).
-
----
-
-## Configuração do ambiente — faça uma vez
-
-O Colab começa do zero a cada sessão — qualquer arquivo some ao encerrar. Solução: clonar o repositório dentro do **Google Drive** (uma vez), onde tudo fica salvo permanentemente.
-
-**Célula 1 — clone inicial (só na primeira vez):**
-
-```python
-from google.colab import drive
-drive.mount('/content/drive')      # autorize quando o link aparecer
-
-import os
-os.makedirs('/content/drive/MyDrive/Turma05', exist_ok=True)
-%cd /content/drive/MyDrive/Turma05
-
-!git clone https://github.com/cfneves/turma05-analise-de-dados-com-python.git
-!ls    # deve aparecer: turma05-analise-de-dados-com-python/
-```
-
-**Célula 2 — início de cada nova sessão (toda vez):**
-
-```python
-from google.colab import drive
-drive.mount('/content/drive')
-
-%cd "/content/drive/MyDrive/Turma05/turma05-analise-de-dados-com-python"
-!ls                            # semanas disponíveis
-
-%cd "01_Introducao_Fundamentos_Analise_Dados"
-!ls
-!pwd
-```
-
----
-
-### Atualizar o repositório — faça toda vez que o professor liberar material novo
-
-Quando uma semana nova for liberada (ou quando o professor atualizar o conteúdo já publicado), siga os passos abaixo **antes de abrir o notebook da semana**.
-
-> **⚠️ Atenção!** O Passo 2 descarta alterações locais no notebook. Se você preencheu exercícios e quer guardar suas respostas, faça download do arquivo antes de continuar (**Arquivo → Fazer download → .ipynb** no Colab).
-
-**Passo 1 — Monte o Drive e vá para o repositório:**
-
-```python
-from google.colab import drive
-drive.mount('/content/drive')
-
-%cd "/content/drive/MyDrive/Turma05/turma05-analise-de-dados-com-python"
-```
-
-**Passo 2 — Descarte as alterações automáticas do Colab na pasta da semana:**
-
-> Substitua `02_Logica_de_Programacao` pelo nome da pasta da semana que você quer atualizar (ex.: `01_Introducao_Fundamentos_Analise_Dados`, `03_Versionamento_e_Python_Local`, etc.)
-
-```python
-!git checkout -- 02_Logica_de_Programacao
-```
-
-*Por que esse passo é necessário?* Quando você abre um notebook no Colab, ele modifica automaticamente o arquivo (contagens de execução, saídas das células). Isso cria um conflito que impede o `git pull` de funcionar. Esse comando desfaz essas alterações automáticas.
-
-**Passo 3 — Baixe as atualizações do repositório:**
-
-```python
-!git pull
-```
-
-Ao final, você verá as pastas e arquivos novos listados no terminal. Abra o notebook da semana normalmente.
 
 ---
 
@@ -156,7 +86,7 @@ Ao final, você verá as pastas e arquivos novos listados no terminal. Abra o no
 
 ### Notebook prático
 
-Configure o ambiente acima (clone inicial) e execute a Célula 2 a cada sessão para ir direto à pasta da semana.
+Use o badge **Open in Colab** na tabela acima — o notebook abre direto no navegador, sem instalar nada. Ou baixe o `.ipynb` e abra no Colab, Jupyter ou VS Code.
 
 ### Aula teórica (HTML)
 
