@@ -241,7 +241,10 @@
   .checagem strong{color:#BF360C;display:block;margin-bottom:6px;}
   .fechamento{background:#E3F2FD;border-left:5px solid #0D47A1;border-radius:8px;padding:20px 24px;margin:0 0 32px;}
   .fechamento h3{color:#0D47A1;margin:0 0 10px;font-size:1.05rem;}
-</style>
+
+    .qs .contextualizacao { background: rgba(120,192,67,.08); border-left: 3px solid #78C043; padding: 8px 12px; border-radius: 4px; font-size: 0.93em; color: #444; line-height: 1.55; margin-bottom: 8px; font-style: italic; }
+    .qs .comando { font-weight: 600; margin-bottom: 10px; color: #222; }
+  </style>
 </head>
 <body>
 
@@ -514,7 +517,8 @@ print(&quot;5. Comunicação:&quot;, &quot;...&quot;)</code></pre>
     <p>Responda e clique em <strong>Verificar</strong> para ver o feedback de cada questão.</p>
 
     <div class="qs" data-correct="c">
-      <p><strong>1.</strong> Qual dia da semana é sempre dedicado ao treino ativo em squads, segundo o modelo deste curso?</p>
+      <p class="contextualizacao"><strong>Contextualização:</strong> Uma empresa de varejo decidiu adotar uma metodologia de aprendizado ativo para treinar sua equipe de analistas de dados. Nessa abordagem, cada profissional pratica resolução de problemas reais em grupo, sem depender de um instrutor presente o tempo todo. No curso de Análise de Dados do SENAI, esse modelo é aplicado semanalmente num dia fixo, com formação de squads, desafios novos e apresentação de resultados.</p>
+      <p class="comando"><strong>Comando:</strong> De acordo com a dinâmica de aprendizado ativo adotada no curso, o dia fixo reservado para o treino em squads é:</p>
       <label><input type="radio" name="q1" value="a"> Segunda-feira</label>
       <label><input type="radio" name="q1" value="b"> Quarta-feira</label>
       <label><input type="radio" name="q1" value="c"> Sexta-feira</label>
@@ -524,7 +528,8 @@ print(&quot;5. Comunicação:&quot;, &quot;...&quot;)</code></pre>
     </div>
 
     <div class="qs" data-correct="c">
-      <p><strong>2.</strong> O valor <code>37</code>, isolado e sem contexto, representa:</p>
+      <p class="contextualizacao"><strong>Contextualização:</strong> Uma analista de dados recebe uma planilha com centenas de registros. Em um campo isolado, aparece apenas o número <code>37</code>, sem cabeçalho de coluna, sem unidade de medida e sem nenhuma descrição. Ela precisa classificar esse registro corretamente antes de decidir como tratá-lo no pipeline de dados.</p>
+      <p class="comando"><strong>Comando:</strong> De acordo com a hierarquia do conhecimento estudada, o número <code>37</code> isolado e sem contexto representa:</p>
       <label><input type="radio" name="q2" value="a"> Conhecimento</label>
       <label><input type="radio" name="q2" value="b"> Informação</label>
       <label><input type="radio" name="q2" value="c"> Dado</label>
@@ -534,7 +539,8 @@ print(&quot;5. Comunicação:&quot;, &quot;...&quot;)</code></pre>
     </div>
 
     <div class="qs" data-correct="b">
-      <p><strong>3.</strong> Qual destas é a sequência correta do ciclo de vida da análise de dados?</p>
+      <p class="contextualizacao"><strong>Contextualização:</strong> Um gerente de operações solicitou à equipe de dados um relatório sobre o desempenho de vendas do último trimestre. A analista responsável passou por várias etapas: obteve os registros do sistema, removeu duplicatas e valores inconsistentes, realizou cálculos comparativos e, por fim, criou gráficos e uma narrativa explicativa para apresentar à diretoria.</p>
+      <p class="comando"><strong>Comando:</strong> A sequência percorrida pela analista corresponde ao ciclo de vida da análise de dados, que deve seguir a ordem:</p>
       <label><input type="radio" name="q3" value="a"> Limpeza → Coleta → Comunicação → Análise → Visualização</label>
       <label><input type="radio" name="q3" value="b"> Coleta → Limpeza → Análise → Visualização → Comunicação</label>
       <label><input type="radio" name="q3" value="c"> Análise → Visualização → Coleta → Limpeza → Comunicação</label>
@@ -544,7 +550,8 @@ print(&quot;5. Comunicação:&quot;, &quot;...&quot;)</code></pre>
     </div>
 
     <div class="qs" data-correct="d">
-      <p><strong>4.</strong> Qual ferramenta do curso é usada para acompanhar frequência, notas e dados cadastrais do aluno?</p>
+      <p class="contextualizacao"><strong>Contextualização:</strong> Um aluno do curso precisou verificar sua nota na atividade avaliativa da Semana 01 e checar o registro de presença da última sexta-feira. Para isso, acessou a plataforma oficial indicada no primeiro dia de aula, onde ficam centralizados a frequência, as notas e os dados cadastrais de todos os estudantes do SENAI.</p>
+      <p class="comando"><strong>Comando:</strong> A plataforma que centraliza as informações acadêmicas dos alunos — frequência, notas e dados cadastrais — é o:</p>
       <label><input type="radio" name="q4" value="a"> Discord</label>
       <label><input type="radio" name="q4" value="b"> Google Meet</label>
       <label><input type="radio" name="q4" value="c"> E-mail</label>
@@ -554,7 +561,8 @@ print(&quot;5. Comunicação:&quot;, &quot;...&quot;)</code></pre>
     </div>
 
     <div class="qs" data-correct="c">
-      <p><strong>5.</strong> "As vendas caíram 18% na região Sul após a saída de um vendedor-chave" é um exemplo da etapa de:</p>
+      <p class="contextualizacao"><strong>Contextualização:</strong> Após processar dados de vendas de uma rede de lojas do Sul do Brasil, a equipe de análise identificou uma queda expressiva nos resultados após a saída de um funcionário-chave. A líder de dados transformou os números em uma frase direta para o diretor comercial: <em>"As vendas caíram 18% na região Sul após a saída de um vendedor-chave."</em></p>
+      <p class="comando"><strong>Comando:</strong> Com base no ciclo de vida da análise de dados, a frase entregue ao diretor comercial representa a etapa de:</p>
       <label><input type="radio" name="q5" value="a"> Coleta</label>
       <label><input type="radio" name="q5" value="b"> Limpeza</label>
       <label><input type="radio" name="q5" value="c"> Comunicação</label>
@@ -582,7 +590,7 @@ print(&quot;5. Comunicação:&quot;, &quot;...&quot;)</code></pre>
 
 <footer>
   Curso: Análise de Dados com Python — SENAI (Turma T5) · Semana 01<br>
-  <strong>Prof. Especialista Cláudio F. Neves</strong>
+  <strong>Professor: Cláudio Ferreira Neves - Especialista em Dados</strong>
 </footer>
 
 <script>
