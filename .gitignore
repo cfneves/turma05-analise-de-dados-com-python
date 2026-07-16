@@ -27,8 +27,12 @@
 *.pptx
 
 # Gabaritos e cadernos internos do professor em formato notebook
-# (ficam só na máquina do professor, nunca no repositório da turma)
-gabarito_professor_*.ipynb
+# (ficam só na máquina do professor, nunca no repositório da turma).
+# Ignora QUALQUER .ipynb por padrão e libera só o notebook do aluno
+# (notebook_colab.ipynb) — cobre gabarito_professor_*, notebook_colab_professor.ipynb,
+# gabarito_treino_squads_*.ipynb e qualquer outro nome que apareça no futuro.
+*.ipynb
+!notebook_colab.ipynb
 
 # Checkpoints e cache do Jupyter/Colab
 .ipynb_checkpoints/
