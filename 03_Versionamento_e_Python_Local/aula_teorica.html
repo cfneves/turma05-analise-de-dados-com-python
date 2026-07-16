@@ -1345,26 +1345,51 @@ misto  = ["Ana", 25, True]               <span class="c"># lista pode misturar t
     <table>
       <tr><th>Recurso</th><th>O que faz</th><th>Exemplo</th><th>Resultado</th></tr>
       <tr><td><code>.append(valor)</code></td><td>Adiciona um item ao <strong>final</strong> da lista</td><td><code>frutas.append("uva")</code></td><td>lista cresce 1 item</td></tr>
+      <tr><td><code>.insert(índice, valor)</code></td><td>Insere um item numa <strong>posição específica</strong></td><td><code>frutas.insert(1, "uva")</code></td><td>"uva" entra na posição 1</td></tr>
+      <tr><td><code>.remove(valor)</code></td><td>Remove a <strong>primeira ocorrência</strong> do valor</td><td><code>frutas.remove("banana")</code></td><td>só essa ocorrência some</td></tr>
+      <tr><td><code>.pop(índice)</code></td><td>Remove e <strong>retorna</strong> o item da posição (ou o último, sem índice)</td><td><code>frutas.pop()</code></td><td>retorna e remove o último item</td></tr>
+      <tr><td><code>.sort()</code></td><td>Ordena a lista em <strong>ordem crescente</strong></td><td><code>notas.sort()</code></td><td>lista fica ordenada</td></tr>
       <tr><td><code>len(lista)</code></td><td>Retorna a <strong>quantidade</strong> de itens</td><td><code>len(frutas)</code></td><td><code>3</code></td></tr>
       <tr><td><code>max(lista)</code></td><td>Retorna o <strong>maior</strong> valor</td><td><code>max(notas)</code></td><td><code>9.5</code></td></tr>
       <tr><td><code>min(lista)</code></td><td>Retorna o <strong>menor</strong> valor</td><td><code>min(notas)</code></td><td><code>7.0</code></td></tr>
     </table>
+    <p><strong>Por que usar cada um (e quando):</strong></p>
+    <ul>
+      <li><strong><code>.append(valor)</code></strong> — acrescenta no final. Use quando a ordem de chegada não importa, só precisa guardar o novo item.</li>
+      <li><strong><code>.insert(índice, valor)</code></strong> — acrescenta numa posição escolhida. Use quando a posição importa (ex.: uma tarefa urgente precisa entrar no topo da lista, não no final).</li>
+      <li><strong><code>.remove(valor)</code></strong> — tira pelo <strong>conteúdo</strong>. Use quando você sabe <em>o que</em> quer tirar (o valor), mas não sabe (ou não importa) em que posição ele está.</li>
+      <li><strong><code>.pop(índice)</code></strong> — tira e <strong>devolve</strong> o item removido. Use quando você ainda vai usar esse valor depois de tirá-lo da lista (<code>remove()</code> só descarta, <code>pop()</code> te entrega o valor).</li>
+      <li><strong><code>.sort()</code></strong> — reordena a lista. Use quando a ordem de exibição ou de análise importa (ranking, lista alfabética, notas em ordem crescente).</li>
+    </ul>
     <div class="box tip">
       <strong>💡 Lista é mutável</strong> — você pode adicionar, remover e alterar itens depois de criá-la. Isso é diferente da tupla, que você vai ver logo a seguir.
     </div>
 
     <h4>Exemplo 1 — Criando e acessando uma lista</h4>
-    <p>Vamos criar uma lista de compras, acessar o primeiro e o último item pelos índices, e adicionar um item novo ao final com <code>.append()</code>:</p>
+    <p>Vamos criar uma lista de compras, acessar o primeiro e o último item pelos índices, e testar os 5 métodos da tabela na prática — vendo o que cada um faz e em qual situação você usaria ele:</p>
     <pre class="codeblock">compras = ["arroz", "feijão", "leite"]
 
 print(compras[0])      <span class="c"># arroz  — posição 0 é sempre o primeiro</span>
 print(compras[-1])     <span class="c"># leite  — posição -1 é sempre o último</span>
 
-compras.append("café") <span class="c"># adiciona ao final da lista</span>
-print(compras)         <span class="c"># ["arroz", "feijão", "leite", "café"]</span></pre>
+compras.append("café")         <span class="c"># .append() sempre entra no FINAL — não importa onde, só precisa guardar</span>
+print(compras)
+
+compras.insert(0, "manteiga")  <span class="c"># .insert(posição, valor) entra ONDE eu escolher — aqui, no início</span>
+print(compras)
+
+compras.remove("feijão")       <span class="c"># .remove(valor) tira pelo CONTEÚDO — eu sei o que quero tirar, não onde está</span>
+print(compras)
+
+item_retirado = compras.pop()  <span class="c"># .pop() tira o ÚLTIMO item e me devolve o valor — uso quando ainda preciso dele</span>
+print(f"Retirado da lista: {item_retirado}")
+print(compras)
+
+compras.sort()                 <span class="c"># .sort() reordena em ordem alfabética — útil quando a ordem de exibição importa</span>
+print(compras)</pre>
 
     <div class="box">
-      <strong>⚠️ Erro real do Python — IndexError:</strong> a lista <code>compras</code> tem 4 itens (índices 0 a 3). Se você pedir <code>compras[10]</code>:
+      <strong>⚠️ Erro real do Python — IndexError:</strong> depois de todas as operações acima, a lista <code>compras</code> ficou com 3 itens (índices 0 a 2). Se você pedir <code>compras[10]</code>:
       <pre class="codeblock" style="margin:10px 0 0;">IndexError: list index out of range</pre>
       "Índice fora do intervalo" — você pediu uma posição que não existe. Tente provocar esse erro de propósito no notebook.
     </div>
@@ -1400,6 +1425,51 @@ nomes.___("___")
 
 print(nomes)
 print(f"Total de nomes: {len(nomes)}")</code></pre>
+    </div>
+
+    <div class="ex">
+      <strong>✏️ Atividade 3-C (no notebook):</strong> uma tarefa urgente chegou e precisa furar a fila — ela tem que aparecer na posição 0 (o início), não no final. Use <code>.insert()</code> para colocá-la lá e exiba a lista completa.
+      <pre><code># Atividade 3-C
+tarefas = ["Estudar Python", "Revisar Git", "Enviar exercício"]
+
+# Insira "Tarefa urgente" na posição 0 usando .insert()
+tarefas.___(___, "___")
+
+print(tarefas)</code></pre>
+    </div>
+
+    <div class="ex">
+      <strong>✏️ Atividade 3-D (no notebook):</strong> a lista de presença abaixo tem um nome duplicado por engano. Use <code>.remove()</code> para tirar a duplicata (sem saber ou se importar com a posição) e exiba a lista corrigida.
+      <pre><code># Atividade 3-D
+presenca = ["Ana", "Bruno", "Carla", "Bruno"]
+
+# Remova a duplicata usando .remove()
+presenca.___("___")
+
+print(presenca)</code></pre>
+    </div>
+
+    <div class="ex">
+      <strong>✏️ Atividade 3-E (no notebook):</strong> a fila de atendimento abaixo precisa chamar a <strong>primeira</strong> pessoa (ela é a próxima a ser atendida). Use <code>.pop(0)</code> para retirar essa pessoa da fila, guarde o nome numa variável (você vai usar esse valor na mensagem) e exiba quem foi chamado e como ficou a fila.
+      <pre><code># Atividade 3-E
+fila = ["Marcos", "Beatriz", "Rafael"]
+
+# Retire a PRIMEIRA pessoa da fila usando .pop(0) e guarde numa variável
+proximo = fila.___(0)
+
+print(f"Chamando: {proximo}")
+print(fila)</code></pre>
+    </div>
+
+    <div class="ex">
+      <strong>✏️ Atividade 3-F (no notebook):</strong> as notas da turma abaixo precisam ser exibidas em ordem crescente para o boletim. Use <code>.sort()</code> para ordenar a lista e exiba o resultado.
+      <pre><code># Atividade 3-F
+notas_turma = [8.5, 6.0, 9.5, 7.0]
+
+# Ordene a lista usando .sort()
+notas_turma.___()
+
+print(notas_turma)</code></pre>
     </div>
 
     <!-- ══ TUPLAS ══ -->
