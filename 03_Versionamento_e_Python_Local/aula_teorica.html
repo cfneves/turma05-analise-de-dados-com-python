@@ -417,6 +417,20 @@
     height: 1px;
     background: #ddd;
   }
+
+  /* ── Fases do fluxo Git/GitHub ── */
+  .fase-bloco { border:1px solid #ddd; border-radius:10px; overflow:hidden; margin:20px 0; }
+  .fase-header { display:flex; align-items:center; gap:12px; padding:12px 18px; font-weight:700; font-size:.97rem; color:#fff; text-transform:uppercase; letter-spacing:.03em; }
+  .fase-bloco.fase1 .fase-header { background:#1565c0; }
+  .fase-bloco.fase2 .fase-header { background:#2e7d32; }
+  .fase-bloco.fase3 .fase-header { background:#e65100; }
+  .fase-bloco.fase4 .fase-header { background:#37474f; }
+  .fase-num { background:rgba(255,255,255,.22); border-radius:4px; padding:2px 9px; font-size:.75rem; font-weight:800; letter-spacing:.1em; flex-shrink:0; }
+  .fase-obs { font-weight:400; font-size:.82rem; opacity:.85; }
+  .fase-body { padding:16px 22px; }
+  .resumo-line { display:flex; align-items:flex-start; gap:10px; padding:5px 0; font-size:.9rem; line-height:1.5; }
+  .resumo-sep { border-top:1px dashed #ccc; margin:10px 0; }
+  .estrutura-tree { font-family:Consolas,monospace; font-size:.85rem; background:#f5f5f5; border-radius:6px; padding:12px 16px; margin:10px 0; line-height:1.8; }
 </style>
 </head>
 <body>
@@ -876,290 +890,424 @@ git --version      # git version 2.x.x.windows.x</pre>
 <!-- checagem_1._Instalando_Ferramentas -->
 
   <section>
-    <h2>2. Git e GitHub — Controle de Versão e Seu Repositório</h2>
-    <p>Com as ferramentas instaladas, agora você vai entender <strong>o que</strong> cada conceito do Git significa e, na sequência, criar o <strong>seu próprio repositório</strong> — onde o código que você escreve neste curso vai ficar salvo e versionado.</p>
+    <h2>2. Git e GitHub — Fluxo Completo no VS Code (Windows)</h2>
+    <p>Com as ferramentas instaladas, agora você vai aprender o <strong>fluxo completo de versionamento</strong> — da criação do repositório até a publicação das suas alterações. Todos os comandos são para o <strong>Terminal integrado do VS Code no Windows</strong> (PowerShell).</p>
     <div class="box">
-      <strong>📌 Repositório da turma × seu repositório:</strong> o repositório <code>cfneves/turma05-analise-de-dados-com-python</code> é para você <strong>consultar o material do curso</strong> (HTML e notebook de cada semana). O repositório que você vai criar agora é o <strong>seu</strong> — onde fica o código que você escreve.
+      <strong>📌 Repositório da turma × seu repositório:</strong> o repositório <code>cfneves/turma05-analise-de-dados-com-python</code> é para você <strong>consultar o material do curso</strong>. O repositório que você vai criar agora é o <strong>seu</strong> — onde fica o código que você escreve.
     </div>
 
-    <h3>Os conceitos essenciais</h3>
+    <h3>Conceitos essenciais</h3>
     <table>
       <tr><th>Conceito</th><th>O que é</th><th>Analogia</th></tr>
       <tr><td><strong>Repositório</strong></td><td>Pasta do projeto versionada pelo Git</td><td>A caixa onde você guarda tudo</td></tr>
       <tr><td><strong>Commit</strong></td><td>Um "ponto de salvamento" das suas mudanças, com mensagem</td><td>Fotografia + legenda do estado atual</td></tr>
-      <tr><td><strong>Branch</strong></td><td>Cópia paralela onde você trabalha sem afetar a versão principal</td><td>Rascunho antes de passar a limpo</td></tr>
+      <tr><td><strong>Clone</strong></td><td>Copiar um repositório do GitHub para o seu computador</td><td>Baixar o projeto completo</td></tr>
       <tr><td><strong>Push</strong></td><td>Enviar seus commits do computador para o GitHub</td><td>Salvar na nuvem</td></tr>
       <tr><td><strong>Pull</strong></td><td>Baixar as atualizações do GitHub para o seu computador</td><td>Sincronizar o arquivo</td></tr>
-      <tr><td><strong>Clone</strong></td><td>Copiar um repositório do GitHub para o seu computador</td><td>Baixar o projeto completo</td></tr>
     </table>
 
-    <h3>O fluxo do dia a dia</h3>
-    <div class="fluxo">
-      <div class="etapa">1. Editar arquivo</div>
-      <div class="seta">→</div>
-      <div class="etapa">2. git add</div>
-      <div class="seta">→</div>
-      <div class="etapa">3. git commit</div>
-      <div class="seta">→</div>
-      <div class="etapa">4. git push</div>
-    </div>
-    <pre class="codeblock">git add meu_script.py
-git commit -m "Adiciona análise de vendas da Semana 03"
-git push origin main</pre>
-    <div class="box tip">
-      <strong>💡 Mensagem de commit: seja específico.</strong> <code>"Update"</code> ou <code>"Mudanças"</code> não dizem nada. <code>"Corrige cálculo de média quando notas são zero"</code> conta a história — você mesmo vai agradecer em duas semanas.
-    </div>
-
-    <!-- ══ CRIANDO SEU REPOSITÓRIO ══ -->
-    <h3>Criando seu próprio repositório no GitHub</h3>
-    <p>Existem duas formas de criar um repositório. Escolha a que faz mais sentido para você agora:</p>
-
-    <!-- ══ OPÇÃO 1: PELO GITHUB.COM ══ -->
-    <div class="opcao-bloco">
-      <div class="opcao-header rec">
-        <span class="opcao-badge">Opção 1</span>
-        🌐 Criar pelo GitHub.com — recomendado para iniciantes
+    <!-- ═══════════════════════════════════════════════
+         FASE 1 — CONFIGURAÇÃO INICIAL (apenas uma vez)
+    ════════════════════════════════════════════════ -->
+    <div class="fase-bloco fase1">
+      <div class="fase-header">
+        <span class="fase-num">FASE 1</span>
+        Configuração Inicial
+        <span class="fase-obs">(apenas uma vez)</span>
       </div>
-      <div class="opcao-body">
-        <p style="margin:0 0 14px;font-size:.92rem;color:#444;">Você cria o repositório direto no site do GitHub, depois traz para o seu computador. Mais visual e mais fácil para quem nunca usou Git antes.</p>
+      <div class="fase-body">
 
-        <!-- PASSO 1: CRIAR CONTA -->
         <div class="step-wrapper">
           <div class="step-num">1</div>
           <div class="step-content">
-            <h4>Crie sua conta no GitHub</h4>
-            <p>Acesse o link abaixo e clique em <strong>Sign up</strong>:</p>
-            <a href="https://github.com/signup" target="_blank" class="link-download">🔗 github.com/signup</a>
-            <p style="margin-top:12px;">O cadastro tem 3 campos — preencha um por vez e clique em <strong>Continue</strong> após cada um:</p>
-            <div class="simulacao-win" style="margin-top:10px;">
-              <div class="win-titlebar">
-                <span>🐙 GitHub — Create your account</span>
-                <span style="letter-spacing:2px;">─ □ ✕</span>
-              </div>
-              <div class="win-body">
-                <p style="font-size:.78rem;font-weight:700;margin:0 0 10px;">Preencha cada campo e clique em Continue:</p>
-                <div style="margin-bottom:8px;">
-                  <div style="font-size:.76rem;color:#555;margin-bottom:3px;">① E-mail address</div>
-                  <div style="background:#fff;border:1px solid #0078d4;border-radius:4px;padding:6px 10px;font-size:.85rem;">seu@email.com</div>
-                  <div style="font-size:.72rem;color:#888;margin-top:2px;">Use o mesmo e-mail do Git que você configurou na Parte C</div>
-                </div>
-                <div style="margin-bottom:8px;">
-                  <div style="font-size:.76rem;color:#555;margin-bottom:3px;">② Password (mínimo 8 caracteres)</div>
-                  <div style="background:#fff;border:1px solid #ccc;border-radius:4px;padding:6px 10px;font-size:.85rem;color:#999;">••••••••••</div>
-                </div>
-                <div style="margin-bottom:12px;">
-                  <div style="font-size:.76rem;color:#555;margin-bottom:3px;">③ Username (nome que aparece no seu perfil)</div>
-                  <div style="background:#fff;border:1px solid #ccc;border-radius:4px;padding:6px 10px;font-size:.85rem;">maria-silva</div>
-                  <div style="font-size:.72rem;color:#888;margin-top:2px;">Letras minúsculas e hífens. Ex: <code>joao-analista</code>, <code>maria-dados</code></div>
-                </div>
-                <div class="btn-sim primary" style="width:100%;text-align:center;">Continue</div>
-              </div>
-            </div>
-            <div class="box tip" style="margin-top:10px;">
-              <strong>📧 Verifique seu e-mail!</strong> O GitHub vai enviar um código de verificação. Abra o e-mail, copie o código de 6 dígitos e cole na tela do GitHub para ativar a conta.
-            </div>
+            <h4>Criar repositório no GitHub</h4>
+            <p>Crie um repositório <strong>público</strong>, <strong>sem README</strong>. Nome sugerido:</p>
+            <pre class="codeblock">gitsenai</pre>
+            <div class="box tip">💡 Use letras minúsculas e hífens. Sem espaços, sem acentos. Ex: <code>analise-de-dados</code>, <code>projetos-python</code>.</div>
           </div>
         </div>
 
-        <!-- PASSO 2: CRIAR REPOSITÓRIO -->
         <div class="step-wrapper">
           <div class="step-num">2</div>
           <div class="step-content">
-            <h4>Crie um novo repositório</h4>
-            <p>Depois de fazer login, você está na página inicial do GitHub. Para criar um repositório, clique no ícone <strong>+</strong> no canto superior direito da tela:</p>
-            <div class="simulacao-win" style="margin-top:10px;">
-              <div class="win-titlebar">
-                <span>🌐 github.com</span>
-                <span style="letter-spacing:2px;">─ □ ✕</span>
-              </div>
-              <div class="win-body" style="padding:8px 12px;">
-                <div style="display:flex;align-items:center;justify-content:space-between;background:#24292f;padding:8px 12px;border-radius:6px;color:#fff;font-size:.82rem;">
-                  <span>🐙 <strong>GitHub</strong></span>
-                  <div style="display:flex;align-items:center;gap:10px;">
-                    <span style="color:#aaa;">🔔</span>
-                    <div style="background:#238636;color:#fff;border-radius:4px;padding:3px 10px;font-size:.78rem;font-weight:700;border:2px solid #78C043;">
-                      <strong>+</strong> ▾ <span class="badge-critico" style="margin-left:4px;">← CLIQUE AQUI</span>
-                    </div>
-                    <span style="font-size:1.2rem;">👤</span>
-                  </div>
-                </div>
-                <div style="background:#fff;border:1px solid #ddd;border-radius:4px;padding:8px;margin-top:8px;font-size:.8rem;">
-                  <div style="padding:4px 8px;border-radius:3px;background:#f0f0f0;margin-bottom:2px;cursor:default;">📁 New repository</div>
-                  <div style="padding:4px 8px;color:#aaa;font-size:.76rem;">New gist</div>
-                  <div style="padding:4px 8px;color:#aaa;font-size:.76rem;">New organization</div>
-                </div>
-              </div>
-            </div>
-            <p style="margin-top:12px;">Clique em <strong>New repository</strong>. Na página que abrir, preencha assim:</p>
-            <div class="simulacao-win" style="margin-top:8px;">
-              <div class="win-titlebar">
-                <span>🐙 GitHub — Create a new repository</span>
-                <span style="letter-spacing:2px;">─ □ ✕</span>
-              </div>
-              <div class="win-body">
-                <div style="margin-bottom:10px;">
-                  <p style="font-size:.78rem;font-weight:700;margin:0 0 4px;">Repository name *</p>
-                  <div style="background:#fff;border:1px solid #0078d4;border-radius:4px;padding:6px 10px;font-size:.88rem;">analise-de-dados-python</div>
-                  <div style="font-size:.72rem;color:#888;margin-top:2px;">Só letras minúsculas e hífens. Sem espaços, sem acentos.</div>
-                </div>
-                <div style="margin-bottom:10px;">
-                  <p style="font-size:.78rem;font-weight:700;margin:0 0 4px;">Description (opcional)</p>
-                  <div style="background:#fff;border:1px solid #ccc;border-radius:4px;padding:6px 10px;font-size:.85rem;color:#aaa;">Meu repositório do curso de Análise de Dados</div>
-                </div>
-                <div style="margin-bottom:10px;">
-                  <p style="font-size:.78rem;font-weight:700;margin:0 0 4px;">Visibility</p>
-                  <div class="checkbox-sim destaque">● <strong>Public</strong> <span class="badge-critico">← ESCOLHA PUBLIC</span></div>
-                  <div class="checkbox-sim" style="color:#888;font-size:.82rem;">○ Private</div>
-                </div>
-                <div class="checkbox-sim" style="color:#888;">☐ Add a README file — <em>deixe desmarcado</em></div>
-                <div style="font-size:.76rem;color:#777;margin:2px 0 0 24px;">Você vai criar seus próprios arquivos depois do clone.</div>
-                <div style="margin-top:14px;">
-                  <div class="btn-sim primary">Create repository</div>
-                </div>
-              </div>
-            </div>
-            <div class="box tip" style="margin-top:10px;">
-              <strong>Por que Public?</strong> Repositórios públicos são gratuitos e ficam visíveis no seu perfil — qualquer recrutador pode ver. Tudo que não quiser expor vai para o <code>.gitignore</code>.
+            <h4>Abrir o Explorador de Arquivos</h4>
+            <p>Crie uma pasta local no seu computador para armazenar seus projetos.</p>
+            <div class="box tip">
+              💡 Use uma pasta fácil de encontrar, como <strong>Meus Documentos</strong>.<br>
+              Exemplo: <code>C:\Users\SEU_USUARIO\Documents\git_aula</code><br><br>
+              Caminho sugerido: <em>Este Computador → Documentos → (botão direito) → Nova Pasta → <strong>git_aula</strong></em>
             </div>
           </div>
         </div>
 
-        <!-- PASSO 3: CLONAR -->
         <div class="step-wrapper">
           <div class="step-num">3</div>
           <div class="step-content">
-            <h4>Traga o repositório para o seu computador</h4>
-            <p>Após criar, você cai na página do repositório. Localize o botão verde <strong>Code</strong> — ele fica no lado direito, acima da lista de arquivos:</p>
-            <div class="simulacao-win" style="margin-top:10px;">
-              <div class="win-titlebar">
-                <span>🐙 github.com/seu-usuario/analise-de-dados-python</span>
-                <span style="letter-spacing:2px;">─ □ ✕</span>
-              </div>
-              <div class="win-body" style="padding:10px;">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-                  <span style="font-size:.82rem;color:#555;">📁 <strong>analise-de-dados-python</strong></span>
-                  <div style="background:#238636;color:#fff;border-radius:5px;padding:4px 12px;font-size:.82rem;font-weight:700;border:2px solid #78C043;">
-                    ⬇ Code ▾ <span class="badge-critico" style="margin-left:4px;">← CLIQUE AQUI</span>
-                  </div>
-                </div>
-                <div style="background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:10px;font-size:.8rem;margin-top:4px;">
-                  <div style="display:flex;gap:8px;margin-bottom:8px;">
-                    <span style="border-bottom:2px solid #0078d4;padding:2px 6px;font-weight:700;font-size:.78rem;">HTTPS</span>
-                    <span style="color:#aaa;padding:2px 6px;font-size:.78rem;">SSH</span>
-                    <span style="color:#aaa;padding:2px 6px;font-size:.78rem;">GitHub CLI</span>
-                  </div>
-                  <div style="display:flex;align-items:center;gap:6px;background:#fff;border:1px solid #ccc;border-radius:4px;padding:5px 8px;">
-                    <span style="font-size:.78rem;flex:1;color:#333;">https://github.com/seu-usuario/analise-de-dados-python.git</span>
-                    <span style="cursor:default;font-size:.9rem;" title="Copiar">📋 <span class="badge-critico">← COPIE</span></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <p style="margin-top:12px;">Com a URL copiada, abra o <strong>terminal do VS Code</strong> (<strong>Terminal → New Terminal</strong>) e execute:</p>
-            <pre class="codeblock">git clone https://github.com/seu-usuario/analise-de-dados-python.git</pre>
-            <p>Uma pasta <code>analise-de-dados-python</code> vai aparecer no seu computador. Abra ela no VS Code:</p>
-            <pre class="codeblock">cd analise-de-dados-python
-code .</pre>
+            <h4>Entrar na pasta local</h4>
+            <p>No Explorador de Arquivos, abra a pasta que você criou (ex: <code>git_aula</code>).</p>
           </div>
         </div>
 
-        <!-- PASSO 4: PRIMEIRO COMMIT -->
         <div class="step-wrapper">
           <div class="step-num">4</div>
           <div class="step-content">
-            <h4>Crie um arquivo, salve no histórico e envie para o GitHub</h4>
-            <p>No VS Code, crie um novo arquivo (<kbd>Ctrl</kbd>+<kbd>N</kbd>), salve como <code>semana03.py</code> (<kbd>Ctrl</kbd>+<kbd>S</kbd>) e escreva:</p>
-            <pre class="codeblock">print("Meu primeiro script local — Semana 03!")
-print("Análise de Dados com Python — Turma T5")</pre>
-            <p>No terminal, rode os três comandos — um por vez, aguardando cada um terminar:</p>
-            <pre class="codeblock">git add semana03.py        # "Git, presta atenção nesse arquivo"
-git commit -m "Adiciona script da Semana 03"   # "Git, salva isso no histórico"
-git push origin main       # "Git, manda para o GitHub"</pre>
-            <p>Agora acesse <strong>github.com/seu-usuario/analise-de-dados-python</strong> no navegador — você vai ver o arquivo <code>semana03.py</code> aparecendo lá. Portfólio começando. 🎉</p>
+            <h4>Abrir o Terminal no VS Code</h4>
+            <p>Com a pasta <code>git_aula</code> aberta no VS Code, abra o Terminal integrado: <strong>Terminal → New Terminal</strong>.</p>
           </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h4>Clonar o repositório do GitHub</h4>
+            <p>Clone o repositório <code>gitsenai</code> para dentro da pasta <code>git_aula</code>:</p>
+            <pre class="codeblock">git clone https://github.com/SEU_USUARIO/gitsenai.git</pre>
+            <p>Será criada a pasta <code>gitsenai</code> dentro de <code>git_aula</code>.</p>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">6</div>
+          <div class="step-content">
+            <h4>Entrar no repositório</h4>
+            <p>No Terminal (ainda dentro de <code>git_aula</code>), entre em <code>gitsenai</code>:</p>
+            <pre class="codeblock">cd gitsenai</pre>
+            <p>Agora você está dentro do repositório local.</p>
+          </div>
+        </div>
+
+        <div class="box tip">
+          <strong>📁 Estrutura até aqui:</strong>
+          <div class="estrutura-tree">
+            Documentos/<br>
+            └── git_aula/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#888;">(pasta local que você criou)</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;└── gitsenai/ &nbsp;&nbsp;<span style="color:#888;">(repositório clonado)</span>
+          </div>
+          <strong>⚠️ Importante:</strong> todos os próximos comandos devem ser executados <strong>dentro da pasta <code>gitsenai</code></strong>.
         </div>
 
       </div>
     </div>
-    <div class="ou-divider">ou</div>
 
-    <!-- ══ OPÇÃO 2: GIT INIT NO TERMINAL ══ -->
-    <div class="opcao-bloco">
-      <div class="opcao-header alt">
-        <span class="opcao-badge alt">Opção 2</span>
-        💻 Criar pelo terminal — para quem já tem uma pasta no computador
+    <!-- ═══════════════════════════════════════════════
+         FASE 2 — CRIAR E COMMITAR A ESTRUTURA INICIAL (primeiro push)
+    ════════════════════════════════════════════════ -->
+    <div class="fase-bloco fase2">
+      <div class="fase-header">
+        <span class="fase-num">FASE 2</span>
+        Criar e Commitar a Estrutura Inicial
+        <span class="fase-obs">(primeiro push)</span>
       </div>
-      <div class="opcao-body">
-        <p style="margin:0 0 14px;font-size:.92rem;color:#444;">Você já tem uma pasta com arquivos no seu computador e quer começar a versionar. Aqui você inicializa o Git localmente e conecta ao GitHub depois.</p>
+      <div class="fase-body">
 
         <div class="step-wrapper">
           <div class="step-num">1</div>
           <div class="step-content">
-            <h4>Abra a pasta do projeto no VS Code e inicialize o Git</h4>
-            <p>No terminal do VS Code (<strong>Terminal → New Terminal</strong>), navegue até a pasta do seu projeto e rode:</p>
+            <h4>Criar duas pastas dentro do repositório local</h4>
+            <pre class="codeblock">mkdir Aula01
+mkdir Aula02</pre>
+            <p>Serão criadas as pastas <code>Aula01</code> e <code>Aula02</code>.</p>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Entrar na pasta Aula01</h4>
+            <pre class="codeblock">cd Aula01</pre>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Criar um arquivo Python vazio na pasta Aula01</h4>
+            <pre class="codeblock">ni main.py</pre>
+            <p>(cria o arquivo vazio <code>main.py</code>)</p>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Voltar ao projeto principal (pasta gitsenai)</h4>
+            <pre class="codeblock">cd ..</pre>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h4>Entrar na pasta Aula02</h4>
+            <pre class="codeblock">cd Aula02</pre>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">6</div>
+          <div class="step-content">
+            <h4>Criar um arquivo Python vazio na pasta Aula02</h4>
+            <pre class="codeblock">ni arquivo.py</pre>
+            <p>(cria o arquivo vazio <code>arquivo.py</code>)</p>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">7</div>
+          <div class="step-content">
+            <h4>Voltar ao projeto principal (pasta gitsenai)</h4>
+            <pre class="codeblock">cd ..</pre>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">8</div>
+          <div class="step-content">
+            <h4>README.md</h4>
+            <p>O <code>README.md</code> já está pronto e commitado no repositório remoto (GitHub). <strong>Não é necessário criá-lo agora.</strong></p>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">9</div>
+          <div class="step-content">
+            <h4>Inicializar o repositório Git local (caso ainda não esteja inicializado)</h4>
             <pre class="codeblock">git init</pre>
-            <p>Isso cria um repositório Git vazio dentro da pasta. Você vai ver uma pasta oculta <code>.git</code> aparecer — é onde o Git guarda todo o histórico.</p>
+            <p>Aparecerá uma pasta oculta <code>.git</code>.</p>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">10</div>
+          <div class="step-content">
+            <h4>Verificar o status do repositório</h4>
+            <pre class="codeblock">git status</pre>
+            <p>Você verá todas as pastas e arquivos listados como "não rastreados".</p>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">11</div>
+          <div class="step-content">
+            <h4>Adicionar todos os arquivos ao stage</h4>
+            <pre class="codeblock">git add .</pre>
+            <p>(o ponto <code>.</code> adiciona tudo de uma vez)</p>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">12</div>
+          <div class="step-content">
+            <h4>Criar o primeiro commit</h4>
+            <pre class="codeblock">git commit -m "Criando meu primeiro commit"</pre>
+            <p>Seu primeiro commit foi criado com sucesso!</p>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">13</div>
+          <div class="step-content">
+            <h4>Enviar para o GitHub (primeiro push)</h4>
+            <pre class="codeblock">git push origin main</pre>
+            <p>Pronto! Seu repositório <code>gitsenai</code> já está publicado no GitHub com a estrutura inicial.</p>
+          </div>
+        </div>
+
+        <div class="box" style="background:#e8f5e9;border-left-color:#2e7d32;margin-top:20px;">
+          <strong>🏆 Parabéns! Você criou a estrutura inicial e publicou seu projeto no GitHub com sucesso!</strong>
+          <br><br>
+          <strong>📁 Estrutura do projeto após o primeiro push:</strong>
+          <div class="estrutura-tree">
+            gitsenai/<br>
+            ├── Aula01/<br>
+            │&nbsp;&nbsp;&nbsp;└── main.py<br>
+            ├── Aula02/<br>
+            │&nbsp;&nbsp;&nbsp;└── arquivo.py<br>
+            └── README.md
+          </div>
+          <em>Essa estrutura já está no repositório remoto (GitHub).</em>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         FASE 3 — ADICIONAR NOVO ARQUIVO (segundo push)
+    ════════════════════════════════════════════════ -->
+    <div class="fase-bloco fase3">
+      <div class="fase-header">
+        <span class="fase-num">FASE 3</span>
+        Adicionar Novo Arquivo na Pasta Aula02
+        <span class="fase-obs">(segundo push)</span>
+      </div>
+      <div class="fase-body">
+
+        <div class="step-wrapper">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Entrar na pasta Aula02</h4>
+            <pre class="codeblock">cd Aula02</pre>
           </div>
         </div>
 
         <div class="step-wrapper">
           <div class="step-num">2</div>
           <div class="step-content">
-            <h4>Faça o primeiro commit com os arquivos existentes</h4>
-            <pre class="codeblock">git add .
-git commit -m "Primeiro commit — início do projeto"</pre>
-            <p><code>git add .</code> adiciona todos os arquivos da pasta de uma vez. <code>git commit</code> salva o estado atual no histórico.</p>
+            <h4>Criar um novo arquivo Python na pasta Aula02</h4>
+            <pre class="codeblock">ni novo_arquivo.py</pre>
+            <p>(cria o arquivo vazio <code>novo_arquivo.py</code>)</p>
           </div>
         </div>
 
         <div class="step-wrapper">
           <div class="step-num">3</div>
           <div class="step-content">
-            <h4>Crie um repositório vazio no GitHub</h4>
-            <p>Acesse <strong>github.com/new</strong> e crie o repositório — mas desta vez <strong>NÃO marque "Add a README file"</strong>. O repositório precisa estar vazio para receber o seu histórico local.</p>
-            <div class="aviso-critico">⚠️ <strong>Atenção:</strong> se marcar README, o GitHub cria um commit automático e vai dar conflito na hora do push. Repositório vazio = sem nenhuma opção marcada.</div>
+            <h4>Voltar ao projeto principal (pasta gitsenai)</h4>
+            <pre class="codeblock">cd ..</pre>
           </div>
         </div>
 
         <div class="step-wrapper">
           <div class="step-num">4</div>
           <div class="step-content">
-            <h4>Conecte o repositório local ao GitHub e envie</h4>
-            <p>Copie a URL do repositório recém-criado no GitHub e rode no terminal:</p>
-            <pre class="codeblock">git remote add origin https://github.com/seu-usuario/nome-do-repo.git
-git push -u origin main</pre>
-            <p>O <code>-u origin main</code> é só na primeira vez — configura o vínculo entre o seu computador e o GitHub. Nos próximos pushes basta <code>git push</code>.</p>
+            <h4>Verificar alterações</h4>
+            <pre class="codeblock">git status</pre>
+            <p>Você verá <code>novo_arquivo.py</code> como "não rastreado".</p>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h4>Adicionar o novo arquivo ao stage</h4>
+            <pre class="codeblock">git add .</pre>
+            <p>(ou apenas o arquivo específico: <code>git add Aula02/novo_arquivo.py</code>)</p>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">6</div>
+          <div class="step-content">
+            <h4>Criar commit da alteração</h4>
+            <pre class="codeblock">git commit -m "Adiciona novo arquivo na pasta Aula02"</pre>
+            <p>Novo commit criado com sucesso!</p>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">7</div>
+          <div class="step-content">
+            <h4>Enviar para o GitHub</h4>
+            <pre class="codeblock">git push</pre>
+            <p>Suas alterações foram enviadas e publicadas no GitHub!</p>
+          </div>
+        </div>
+
+        <div class="box" style="background:#fff8e1;border-left-color:#f9a825;margin-top:20px;">
+          <strong>⭐ Fase 3 concluída! Seu repositório foi atualizado com o novo arquivo.</strong>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         FASE 4 — FLUXO DIÁRIO
+    ════════════════════════════════════════════════ -->
+    <div class="fase-bloco fase4">
+      <div class="fase-header">
+        <span class="fase-num">FASE 4</span>
+        Fluxo Diário para Atualizar o Repositório
+      </div>
+      <div class="fase-body">
+
+        <p>Sempre que fizer uma alteração nos seus arquivos, repita estes 5 passos:</p>
+
+        <div class="step-wrapper">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Editar arquivos</h4>
+            <p>Faça as alterações nos arquivos do projeto no VS Code.</p>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Verificar alterações</h4>
+            <pre class="codeblock">git status</pre>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Adicionar alterações ao stage</h4>
+            <pre class="codeblock">git add .</pre>
+            <p>(ou especifique os arquivos que quer enviar)</p>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Criar commit</h4>
+            <pre class="codeblock">git commit -m "Descrição da alteração"</pre>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h4>Enviar para o GitHub</h4>
+            <pre class="codeblock">git push</pre>
+            <p>Suas alterações serão publicadas no GitHub!</p>
           </div>
         </div>
 
       </div>
     </div>
 
-    <!-- ══ MERGE E CONFLITO ══ -->
-    <h3>Quando o Git pede ajuda: conflito de merge</h3>
-    <p><strong>Quando acontece na prática:</strong> você e um colega editam o <em>mesmo arquivo, na mesma linha</em>, e os dois fazem push. O Git não sabe qual versão manter — então ele para e pede que você decida. Na maioria das vezes o Git junta as mudanças automaticamente. Mas quando duas versões alteram a mesma linha de jeitos diferentes, ele marca o trecho no arquivo assim:</p>
-    <pre class="codeblock"><span class="c">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span>
-total = preco * quantidade
-<span class="c">=======</span>
-total = preco * quantidade * 1.1  # com imposto
-<span class="c">&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/calculo-imposto</span></pre>
-    <div class="box tip">
-      <strong>Conflito não é erro — é o Git pedindo sua decisão.</strong> No VS Code com GitLens instalado, aparecem botões <em>"Accept Current Change"</em> / <em>"Accept Incoming Change"</em> — clique no que quiser manter. Se preferir resolver manualmente: apague as linhas com <code>&lt;&lt;&lt;</code> / <code>===</code> / <code>&gt;&gt;&gt;</code>, deixe só o trecho que deve ficar e faça um novo commit.
+    <!-- ═══ DICAS IMPORTANTES ═══ -->
+    <div class="box tip" style="margin-top:24px;">
+      <strong>💡 Dicas importantes:</strong>
+      <ul style="margin:8px 0 0;padding-left:20px;line-height:2;">
+        <li>Faça commits pequenos e frequentes.</li>
+        <li>Escreva mensagens claras e objetivas.</li>
+        <li>Sempre verifique o <code>git status</code> antes de adicionar e commitar.</li>
+        <li>Salve seus arquivos antes de executar os comandos.</li>
+        <li>Em caso de erro, leia a mensagem do Git com atenção.</li>
+      </ul>
     </div>
 
-    <!-- ══ GITIGNORE ══ -->
-    <h3>O que o Git não deve guardar: <code>.gitignore</code></h3>
-    <p>Nem tudo numa pasta de projeto deve ir para o GitHub — senhas, arquivos temporários do sistema, ambientes virtuais. O arquivo <code>.gitignore</code> lista o que o Git deve ignorar completamente.</p>
-    <p><strong>Como criar o arquivo:</strong> no VS Code, clique em <strong>File → New File…</strong> (<kbd>Ctrl</kbd>+<kbd>N</kbd>), salve com <kbd>Ctrl</kbd>+<kbd>S</kbd> e nomeie exatamente como <code>.gitignore</code> (com ponto no início, sem extensão). O VS Code vai perguntar o tipo — escolha <strong>Plain Text</strong>. Depois cole o conteúdo abaixo:</p>
-    <pre class="codeblock"><span class="c"># .gitignore — copie este modelo para o seu repositório</span>
-*.pyc
-__pycache__/
-.env
-venv/
-.DS_Store</pre>
-    <div class="box tip">
-      <strong>💡 Nunca coloque senhas ou tokens de API em arquivos versionados.</strong> Mesmo que você apague depois, o histórico do Git guarda tudo. Use variáveis de ambiente (<code>.env</code> no <code>.gitignore</code>) para dados sensíveis.
+    <div class="box" style="background:#fce4ec;border-left-color:#c62828;margin-top:12px;">
+      <strong>⚠️ Importante:</strong>
+      <ul style="margin:8px 0 0;padding-left:20px;line-height:2;">
+        <li>Todos os comandos Git devem ser executados <strong>dentro da pasta <code>gitsenai</code></strong> (repositório local).</li>
+        <li>Após cada alteração, siga o fluxo para atualizar o GitHub.</li>
+        <li>Mantenha seu repositório sempre atualizado!</li>
+      </ul>
     </div>
+
+    <!-- ═══ RESUMO DO FLUXO COMPLETO ═══ -->
+    <h3>Resumo do fluxo completo</h3>
+    <div style="background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px 24px;">
+      <div class="resumo-line">🐙 Criar repositório no GitHub</div>
+      <div class="resumo-line">📥 Clonar repositório: <code>git clone ...</code></div>
+      <div class="resumo-line">📁 Entrar na pasta: <code>cd gitsenai</code></div>
+      <div class="resumo-line">🔧 Criar estrutura inicial (pastas/arquivos)</div>
+      <div class="resumo-line">⚙️ <code>git init</code></div>
+      <div class="resumo-line">➕ <code>git add .</code></div>
+      <div class="resumo-line">✅ <code>git commit -m "Criando meu primeiro commit"</code></div>
+      <div class="resumo-line">☁️ <code>git push origin main</code> — <em>primeiro push</em></div>
+      <div class="resumo-sep"></div>
+      <div class="resumo-line">📄 Adicionar novo arquivo (ex: <code>Aula02/novo_arquivo.py</code>)</div>
+      <div class="resumo-line">➕ <code>git add .</code></div>
+      <div class="resumo-line">✅ <code>git commit -m "Adiciona novo arquivo na pasta Aula02"</code></div>
+      <div class="resumo-line">☁️ <code>git push</code></div>
+      <div class="resumo-sep"></div>
+      <div class="resumo-line" style="font-weight:700;color:#2e7d32;">🔄 Repetir sempre que houver novas alterações!</div>
+    </div>
+
   </section>
     <div class="checagem">
       <strong>✅ Checagem rápida — antes de avançar:</strong>
@@ -1179,8 +1327,34 @@ venv/
 
     <!-- ══ LISTAS ══ -->
     <h3>Lista</h3>
+    <p>Uma <strong>lista</strong> é uma coleção de valores guardados em <strong>sequência</strong>, dentro de colchetes <code>[ ]</code>, separados por vírgulas. Você pode guardar qualquer tipo de dado: palavras, números, ou mistura dos dois.</p>
+    <pre class="codeblock">frutas = ["maçã", "banana", "laranja"]   <span class="c"># lista de strings</span>
+notas  = [8.5, 7.0, 9.5]                 <span class="c"># lista de números</span>
+misto  = ["Ana", 25, True]               <span class="c"># lista pode misturar tipos</span></pre>
+
+    <h4>Como acessar itens: índices</h4>
+    <p>Cada item tem uma <strong>posição numérica</strong> chamada <strong>índice</strong>, que começa em <code>0</code> (não em 1). Você também pode usar índices negativos para contar do final:</p>
+    <table>
+      <tr><th>Item da lista</th><th><code>"maçã"</code></th><th><code>"banana"</code></th><th><code>"laranja"</code></th></tr>
+      <tr><td><strong>Índice positivo</strong></td><td>0</td><td>1</td><td>2</td></tr>
+      <tr><td><strong>Índice negativo</strong></td><td>-3</td><td>-2</td><td>-1</td></tr>
+    </table>
+    <p>Use o índice entre colchetes: <code>frutas[0]</code> → <code>"maçã"</code> &nbsp;·&nbsp; <code>frutas[-1]</code> → <code>"laranja"</code> (último, qualquer que seja o tamanho).</p>
+
+    <h4>Principais funções e métodos</h4>
+    <table>
+      <tr><th>Recurso</th><th>O que faz</th><th>Exemplo</th><th>Resultado</th></tr>
+      <tr><td><code>.append(valor)</code></td><td>Adiciona um item ao <strong>final</strong> da lista</td><td><code>frutas.append("uva")</code></td><td>lista cresce 1 item</td></tr>
+      <tr><td><code>len(lista)</code></td><td>Retorna a <strong>quantidade</strong> de itens</td><td><code>len(frutas)</code></td><td><code>3</code></td></tr>
+      <tr><td><code>max(lista)</code></td><td>Retorna o <strong>maior</strong> valor</td><td><code>max(notas)</code></td><td><code>9.5</code></td></tr>
+      <tr><td><code>min(lista)</code></td><td>Retorna o <strong>menor</strong> valor</td><td><code>min(notas)</code></td><td><code>7.0</code></td></tr>
+    </table>
+    <div class="box tip">
+      <strong>💡 Lista é mutável</strong> — você pode adicionar, remover e alterar itens depois de criá-la. Isso é diferente da tupla, que você vai ver logo a seguir.
+    </div>
 
     <h4>Exemplo 1 — Criando e acessando uma lista</h4>
+    <p>Vamos criar uma lista de compras, acessar o primeiro e o último item pelos índices, e adicionar um item novo ao final com <code>.append()</code>:</p>
     <pre class="codeblock">compras = ["arroz", "feijão", "leite"]
 
 print(compras[0])      <span class="c"># arroz  — posição 0 é sempre o primeiro</span>
@@ -1196,6 +1370,7 @@ print(compras)         <span class="c"># ["arroz", "feijão", "leite", "café"]<
     </div>
 
     <h4>Exemplo 2 — Medindo e percorrendo uma lista</h4>
+    <p>Agora veja como usar <code>len()</code> para contar os itens, <code>max()</code> e <code>min()</code> para encontrar o maior e o menor valor, e o laço <code>for</code> para percorrer todos os itens um por um:</p>
     <pre class="codeblock">notas = [8.5, 7.0, 9.5, 6.0]
 
 print(f"Total de notas: {len(notas)}")   <span class="c"># 4</span>
@@ -1229,8 +1404,17 @@ print(f"Total de nomes: {len(nomes)}")</code></pre>
 
     <!-- ══ TUPLAS ══ -->
     <h3>Tupla</h3>
+    <p>Uma <strong>tupla</strong> é parecida com uma lista, mas usa <strong>parênteses</strong> <code>( )</code> em vez de colchetes — e a diferença fundamental é que ela é <strong>imutável</strong>: depois de criada, os valores não podem ser alterados.</p>
+    <pre class="codeblock">cores  = ("vermelho", "verde", "azul")   <span class="c"># tupla de strings</span>
+ponto  = (10, 20)                         <span class="c"># coordenada x, y</span>
+data   = (15, 3, 2005)                    <span class="c"># dia, mês, ano</span></pre>
+    <div class="box tip">
+      <strong>💡 Quando usar tupla em vez de lista?</strong><br>
+      Use tupla para dados que <em>não devem mudar nunca</em>: coordenadas geográficas, data de nascimento, configurações fixas de um sistema. A imutabilidade <strong>protege o dado</strong> de alterações acidentais — o Python simplesmente recusa qualquer tentativa de mudança e lança um erro.
+    </div>
 
     <h4>Exemplo 1 — Dados que não devem mudar</h4>
+    <p>Vamos criar uma tupla de coordenadas e acessar seus valores pelos índices. Ao final, vamos tentar alterar um item para ver o erro que o Python lança:</p>
     <pre class="codeblock">coordenadas = (10, 20)
 
 print(f"X = {coordenadas[0]}, Y = {coordenadas[1]}")</pre>
@@ -1242,6 +1426,7 @@ print(f"X = {coordenadas[0]}, Y = {coordenadas[1]}")</pre>
     </div>
 
     <h4>Exemplo 2 — Tupla para data de nascimento</h4>
+    <p>Uma data de nascimento nunca muda — caso perfeito para tupla. Veja como criar a tupla e extrair cada parte em variáveis separadas para montar uma frase com f-string:</p>
     <pre class="codeblock">nascimento = (15, 3, 2005)   <span class="c"># dia, mês, ano</span>
 
 dia = nascimento[0]
@@ -1260,14 +1445,30 @@ print(f"Moro em {localizacao[___]}, {localizacao[___]}, {localizacao[___]}.")</c
 
     <!-- ══ DICIONÁRIOS ══ -->
     <h3>Dicionário</h3>
+    <p>Um <strong>dicionário</strong> guarda pares de <strong>chave: valor</strong> entre chaves <code>{ }</code>. Em vez de acessar por posição (como lista e tupla), você acessa pelo <strong>nome da chave</strong> — o que torna o código muito mais legível.</p>
+    <pre class="codeblock">aluno = {"nome": "Ana", "nota": 9.5, "turma": "T5"}
+<span class="c">#         chave   valor   chave  valor  chave   valor</span>
+
+print(aluno["nome"])   <span class="c"># "Ana"  — acesso pela chave, não pela posição</span>
+print(aluno["nota"])   <span class="c"># 9.5</span></pre>
+    <table>
+      <tr><th>Recurso</th><th>O que faz</th><th>Exemplo</th></tr>
+      <tr><td><code>dic["chave"]</code></td><td>Acessa o valor pela chave</td><td><code>aluno["nome"]</code> → <code>"Ana"</code></td></tr>
+      <tr><td><code>dic["chave"] = novo</code></td><td>Atualiza (ou cria) um valor</td><td><code>aluno["nota"] = 10.0</code></td></tr>
+    </table>
+    <div class="box tip">
+      <strong>💡 Dicionário vs. Lista:</strong> lista usa posição (<code>0, 1, 2…</code>); dicionário usa nome (<code>"nome"</code>, <code>"nota"</code>). Use dicionário quando o <em>significado do campo</em> importa mais que a posição — por exemplo, para representar um cadastro, um produto ou um usuário.
+    </div>
 
     <h4>Exemplo 1 — Acessando valores por chave</h4>
+    <p>Vamos criar um dicionário de produto com três campos e acessar cada valor pelo nome da chave:</p>
     <pre class="codeblock">produto = {"nome": "Mouse", "preco": 45.0, "estoque": 12}
 
 print(f"{produto['nome']} custa R$ {produto['preco']}")
 print(f"Estoque disponível: {produto['estoque']} unidades")</pre>
 
     <h4>Exemplo 2 — Atualizando um valor no dicionário</h4>
+    <p>O dicionário é <strong>mutável</strong> — diferente da tupla, você pode alterar o valor de uma chave a qualquer momento. Veja como atualizar a nota de um aluno e comparar o antes e o depois:</p>
     <pre class="codeblock">aluno = {"nome": "Carlos", "nota": 7.5}
 
 print(f"Nota atual: {aluno['nota']}")   <span class="c"># 7.5</span>
