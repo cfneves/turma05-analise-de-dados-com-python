@@ -19,8 +19,14 @@
 *.jpg
 *.jpeg
 
+# Exceção: infográfico de Git/GitHub da Semana 03, publicado para os alunos
+!03_Versionamento_e_Python_Local/github.png
+
 # Ficha de produto e demais PDFs internos
 *.pdf
+
+# Exceção: versão em PDF do infográfico de Git/GitHub da Semana 03, publicada para os alunos
+!03_Versionamento_e_Python_Local/Fluxo_Git_GitHub_VSCode_HD.pdf
 
 # Apresentações de slide (template oficial e decks gerados por semana) -
 # material de apoio do professor para a aula em vivo, nao publicado ao aluno

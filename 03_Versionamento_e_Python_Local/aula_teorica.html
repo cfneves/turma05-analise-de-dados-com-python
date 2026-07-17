@@ -896,6 +896,11 @@ git --version      # git version 2.x.x.windows.x</pre>
       <strong>📌 Repositório da turma × seu repositório:</strong> o repositório <code>cfneves/turma05-analise-de-dados-com-python</code> é para você <strong>consultar o material do curso</strong>. O repositório que você vai criar agora é o <strong>seu</strong> — onde fica o código que você escreve.
     </div>
 
+    <div style="text-align:center;margin:20px 0;">
+      <img src="github.png" alt="Infográfico: Fluxo completo de versionamento Git + GitHub no VS Code (100% Windows) — Fase 1 Configuração, Fase 2 Primeiro Push, Fase 3 Continuando o Projeto, Fase 4 Rotina Diária" style="max-width:100%;height:auto;border:1px solid #ddd;border-radius:10px;">
+      <p style="font-size:.82rem;color:#888;margin-top:8px;">Use este infográfico como referência visual — os mesmos passos estão detalhados abaixo.</p>
+    </div>
+
     <h3>Conceitos essenciais</h3>
     <table>
       <tr><th>Conceito</th><th>O que é</th><th>Analogia</th></tr>
@@ -930,8 +935,8 @@ git --version      # git version 2.x.x.windows.x</pre>
         <div class="step-wrapper">
           <div class="step-num">2</div>
           <div class="step-content">
-            <h4>Abrir o Explorador de Arquivos</h4>
-            <p>Crie uma pasta local no seu computador para armazenar seus projetos.</p>
+            <h4>Criar pasta local</h4>
+            <p>Crie uma pasta no seu computador para armazenar seus projetos.</p>
             <div class="box tip">
               💡 Use uma pasta fácil de encontrar, como <strong>Meus Documentos</strong>.<br>
               Exemplo: <code>C:\Users\SEU_USUARIO\Documents\git_aula</code><br><br>
@@ -943,16 +948,16 @@ git --version      # git version 2.x.x.windows.x</pre>
         <div class="step-wrapper">
           <div class="step-num">3</div>
           <div class="step-content">
-            <h4>Entrar na pasta local</h4>
-            <p>No Explorador de Arquivos, abra a pasta que você criou (ex: <code>git_aula</code>).</p>
+            <h4>Abrir o VS Code</h4>
+            <p>Abra o Visual Studio Code na pasta <code>git_aula</code> que você acabou de criar.</p>
           </div>
         </div>
 
         <div class="step-wrapper">
           <div class="step-num">4</div>
           <div class="step-content">
-            <h4>Abrir o Terminal no VS Code</h4>
-            <p>Com a pasta <code>git_aula</code> aberta no VS Code, abra o Terminal integrado: <strong>Terminal → New Terminal</strong>.</p>
+            <h4>Abrir o Terminal</h4>
+            <p>No VS Code, abra o Terminal integrado: <strong>Terminal → New Terminal</strong>.</p>
           </div>
         </div>
 
@@ -969,21 +974,34 @@ git --version      # git version 2.x.x.windows.x</pre>
         <div class="step-wrapper">
           <div class="step-num">6</div>
           <div class="step-content">
-            <h4>Entrar no repositório</h4>
+            <h4>Entrar na pasta do repositório</h4>
             <p>No Terminal (ainda dentro de <code>git_aula</code>), entre em <code>gitsenai</code>:</p>
             <pre class="codeblock">cd gitsenai</pre>
             <p>Agora você está dentro do repositório local.</p>
           </div>
         </div>
 
+        <div class="box" style="background:#e8f5e9;border-left-color:#2e7d32;">
+          <strong>✅ Pronto!</strong> Seu ambiente está preparado. Agora vamos criar e publicar nosso primeiro projeto no GitHub.
+        </div>
+
+        <div class="box tip">
+          <strong>ℹ️ Importante:</strong>
+          <ul style="margin:8px 0 0;padding-left:20px;line-height:2;">
+            <li>Todos os comandos deste guia devem ser executados <strong>dentro da pasta <code>gitsenai</code></strong> (repositório local), utilizando o Terminal do VS Code (PowerShell ou CMD).</li>
+            <li>O comando <code>git clone</code> já cria a pasta <code>.git</code>. <strong>Não é necessário executar <code>git init</code>.</strong></li>
+            <li>No Windows, os comandos são executados no Terminal do VS Code (PowerShell ou CMD).</li>
+          </ul>
+        </div>
+
         <div class="box tip">
           <strong>📁 Estrutura até aqui:</strong>
           <div class="estrutura-tree">
-            Documentos/<br>
+            Documentos/ &nbsp;&nbsp;<span style="color:#888;">(ou pasta escolhida)</span><br>
             └── git_aula/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#888;">(pasta local que você criou)</span><br>
             &nbsp;&nbsp;&nbsp;&nbsp;└── gitsenai/ &nbsp;&nbsp;<span style="color:#888;">(repositório clonado)</span>
           </div>
-          <strong>⚠️ Importante:</strong> todos os próximos comandos devem ser executados <strong>dentro da pasta <code>gitsenai</code></strong>.
+          <strong>⚠️ Importante:</strong> todos os próximos comandos serão executados <strong>dentro da pasta <code>gitsenai</code></strong>.
         </div>
 
       </div>
@@ -1063,22 +1081,14 @@ mkdir Aula02</pre>
         <div class="step-wrapper">
           <div class="step-num">8</div>
           <div class="step-content">
-            <h4>README.md</h4>
-            <p>O <code>README.md</code> já está pronto e commitado no repositório remoto (GitHub). <strong>Não é necessário criá-lo agora.</strong></p>
+            <h4>Criar o arquivo README.md na raiz do projeto</h4>
+            <pre class="codeblock">ni README.md</pre>
+            <p>(cria o arquivo vazio <code>README.md</code>) — lembre-se: você criou o repositório <strong>sem README</strong> na Fase 1, então ele ainda não existe.</p>
           </div>
         </div>
 
         <div class="step-wrapper">
           <div class="step-num">9</div>
-          <div class="step-content">
-            <h4>Inicializar o repositório Git local (caso ainda não esteja inicializado)</h4>
-            <pre class="codeblock">git init</pre>
-            <p>Aparecerá uma pasta oculta <code>.git</code>.</p>
-          </div>
-        </div>
-
-        <div class="step-wrapper">
-          <div class="step-num">10</div>
           <div class="step-content">
             <h4>Verificar o status do repositório</h4>
             <pre class="codeblock">git status</pre>
@@ -1087,7 +1097,7 @@ mkdir Aula02</pre>
         </div>
 
         <div class="step-wrapper">
-          <div class="step-num">11</div>
+          <div class="step-num">10</div>
           <div class="step-content">
             <h4>Adicionar todos os arquivos ao stage</h4>
             <pre class="codeblock">git add .</pre>
@@ -1096,7 +1106,7 @@ mkdir Aula02</pre>
         </div>
 
         <div class="step-wrapper">
-          <div class="step-num">12</div>
+          <div class="step-num">11</div>
           <div class="step-content">
             <h4>Criar o primeiro commit</h4>
             <pre class="codeblock">git commit -m "Criando meu primeiro commit"</pre>
@@ -1105,12 +1115,16 @@ mkdir Aula02</pre>
         </div>
 
         <div class="step-wrapper">
-          <div class="step-num">13</div>
+          <div class="step-num">12</div>
           <div class="step-content">
             <h4>Enviar para o GitHub (primeiro push)</h4>
-            <pre class="codeblock">git push origin main</pre>
+            <pre class="codeblock">git push -u origin main</pre>
             <p>Pronto! Seu repositório <code>gitsenai</code> já está publicado no GitHub com a estrutura inicial.</p>
           </div>
+        </div>
+
+        <div class="box" style="background:#fff8e1;border-left-color:#f9a825;">
+          <strong>⭐ Importante:</strong> este comando é executado apenas no <strong>primeiro</strong> envio do projeto. O parâmetro <code>-u</code> vincula a branch local (<code>main</code>) à branch remota (<code>origin/main</code>). Após isso, basta utilizar <code>git push</code>.
         </div>
 
         <div class="box" style="background:#e8f5e9;border-left-color:#2e7d32;margin-top:20px;">
@@ -1137,13 +1151,22 @@ mkdir Aula02</pre>
     <div class="fase-bloco fase3">
       <div class="fase-header">
         <span class="fase-num">FASE 3</span>
-        Adicionar Novo Arquivo na Pasta Aula02
-        <span class="fase-obs">(segundo push)</span>
+        Continuando o Projeto
+        <span class="fase-obs">(nova aula)</span>
       </div>
       <div class="fase-body">
 
         <div class="step-wrapper">
           <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Abrir o projeto</h4>
+            <pre class="codeblock">cd gitsenai</pre>
+            <p>(entrar na pasta do repositório)</p>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">2</div>
           <div class="step-content">
             <h4>Entrar na pasta Aula02</h4>
             <pre class="codeblock">cd Aula02</pre>
@@ -1151,16 +1174,16 @@ mkdir Aula02</pre>
         </div>
 
         <div class="step-wrapper">
-          <div class="step-num">2</div>
+          <div class="step-num">3</div>
           <div class="step-content">
-            <h4>Criar um novo arquivo Python na pasta Aula02</h4>
-            <pre class="codeblock">ni novo_arquivo.py</pre>
-            <p>(cria o arquivo vazio <code>novo_arquivo.py</code>)</p>
+            <h4>Criar um novo arquivo Python (exemplo: exercicio01.py)</h4>
+            <pre class="codeblock">ni exercicio01.py</pre>
+            <p>(cria o arquivo vazio <code>exercicio01.py</code>)</p>
           </div>
         </div>
 
         <div class="step-wrapper">
-          <div class="step-num">3</div>
+          <div class="step-num">4</div>
           <div class="step-content">
             <h4>Voltar ao projeto principal (pasta gitsenai)</h4>
             <pre class="codeblock">cd ..</pre>
@@ -1168,34 +1191,34 @@ mkdir Aula02</pre>
         </div>
 
         <div class="step-wrapper">
-          <div class="step-num">4</div>
+          <div class="step-num">5</div>
           <div class="step-content">
             <h4>Verificar alterações</h4>
             <pre class="codeblock">git status</pre>
-            <p>Você verá <code>novo_arquivo.py</code> como "não rastreado".</p>
-          </div>
-        </div>
-
-        <div class="step-wrapper">
-          <div class="step-num">5</div>
-          <div class="step-content">
-            <h4>Adicionar o novo arquivo ao stage</h4>
-            <pre class="codeblock">git add .</pre>
-            <p>(ou apenas o arquivo específico: <code>git add Aula02/novo_arquivo.py</code>)</p>
+            <p>Você verá o novo arquivo como "não rastreado" ou modificado.</p>
           </div>
         </div>
 
         <div class="step-wrapper">
           <div class="step-num">6</div>
           <div class="step-content">
-            <h4>Criar commit da alteração</h4>
-            <pre class="codeblock">git commit -m "Adiciona novo arquivo na pasta Aula02"</pre>
-            <p>Novo commit criado com sucesso!</p>
+            <h4>Adicionar alterações ao stage</h4>
+            <pre class="codeblock">git add .</pre>
+            <p>(adiciona todas as alterações)</p>
           </div>
         </div>
 
         <div class="step-wrapper">
           <div class="step-num">7</div>
+          <div class="step-content">
+            <h4>Criar commit da alteração</h4>
+            <pre class="codeblock">git commit -m "Adicionando exercicio Aula02"</pre>
+            <p>Novo commit criado com sucesso!</p>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">8</div>
           <div class="step-content">
             <h4>Enviar para o GitHub</h4>
             <pre class="codeblock">git push</pre>
@@ -1216,22 +1239,32 @@ mkdir Aula02</pre>
     <div class="fase-bloco fase4">
       <div class="fase-header">
         <span class="fase-num">FASE 4</span>
-        Fluxo Diário para Atualizar o Repositório
+        Rotina Diária
+        <span class="fase-obs">(PULL → COMMIT → PUSH)</span>
       </div>
       <div class="fase-body">
 
-        <p>Sempre que fizer uma alteração nos seus arquivos, repita estes 5 passos:</p>
+        <p><strong>Antes de começar, sincronize seu projeto com o GitHub.</strong> Sempre que fizer uma alteração nos seus arquivos, repita estes 6 passos:</p>
 
         <div class="step-wrapper">
           <div class="step-num">1</div>
           <div class="step-content">
-            <h4>Editar arquivos</h4>
-            <p>Faça as alterações nos arquivos do projeto no VS Code.</p>
+            <h4>Atualizar o repositório local (PULL)</h4>
+            <pre class="codeblock">git pull</pre>
+            <p>Baixa e aplica todas as alterações que existem no GitHub e que você ainda não tem.</p>
           </div>
         </div>
 
         <div class="step-wrapper">
           <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Editar / Criar / Alterar arquivos</h4>
+            <p>Faça suas alterações no projeto, no VS Code.</p>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">3</div>
           <div class="step-content">
             <h4>Verificar alterações</h4>
             <pre class="codeblock">git status</pre>
@@ -1239,32 +1272,66 @@ mkdir Aula02</pre>
         </div>
 
         <div class="step-wrapper">
-          <div class="step-num">3</div>
+          <div class="step-num">4</div>
           <div class="step-content">
             <h4>Adicionar alterações ao stage</h4>
             <pre class="codeblock">git add .</pre>
-            <p>(ou especifique os arquivos que quer enviar)</p>
-          </div>
-        </div>
-
-        <div class="step-wrapper">
-          <div class="step-num">4</div>
-          <div class="step-content">
-            <h4>Criar commit</h4>
-            <pre class="codeblock">git commit -m "Descrição da alteração"</pre>
+            <p>(adiciona todas as alterações)</p>
           </div>
         </div>
 
         <div class="step-wrapper">
           <div class="step-num">5</div>
           <div class="step-content">
-            <h4>Enviar para o GitHub</h4>
-            <pre class="codeblock">git push</pre>
-            <p>Suas alterações serão publicadas no GitHub!</p>
+            <h4>Criar commit</h4>
+            <pre class="codeblock">git commit -m "Descrição da alteração"</pre>
+            <p>Commit criado com sucesso!</p>
           </div>
         </div>
 
+        <div class="step-wrapper">
+          <div class="step-num">6</div>
+          <div class="step-content">
+            <h4>Enviar para o GitHub</h4>
+            <pre class="codeblock">git push</pre>
+            <p>Suas alterações foram enviadas e publicadas no GitHub!</p>
+          </div>
+        </div>
+
+        <div class="box" style="background:#ede7f6;border-left-color:#5e35b1;">
+          <strong>🔄 Fluxo diário resumido:</strong>
+          <div class="estrutura-tree">
+            Abrir projeto (<code>cd gitsenai</code>) → <code>git pull</code> → editar arquivos → <code>git status</code> → <code>git add .</code> → <code>git commit -m "Descrição"</code> → <code>git push</code>
+          </div>
+        </div>
+
+        <div class="box" style="background:#fff8e1;border-left-color:#f9a825;">
+          <strong>💡 Lembre-se:</strong> depois do primeiro push, não utilize mais <code>-u origin main</code>. Basta apenas <code>git push</code>.
+        </div>
+
+        <div class="box tip">
+          <strong>⭐ Boa prática:</strong> sempre execute <code>git pull</code> antes de iniciar suas atividades. Assim você evita conflitos e garante que está trabalhando com a versão mais atual do projeto.
+        </div>
+
       </div>
+    </div>
+
+    <!-- ═══ QUANDO USAR CADA COMANDO ═══ -->
+    <h3>Quando usar cada comando</h3>
+    <table>
+      <tr><th>Comando</th><th>Quando usar</th></tr>
+      <tr><td><code>git clone</code></td><td>Apenas uma vez, para baixar o projeto do GitHub.</td></tr>
+      <tr><td><code>git pull</code></td><td>Sempre antes de começar a trabalhar em um projeto existente.</td></tr>
+      <tr><td><code>git status</code></td><td>Sempre que quiser verificar as alterações.</td></tr>
+      <tr><td><code>git add .</code></td><td>Antes de criar um commit.</td></tr>
+      <tr><td><code>git commit -m "msg"</code></td><td>Registrar as alterações realizadas.</td></tr>
+      <tr><td><code>git push -u origin main</code></td><td>Somente no primeiro envio do projeto.</td></tr>
+      <tr><td><code>git push</code></td><td>Todos os envios seguintes.</td></tr>
+    </table>
+
+    <!-- ═══ FLUXO COLABORATIVO ═══ -->
+    <div class="box" style="margin-top:16px;">
+      <strong>👥 Fluxo colaborativo (com outras pessoas):</strong> quando mais de uma pessoa trabalha no mesmo repositório, o GitHub funciona como o ponto de encontro. Se João faz alterações e executa <code>git push</code>, essas alterações só chegam no computador de Maria quando ela executa <code>git pull</code> — e vice-versa. É por isso que a Fase 4 sempre começa com <code>git pull</code>: sem isso, você corre o risco de trabalhar em cima de uma versão desatualizada do projeto e gerar conflitos.
     </div>
 
     <!-- ═══ DICAS IMPORTANTES ═══ -->
@@ -1276,6 +1343,7 @@ mkdir Aula02</pre>
         <li>Sempre verifique o <code>git status</code> antes de adicionar e commitar.</li>
         <li>Salve seus arquivos antes de executar os comandos.</li>
         <li>Em caso de erro, leia a mensagem do Git com atenção.</li>
+        <li>Mantenha seu repositório sempre atualizado!</li>
       </ul>
     </div>
 
@@ -1288,21 +1356,49 @@ mkdir Aula02</pre>
       </ul>
     </div>
 
+    <!-- ═══ COMANDOS ÚTEIS E ATALHOS ═══ -->
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:16px;">
+      <div class="box" style="flex:1;min-width:260px;">
+        <strong>⌨️ Comandos úteis (Windows):</strong>
+        <pre class="codeblock" style="background:transparent;color:#333;border:none;padding:8px 0 0;">git clone      # Clona um repositório
+git pull       # Atualiza seu repositório local
+git status     # Mostra o estado do repositório
+git log        # Histórico de commits
+git branch     # Lista de branches locais
+git branch -a  # Lista de branches locais e remotas
+git diff       # Mostra diferenças
+git remote -v  # Verifica repositórios remotos</pre>
+      </div>
+      <div class="box" style="flex:1;min-width:260px;">
+        <strong>⌨️ Atalhos VS Code:</strong>
+        <ul style="margin:8px 0 0;padding-left:20px;line-height:2;">
+          <li><kbd>Ctrl</kbd> + <kbd>`</kbd> — Abrir Terminal</li>
+          <li><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> — Abrir Paleta de Comandos</li>
+          <li><kbd>Ctrl</kbd> + <kbd>S</kbd> — Salvar arquivo</li>
+          <li><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>G</kbd> — Abrir Controle de Código-Fonte</li>
+        </ul>
+      </div>
+    </div>
+
     <!-- ═══ RESUMO DO FLUXO COMPLETO ═══ -->
     <h3>Resumo do fluxo completo</h3>
     <div style="background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px 24px;">
       <div class="resumo-line">🐙 Criar repositório no GitHub</div>
       <div class="resumo-line">📥 Clonar repositório: <code>git clone ...</code></div>
       <div class="resumo-line">📁 Entrar na pasta: <code>cd gitsenai</code></div>
-      <div class="resumo-line">🔧 Criar estrutura inicial (pastas/arquivos)</div>
-      <div class="resumo-line">⚙️ <code>git init</code></div>
+      <div class="resumo-line">🔧 Criar estrutura inicial (pastas/arquivos/README.md)</div>
       <div class="resumo-line">➕ <code>git add .</code></div>
       <div class="resumo-line">✅ <code>git commit -m "Criando meu primeiro commit"</code></div>
-      <div class="resumo-line">☁️ <code>git push origin main</code> — <em>primeiro push</em></div>
+      <div class="resumo-line">☁️ <code>git push -u origin main</code> — <em>primeiro push</em></div>
       <div class="resumo-sep"></div>
-      <div class="resumo-line">📄 Adicionar novo arquivo (ex: <code>Aula02/novo_arquivo.py</code>)</div>
+      <div class="resumo-line">📄 Adicionar novo arquivo (ex: <code>Aula02/exercicio01.py</code>)</div>
       <div class="resumo-line">➕ <code>git add .</code></div>
-      <div class="resumo-line">✅ <code>git commit -m "Adiciona novo arquivo na pasta Aula02"</code></div>
+      <div class="resumo-line">✅ <code>git commit -m "Adicionando exercicio Aula02"</code></div>
+      <div class="resumo-line">☁️ <code>git push</code></div>
+      <div class="resumo-sep"></div>
+      <div class="resumo-line">🔽 <code>git pull</code> — <em>sempre antes de começar a trabalhar</em></div>
+      <div class="resumo-line">➕ <code>git add .</code></div>
+      <div class="resumo-line">✅ <code>git commit -m "Descrição da alteração"</code></div>
       <div class="resumo-line">☁️ <code>git push</code></div>
       <div class="resumo-sep"></div>
       <div class="resumo-line" style="font-weight:700;color:#2e7d32;">🔄 Repetir sempre que houver novas alterações!</div>
