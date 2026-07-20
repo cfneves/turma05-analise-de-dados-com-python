@@ -52,8 +52,8 @@ turma05-analise-de-dados-com-python/
 │   ├── aula_teorica.html        ← teoria + quiz interativo
 │   └── notebook_colab_aluno.ipynb   ← notebook prático (abra no Google Colab)
 ├── 04_Manipulacao_Arquivos_e_Modularizacao/
-│   ├── aula_teorica.html      ← teoria + quiz interativo
-│   └── notebook_colab.ipynb   ← notebook prático (abra no Google Colab)
+│   ├── aula_teorica.html        ← teoria + quiz interativo
+│   └── notebook_colab_aluno.ipynb   ← notebook prático (abra no Google Colab)
 ├── 05_Pandas_e_NumPy/
 │   ├── aula_teorica.html      ← teoria + quiz interativo
 │   └── notebook_colab.ipynb   ← notebook prático (abra no Google Colab)
@@ -71,7 +71,7 @@ Escolha a forma que preferir para acessar o material de cada semana:
 | 01 | Introdução e Fundamentos da Análise de Dados | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/01_Introducao_Fundamentos_Analise_Dados/notebook_colab.ipynb) | [⬇ Semana01.ipynb](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/01_Introducao_Fundamentos_Analise_Dados/notebook_colab.ipynb) | [⬇ Semana01.html](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/01_Introducao_Fundamentos_Analise_Dados/aula_teorica.html) |
 | 02 | Lógica de Programação | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/02_Logica_de_Programacao/notebook_colab.ipynb) | [⬇ Semana02.ipynb](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/02_Logica_de_Programacao/notebook_colab.ipynb) | [⬇ Semana02.html](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/02_Logica_de_Programacao/aula_teorica.html) |
 | 03 | Versionamento e Python Local | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/03_Versionamento_e_Python_Local/notebook_colab_aluno.ipynb) | [⬇ Semana03.ipynb](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/03_Versionamento_e_Python_Local/notebook_colab_aluno.ipynb) | [⬇ Semana03.html](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/03_Versionamento_e_Python_Local/aula_teorica.html) |
-| 04 | Manipulação de Arquivos e Modularização | *em breve* | *em breve* | *em breve* |
+| 04 | Manipulação de Arquivos e Modularização | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/04_Manipulacao_Arquivos_e_Modularizacao/notebook_colab_aluno.ipynb) | [⬇ Semana04.ipynb](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/04_Manipulacao_Arquivos_e_Modularizacao/notebook_colab_aluno.ipynb) | [⬇ Semana04.html](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/04_Manipulacao_Arquivos_e_Modularizacao/aula_teorica.html) |
 | 05 | Pandas e NumPy | *em breve* | *em breve* | *em breve* |
 | 06 | Limpeza e Transformação de Dados | *em breve* | *em breve* | *em breve* |
 | 07 | Visualização e Pipelines | *em breve* | *em breve* | *em breve* |

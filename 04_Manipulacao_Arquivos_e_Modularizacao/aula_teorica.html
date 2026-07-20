@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 04 — Manipulação de Arquivos e Modularização</title>
+<style>
+  :root{
+    --red:#CC0000;
+    --red-dark:#990000;
+    --ink:#1a1a2e;
+    --bg:#f7f7fa;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Segoe UI', Roboto, Arial, sans-serif;
+    background:var(--bg);
+    color:#222;
+    line-height:1.6;
+  }
+  .hero{
+    background:linear-gradient(135deg,#0d1b2a,#1b263b,var(--red));
+    color:#fff;
+    padding:60px 24px;
+    text-align:center;
+  }
+  .hero h1{
+    margin:0 0 10px;
+    font-size:2.2rem;
+  }
+  .hero h1 span{ color:#FFD60A; }
+  .hero p{
+    max-width:760px;
+    margin:14px auto 0;
+    font-size:1.05rem;
+    opacity:.92;
+  }
+  .badge{
+    display:inline-block;
+    background:rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.4);
+    border-radius:20px;
+    padding:6px 16px;
+    margin-top:18px;
+    font-size:.9rem;
+  }
+  main{
+    max-width:980px;
+    margin:0 auto;
+    padding:40px 20px 80px;
+  }
+  section{ margin-bottom:48px; }
+  h2{
+    color:var(--red-dark);
+    border-bottom:3px solid var(--red);
+    padding-bottom:8px;
+    font-size:1.5rem;
+  }
+  h3{ color:var(--ink); }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:18px 0;
+    box-shadow:0 1px 4px rgba(0,0,0,.08);
+  }
+  th, td{
+    border:1px solid #ddd;
+    padding:10px 12px;
+    text-align:left;
+    font-size:.95rem;
+  }
+  th{
+    background:var(--red);
+    color:#fff;
+  }
+  tr:nth-child(even){ background:#fafafa; }
+  .box{
+    background:#fff3f3;
+    border-left:5px solid var(--red);
+    padding:16px 20px;
+    border-radius:6px;
+    margin:18px 0;
+  }
+  .box.tip{
+    background:#F0F7FF;
+    border-left-color:#1565C0;
+  }
+  .fluxo{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    margin:24px 0;
+    align-items:center;
+  }
+  .fluxo .etapa{
+    flex:1 1 150px;
+    background:var(--ink);
+    color:#fff;
+    border-radius:10px;
+    padding:18px 14px;
+    text-align:center;
+  }
+  .fluxo .seta{ font-size:1.4rem; color:var(--red); }
+  .qs{
+    background:var(--ink);
+    color:#eee;
+    border-radius:10px;
+    padding:20px 22px;
+    margin:16px 0;
+  }
+  .qs code{
+    background:rgba(255,255,255,.15);
+    color:#E0E0E0;
+    padding:2px 6px;
+    border-radius:4px;
+    font-family:Consolas, monospace;
+  }
+  .qs label{
+    display:block;
+    background:rgba(255,255,255,.06);
+    padding:8px 12px;
+    margin:6px 0;
+    border-radius:6px;
+    cursor:pointer;
+  }
+  .qs label:hover{ background:rgba(255,255,255,.12); }
+  .qs button{
+    background:var(--red);
+    color:#fff;
+    border:none;
+    padding:8px 18px;
+    border-radius:6px;
+    cursor:pointer;
+    margin-top:10px;
+    font-weight:bold;
+  }
+  .qs button:hover{ background:var(--red-dark); }
+  .feedback{
+    margin-top:10px;
+    padding:10px 14px;
+    border-radius:6px;
+    display:none;
+    font-weight:bold;
+  }
+  .feedback.correct{ background:#1b5e20; display:block; }
+  .feedback.wrong{ background:#7a1f1f; display:block; }
+  .ex{
+    background:#F0F7FF;
+    border:1px solid #BBDEFB;
+    border-radius:8px;
+    padding:16px 20px;
+    margin:14px 0;
+  }
+  pre.codeblock{
+    background:var(--ink);
+    color:#E0E0E0;
+    padding:16px 20px;
+    border-radius:8px;
+    overflow-x:auto;
+    font-family:Consolas, monospace;
+    font-size:.9rem;
+    margin:14px 0;
+  }
+  pre.codeblock .c{ color:#8a8aa0; }
+  footer{
+    background:var(--ink);
+    color:#ccc;
+    text-align:center;
+    padding:26px 16px;
+    font-size:.9rem;
+  }
+  footer strong{ color:#fff; }
+  @media (max-width:768px){
+    .hero h1{ font-size:1.6rem; }
+    .fluxo{ flex-direction:column; }
+  }
+
+  /* Estrutura de aula: abertura / checagem / fechamento */
+  .abertura{background:#E8F5E9;border-left:5px solid #1B5E20;border-radius:8px;padding:20px 24px;margin:0 0 32px;}
+  .abertura h3{color:#1B5E20;margin:0 0 10px;font-size:1.05rem;}
+  .abertura ul,.fechamento ul{margin:8px 0 0;padding-left:22px;line-height:1.8;}
+  .checagem{background:#FFF3E0;border-left:5px solid #E65100;border-radius:6px;padding:14px 18px;margin:0 0 28px;font-size:.95rem;}
+  .checagem strong{color:#BF360C;display:block;margin-bottom:6px;}
+  .fechamento{background:#E3F2FD;border-left:5px solid #0D47A1;border-radius:8px;padding:20px 24px;margin:0 0 32px;}
+  .fechamento h3{color:#0D47A1;margin:0 0 10px;font-size:1.05rem;}
+  .topo-autor {
+    background: #0d1b2a;
+    color: rgba(255,255,255,0.72);
+    font-size: 0.82em;
+    font-weight: 500;
+    padding: 7px 28px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    letter-spacing: 0.01em;
+  }
+  .ponte{background:#F3E5F5;border-left:5px solid #6A1B9A;border-radius:6px;padding:12px 18px;margin:18px 0;font-size:.95rem;}
+</style>
+</head>
+<body>
+
+<div class="topo-autor">Professor: Cláudio Ferreira Neves - Especialista em Dados</div>
+<div class="hero">
+  <h1>Semana 04 · <span>Manipulação de Arquivos e Modularização</span></h1>
+  <p>Unidade Curricular: <strong>Manipulação de Dados com Python e SQL</strong> (150h) — Bloco 2, Semanas 03 e 04 (última semana do bloco). Você aprende a ler/escrever arquivos reais e a criar suas próprias funções reutilizáveis.</p>
+  <span class="badge">3 encontros · 9h · CSV/JSON/Excel, datetime, regex, funções, lambda, módulos</span>
+</div>
+
+<main>
+
+  <section>
+    <h2>Competência da Unidade Curricular</h2>
+    <div class="box tip">
+      "Desenvolver competências em lógica de programação com Python, modelagem de dados com SQL e NoSQL e utilização de bibliotecas específicas para manipulação, transformação e visualização de dados, apoiando processos de análise de dados."
+    </div>
+    <p>Esta semana fecha o Bloco 2: você aprende a ler dados de fora do programa (arquivos) e a organizar seu código em funções e módulos — a base de tudo que vem depois no curso.</p>
+    <div class="box">
+      <strong>🧠 Pergunta para você pensar:</strong> por que empresas pagam tanto por código reutilizável e bem organizado? A resposta está exatamente no que você vai praticar hoje: funções.
+    </div>
+  </section>
+
+  <section>
+    <h2>Objetivos da Semana</h2>
+    <ul>
+      <li>Ler e escrever arquivos <strong>CSV</strong>, <strong>JSON</strong> e <strong>Excel</strong> em Python</li>
+      <li>Manipular datas com <code>datetime</code> e validar textos com <strong>expressões regulares</strong></li>
+      <li>Criar <strong>funções</strong> com parâmetros, valores padrão e <code>return</code></li>
+      <li>Criar uma <strong>função lambda</strong> e organizar funções em um <strong>módulo</strong> próprio</li>
+    </ul>
+  </section>
+    <div class="abertura">
+      <h3>🟢 Abertura — Semana 04: Manipulação de Arquivos e Modularização</h3>
+      <p>Você já versiona código. <strong>Hoje você veste o boné de analista júnior de People Analytics</strong> — em português, algo como "análise de pessoas": a área de uma empresa que usa dados sobre os próprios funcionários (horário de entrada, atrasos, cadastro, e-mails) para tomar decisões, em vez de decidir só no "achismo". É a área que, por exemplo, descobre se um setor inteiro está sempre atrasado, ou se um cadastro está desatualizado.</p>
+      <p>Você acaba de ser contratado(a) pelo <strong>Grupo Alfa</strong>, uma empresa fictícia com 30 colaboradores em 4 setores (Comercial, Logística, Estoque e RH), e o RH te passou 3 arquivos reais pra você organizar.</p>
+      <p><strong>O que você vai aprender hoje:</strong></p>
+      <ul><li>Ler e escrever arquivos CSV, JSON e Excel com Python</li><li>Trabalhar com datas e expressões regulares em cima de dados reais de ponto e e-mail</li><li>Criar funções com parâmetros, valores padrão e <code>return</code>, e usar lambda e módulos</li></ul>
+    </div>
+
+  <section>
+    <h2>1. Arquivos: CSV, JSON e Excel</h2>
+    <p>Até agora, todo dado que você usou existia só enquanto o programa rodava, ou foi digitado à mão no próprio código. A partir de hoje isso muda: o RH do Grupo Alfa te passou <strong>3 arquivos reais</strong>, cada um exportado por um sistema diferente da empresa — e cada sistema exporta num formato diferente:</p>
+    <table>
+      <tr><th>Arquivo</th><th>Formato</th><th>Sistema de origem</th><th>Biblioteca usada</th></tr>
+      <tr><td><code>cadastro_funcionario.csv</code></td><td>CSV</td><td>Sistema de folha de pagamento</td><td><code>csv</code></td></tr>
+      <tr><td><code>emails_corporativos.json</code></td><td>JSON</td><td>Sistema de e-mail corporativo</td><td><code>json</code></td></tr>
+      <tr><td><code>recursos_humanos.xlsx</code></td><td>Excel (2 abas)</td><td>Sistema de ponto</td><td><code>openpyxl</code></td></tr>
+    </table>
+    <div class="box tip">
+      <strong>💡 O que é uma "biblioteca"?</strong> É um conjunto de ferramentas prontas que alguém já programou pra você não precisar reinventar a roda. <code>csv</code>, <code>json</code> e <code>re</code> já vêm <strong>dentro do Python</strong> — basta dar <code>import</code>, sem instalar nada. Já <code>openpyxl</code> (que você vai usar daqui a pouco pra ler o Excel) é uma biblioteca <strong>de terceiros</strong>: não vem com o Python, então precisa ser <strong>instalada</strong> antes do primeiro uso — você vai ver como fazer isso logo abaixo, no Exemplo 3. (Mais pra frente, na Seção 4, você vai aprender a criar a sua própria biblioteca — lá ela vai se chamar <strong>módulo</strong>: um módulo nada mais é do que uma biblioteca que você mesmo escreveu.)
+    </div>
+    <div class="box tip">
+      <strong>💡 Por que 3 formatos diferentes?</strong> Isso é muito comum no mundo real: cada sistema de uma empresa é de um fornecedor diferente, e cada um exporta do seu jeito. Parte do trabalho de quem manipula dados é justamente saber ler qualquer formato que aparecer — CSV quando o dado é tabular e simples, JSON quando tem estrutura mais livre (como o e-mail, que é só uma lista de registros), Excel quando vem de planilhas com múltiplas abas, como o banco de horas.
+    </div>
+    <div class="box tip">
+      <strong>📌 Rodando no Google Colab?</strong> Diferente do VS Code local, o Colab não enxerga os arquivos desta pasta automaticamente. Antes de rodar os exemplos abaixo, envie os 3 arquivos (<code>cadastro_funcionario.csv</code>, <code>emails_corporativos.json</code>, <code>recursos_humanos.xlsx</code>) usando o ícone de pasta 📁 na barra lateral esquerda → <strong>Upload</strong> — ou rode a célula de upload no topo do notebook desta semana.
+    </div>
+
+    <div class="box tip">
+      <strong>📖 Antes do primeiro código: o que significa "abrir" um arquivo?</strong>
+      <p style="margin:8px 0;">Assim como você abre um arquivo do Windows dando duplo clique nele, o Python também precisa "abrir" um arquivo antes de conseguir ler o que está escrito dentro. E, do mesmo jeito que é boa prática fechar um programa quando termina de usar, o Python também precisa <strong>fechar</strong> o arquivo depois de ler — senão ele fica "reservado", e nenhum outro programa consegue mexer nele enquanto isso. Em Python, isso é feito assim:</p>
+      <pre class="codeblock" style="margin:10px 0;">with open("cadastro_funcionario.csv", encoding="utf-8") as arquivo:
+    <span class="c"># aqui dentro, o arquivo está aberto e disponível</span>
+    ...
+<span class="c"># aqui fora, o Python já fechou o arquivo sozinho</span></pre>
+      <p style="margin:8px 0;">Repare em 3 coisas:</p>
+      <ul style="margin:0 0 0 20px;line-height:1.9;">
+        <li><code>open("cadastro_funcionario.csv", encoding="utf-8")</code> é a parte que efetivamente abre o arquivo. Você já vai entender o <code>encoding="utf-8"</code> em instantes.</li>
+        <li><code>as arquivo</code> dá um apelido pro arquivo aberto — você poderia chamar de qualquer nome (<code>f</code>, <code>meu_arquivo</code>...), mas <code>arquivo</code> deixa claro o que é.</li>
+        <li>A palavra <code>with</code> é quem garante que o Python vai <strong>fechar o arquivo automaticamente</strong> assim que o bloco indentado (a parte recuada, embaixo dos dois-pontos) terminar — mesmo se algo der errado no meio do caminho. Sempre que for ler ou escrever um arquivo em Python, você vai começar com <code>with open(...) as ...:</code>. Decore essa estrutura: ela vai aparecer o resto do curso inteiro.</li>
+      </ul>
+    </div>
+
+    <h3>Exemplo 1 — Lendo o cadastro de funcionários (CSV)</h3>
+    <pre class="codeblock">import csv
+
+with open("cadastro_funcionario.csv", encoding="utf-8") as arquivo:
+    leitor = csv.DictReader(arquivo)
+    funcionarios = list(leitor)
+
+print(f"Total de funcionários: {len(funcionarios)}")
+print(funcionarios[0])</pre>
+    <pre class="codeblock" style="margin-top:-8px;"><span class="c"># Total de funcionários: 30
+# {'id_funcionario': '1', 'funcionario': 'Ana Souza', 'cargo': 'Atendente', 'setor': 'Comercial'}</span></pre>
+
+    <h3>Exemplo 2 — Lendo os e-mails corporativos (JSON)</h3>
+    <pre class="codeblock">import json
+
+with open("emails_corporativos.json", encoding="utf-8") as arquivo:
+    emails = json.load(arquivo)
+
+print(emails[0])</pre>
+    <pre class="codeblock" style="margin-top:-8px;"><span class="c"># {'id_funcionario': 1, 'funcionario': 'Ana Souza', 'email': 'ana.souza@grupoalfa.com.br'}</span></pre>
+
+    <div class="box">
+      <strong>⚠️ Veja como é um erro real do Python:</strong> se você tentar abrir um arquivo que não existe, como <code>open("nao_existe.json", "r")</code>, o Python recusa e mostra:
+      <pre class="codeblock" style="margin:10px 0 0;">FileNotFoundError: [Errno 2] No such file or directory: 'nao_existe.json'</pre>
+      É o erro mais comum de quem trabalha com arquivos — geralmente é só um nome digitado errado ou um arquivo que ainda não foi criado. Você pode se proteger dele com <code>try</code>/<code>except</code>:
+      <pre class="codeblock" style="margin:10px 0 0;">try:
+    with open("nao_existe.json", "r", encoding="utf-8") as arquivo:
+        dados = json.load(arquivo)
+except FileNotFoundError:
+    print("Arquivo não encontrado — verifique o nome ou crie o arquivo primeiro.")</pre>
+    </div>
+
+    <div class="box">
+      <strong>⚠️ Cuidado com o <code>encoding</code>:</strong> repare que os dois exemplos acima usam <code>encoding="utf-8"</code>. Se você esquecer esse parâmetro no Windows, o Python pode abrir o arquivo com outra codificação padrão do sistema — e palavras acentuadas quebram silenciosamente, sem gerar erro nenhum: <code>"Logística"</code> pode virar <code>"LogÃ­stica"</code> na tela. É um dos bugs mais chatos de encontrar porque <strong>o programa não trava, só mostra o dado errado</strong>. Sempre que abrir um arquivo de texto (CSV, JSON, TXT), inclua <code>encoding="utf-8"</code>.
+    </div>
+
+    <h3>Exemplo extra — Escrevendo um CSV</h3>
+    <p>Até agora você só <strong>leu</strong> arquivos. Mas o RH também vai pedir pra você <strong>gerar</strong> um novo CSV — por exemplo, uma lista só com os funcionários de um setor. Para escrever, o Python usa <code>csv.DictWriter</code>, o "irmão" de escrita do <code>csv.DictReader</code> que você já usou:</p>
+    <pre class="codeblock">import csv
+
+with open("cadastro_funcionario.csv", encoding="utf-8") as arquivo:
+    funcionarios = list(csv.DictReader(arquivo))
+
+funcionarios_estoque = [f for f in funcionarios if f["setor"] == "Estoque"]
+
+with open("funcionarios_estoque.csv", "w", encoding="utf-8", newline="") as arquivo:
+    escritor = csv.DictWriter(arquivo, fieldnames=funcionarios[0].keys())
+    escritor.writeheader()
+    escritor.writerows(funcionarios_estoque)
+
+print(f"{len(funcionarios_estoque)} funcionários do Estoque salvos em funcionarios_estoque.csv")</pre>
+    <pre class="codeblock" style="margin-top:-8px;"><span class="c"># 9 funcionários do Estoque salvos em funcionarios_estoque.csv</span></pre>
+    <div class="box tip">
+      <strong>💡 O que aconteceu em cada linha:</strong>
+      <ul style="margin:8px 0 0;padding-left:20px;line-height:1.9;">
+        <li><code>"w"</code> no <code>open(...)</code> significa <strong>escrita</strong> (<code>write</code>) — diferente do modo de leitura que você já usa. Cuidado: <code>"w"</code> <strong>sobrescreve</strong> o arquivo inteiro se ele já existir.</li>
+        <li><code>newline=""</code> é importante ao escrever CSV, principalmente <strong>no Windows (VS Code local)</strong>: sem ele, o módulo <code>csv</code> pode inserir uma linha em branco entre cada registro — um bug clássico de Windows. No Colab (que roda em Linux) isso costuma não aparecer, mas escrever sempre com <code>newline=""</code> evita o problema nos dois ambientes.</li>
+        <li><code>csv.DictWriter(arquivo, fieldnames=...)</code> precisa saber, de antemão, quais são as colunas — por isso passamos <code>funcionarios[0].keys()</code>, as mesmas chaves que já vieram do CSV original.</li>
+        <li><code>.writeheader()</code> escreve a primeira linha (os nomes das colunas); <code>.writerows(...)</code> escreve o restante, um dicionário por linha.</li>
+      </ul>
+    </div>
+
+    <h3>Exemplo 3 — Lendo o banco de horas (Excel, múltiplas abas)</h3>
+    <div class="box tip">
+      <strong>📦 Antes do código: instalando o <code>openpyxl</code>.</strong> Diferente de <code>csv</code>, <code>json</code>, <code>re</code> e <code>datetime</code> (que já vêm dentro do Python), <code>openpyxl</code> é uma biblioteca <strong>de terceiros</strong> — precisa ser <strong>instalada</strong> antes do primeiro uso. No notebook desta semana, rode <code>%pip install -q openpyxl</code> numa célula antes do código abaixo (funciona tanto no Colab quanto no VS Code local; se já estiver instalado, a célula não faz nada).
+      <pre class="codeblock" style="margin:10px 0 0;">%pip install -q openpyxl</pre>
+      <strong>⚠️ Se você pular essa instalação</strong>, o código abaixo vai gerar <code>ModuleNotFoundError: No module named 'openpyxl'</code>.
+    </div>
+    <pre class="codeblock">from openpyxl import load_workbook
+
+planilha = load_workbook("recursos_humanos.xlsx")
+print("Abas disponíveis:", planilha.sheetnames)
+
+aba_ponto = planilha["banco_horas"]
+print(f"Total de registros de ponto: {aba_ponto.max_row - 1}")   <span class="c"># -1 por causa do cabeçalho</span>
+
+for linha in aba_ponto.iter_rows(min_row=2, max_row=4, values_only=True):
+    print(linha)</pre>
+    <pre class="codeblock" style="margin-top:-8px;"><span class="c"># Abas disponíveis: ['cadastro_funcionario', 'banco_horas']
+# Total de registros de ponto: 100
+# (1, 'Atendente', 'Comercial', datetime.datetime(2023, 1, 2, 0, 0), datetime.datetime(2023, 1, 2, 8, 30), datetime.datetime(2023, 1, 2, 16, 25), 8)
+# ...</span></pre>
+    <div class="box tip">
+      <strong>💡 Os 3 parâmetros de <code>iter_rows(...)</code>:</strong>
+      <ul style="margin:8px 0 0;padding-left:20px;line-height:1.9;">
+        <li><code>min_row=2</code> — comece a partir da linha 2 (pulando a linha 1, que é o cabeçalho com os títulos das colunas, não um dado de verdade).</li>
+        <li><code>max_row=4</code> — pare na linha 4 (senão o Python tentaria imprimir os 100 registros de uma vez).</li>
+        <li><code>values_only=True</code> — devolva só os valores de cada célula (ex.: <code>'Atendente'</code>), em vez de um "objeto célula" mais complexo que o Excel usa internamente. Sem esse parâmetro, você teria que escrever <code>celula.value</code> pra cada campo — <code>values_only=True</code> já entrega o valor pronto.</li>
+      </ul>
+      <p style="margin:10px 0 0;">Não se preocupe com o formato <code>datetime.datetime(2023, 1, 2, 0, 0)</code> que aparece na saída — você vai entender exatamente o que é isso na próxima seção.</p>
+    </div>
+    <p>A partir do Bloco 3, você vai preferir <code>pandas.read_excel()</code> pra isso — mas é bom saber que existe a forma "pura" do Python também, porque nem todo ambiente tem Pandas instalado.</p>
+
+    <div class="ex">
+      <strong>✏️ Atividade 1 — Contar por setor (CSV):</strong> usando <code>cadastro_funcionario.csv</code>, filtre e conte quantos funcionários existem no setor <code>"Estoque"</code>.
+    </div>
+    <div class="ex">
+      <strong>✏️ Atividade 2 — Escrever um resumo (JSON):</strong> a partir do CSV, monte um dicionário contando quantos funcionários existem em cada setor e salve esse resumo em um novo arquivo <code>relatorio_setores.json</code>.
+    </div>
+    <div class="ex">
+      <strong>✏️ Atividade 3 — Explorar o Excel:</strong> abra <code>recursos_humanos.xlsx</code>, confirme que a aba <code>banco_horas</code> tem 100 registros, e imprima os 5 primeiros.
+    </div>
+    <div class="box">
+      <strong>⚠️ Atenção antes da próxima atividade:</strong> repare que, no resultado do Exemplo 1, <code>'id_funcionario': '1'</code> aparece <strong>entre aspas</strong> — isso significa que veio como texto, não como número. Isso acontece porque <strong>todo valor lido de um CSV chega como texto</strong>, mesmo que pareça um número. Já no JSON (Exemplo 2), <code>'id_funcionario': 1</code> aparece <strong>sem aspas</strong> — esse já é um número de verdade. Isso importa porque, em Python, <code>"9" == 9</code> é <code>False</code> — texto e número nunca são considerados iguais, mesmo representando "a mesma coisa" pros nossos olhos. Se for comparar o <code>id_funcionario</code> do CSV com o do JSON, primeiro transforme o do CSV em número com <code>int(...)</code>:
+      <pre class="codeblock" style="margin:10px 0 0;">id_do_csv = funcionarios[0]["id_funcionario"]   <span class="c"># '1' (texto)</span>
+id_convertido = int(id_do_csv)                    <span class="c"># 1 (número)</span></pre>
+    </div>
+
+    <div class="ex">
+      <strong>✏️ Atividade 4 — Cruzar duas fontes:</strong> escolha um <code>id_funcionario</code>, busque o nome dele no CSV e o e-mail dele no JSON, e imprima os dois juntos (ex.: <code>"Igor Pereira: igor.pereira@grupoalfa.com.br"</code>). Lembre-se de converter o id do CSV com <code>int(...)</code> antes de comparar.
+    </div>
+  </section>
+    <div class="checagem">
+      <strong>✅ Checagem rápida — antes de avançar:</strong>
+      Você consegue abrir o <code>cadastro_funcionario.csv</code> e contar quantos registros ele tem, sem olhar o exemplo?
+    </div>
+<!-- checagem_1._Arquivos -->
+
+  <section>
+    <h2>2. Datas e Expressões Regulares</h2>
+    <div class="ponte">
+      <strong>🔗 Por que isso agora?</strong> Repare que a aba <code>banco_horas</code> do Excel tem colunas de data e hora (<code>datahora_entrada</code>, <code>datahora_saida</code>). Pra calcular quanto cada funcionário trabalhou — ou se chegou atrasado — você precisa saber operar com essas datas. E o arquivo de e-mails tem 5 registros com formato quebrado, que só dá pra encontrar com um padrão de texto: é aí que entra o regex.
+    </div>
+
+    <h3>Datas com <code>datetime</code></h3>
+    <h4>Exemplo 1 — Calculando horas trabalhadas</h4>
+    <div class="box tip">
+      <strong>💡 Antes do código: como ler <code>datetime(2023, 1, 2, 8, 30)</code>?</strong> Os 5 números são sempre nessa ordem: <strong>ano, mês, dia, hora, minuto</strong>. Aqui: 2023 (ano), 1 (janeiro), 2 (dia 2), 8 (8 horas), 30 (30 minutos) — ou seja, 2 de janeiro de 2023, às 8h30.
+    </div>
+    <pre class="codeblock">from datetime import datetime
+
+<span class="c"># registro real de Ana Souza (id 1) em 02/01/2023</span>
+entrada = datetime(2023, 1, 2, 8, 30)
+saida = datetime(2023, 1, 2, 16, 25)
+
+horas_trabalhadas = (saida - entrada).seconds / 3600
+print(f"Horas trabalhadas: {horas_trabalhadas:.2f}h")</pre>
+    <pre class="codeblock" style="margin-top:-8px;"><span class="c"># Horas trabalhadas: 7.92h</span></pre>
+    <div class="box tip">
+      <strong>💡 O que aconteceu em cada linha:</strong>
+      <ul style="margin:8px 0 0;padding-left:20px;line-height:1.9;">
+        <li>Quando você subtrai duas datas/horas em Python (<code>saida - entrada</code>), o resultado <strong>não é um número</strong> — é um "pacote" especial chamado <code>timedelta</code> ("diferença de tempo"), que guarda quantos dias e quantos segundos existem entre as duas datas.</li>
+        <li><code>.seconds</code> pega só a parte em segundos desse pacote. Como <code>entrada</code> e <code>saida</code> são no mesmo dia, isso já nos dá o total certo.</li>
+        <li>1 hora tem 3600 segundos (60 minutos × 60 segundos) — por isso dividimos por <code>3600</code>: é a conversão de segundos para horas.</li>
+        <li><code>:.2f</code> dentro do <code>f"..."</code> significa "mostre só 2 casas depois da vírgula". Sem isso, apareceria algo como <code>7.916666666666667</code> — difícil de ler.</li>
+      </ul>
+    </div>
+
+    <h4>Exemplo 2 — Calculando o atraso em minutos</h4>
+    <pre class="codeblock">from datetime import datetime
+
+entrada_prevista_min = 8 * 60          <span class="c"># 08:00, em minutos</span>
+entrada_real = datetime(2023, 1, 2, 8, 30)
+entrada_real_min = entrada_real.hour * 60 + entrada_real.minute
+
+atraso_minutos = entrada_real_min - entrada_prevista_min
+print(f"Atraso: {atraso_minutos} minutos")</pre>
+    <pre class="codeblock" style="margin-top:-8px;"><span class="c"># Atraso: 30 minutos</span></pre>
+
+    <div class="box">
+      <strong>⚠️ Veja como é um erro real do Python:</strong> tente criar <code>datetime(2023, 13, 1)</code> (mês 13 não existe) — o Python recusa e mostra <code>ValueError: month must be in 1..12</code>. Diferente do <code>FileNotFoundError</code> (um arquivo que não existe), esse é um erro de <strong>valor inválido</strong>: a data em si não existe no calendário, então o Python nem tenta continuar.
+    </div>
+
+    <div class="ex">
+      <strong>✏️ Atividade 5 — Outro registro:</strong> usando o Excel, pegue o registro de outro <code>id_funcionario</code> do dia 02/01/2023 e calcule as horas trabalhadas dele.
+    </div>
+    <div class="ex">
+      <strong>✏️ Atividade 6 — Atraso de outro funcionário:</strong> calcule o atraso (em minutos) do mesmo registro da Atividade 5, comparando com a entrada prevista das 08:00. Se o resultado for negativo, o que isso significa?
+    </div>
+
+    <h3>Expressões regulares com <code>re</code></h3>
+    <p>Uma expressão regular (regex) é um padrão de texto usado para <strong>validar</strong> ou <strong>buscar</strong> formatos específicos — como e-mails, telefones ou CPFs. Você já sabe que 5 dos 30 e-mails de <code>emails_corporativos.json</code> vieram quebrados do sistema de TI — é hora de encontrá-los.</p>
+
+    <h4>Exemplo 1 — Validando um e-mail</h4>
+    <div class="box tip">
+      <strong>💡 Antes do código: o que é o "r" antes das aspas?</strong> Repare que o padrão vai começar com <code>r"..."</code> — esse <code>r</code> colado nas aspas cria o que chamamos de <em>raw string</em> ("texto bruto"). Padrões de regex usam bastante a barra invertida (<code>\</code>), e sem o <code>r</code> o Python tentaria entender essa barra de outro jeito, o que quebraria o padrão. <strong>Regra prática: sempre que for escrever um padrão de regex, comece com <code>r"..."</code>.</strong>
+    </div>
+    <pre class="codeblock">import re
+
+email = "ana.souza@grupoalfa.com.br"
+padrao = r"^[^\s@]+@[^\s@]+\.[^\s@]+$"
+
+if re.match(padrao, email):
+    print("E-mail parece válido!")
+else:
+    print("E-mail inválido.")</pre>
+
+    <table>
+      <tr><th>Trecho do padrão</th><th>O que verifica</th></tr>
+      <tr><td><code>^</code></td><td>Início do texto</td></tr>
+      <tr><td><code>[^\s@]+</code></td><td>1 ou mais caracteres que <strong>não</strong> sejam espaço (<code>\s</code>) nem <code>@</code> — a parte antes do <code>@</code></td></tr>
+      <tr><td><code>@</code></td><td>O <code>@</code> obrigatório, exatamente uma vez</td></tr>
+      <tr><td><code>[^\s@]+</code></td><td>De novo: 1+ caracteres sem espaço/<code>@</code> — o domínio</td></tr>
+      <tr><td><code>\.</code></td><td>Um ponto literal (o <code>\</code> evita que <code>.</code> signifique "qualquer caractere")</td></tr>
+      <tr><td><code>[^\s@]+</code></td><td>A extensão do domínio (ex.: <code>com.br</code>)</td></tr>
+      <tr><td><code>$</code></td><td>Fim do texto</td></tr>
+    </table>
+
+    <h4>Exemplo 2 — Separando todos os e-mails válidos dos inválidos</h4>
+    <pre class="codeblock">import json, re
+
+with open("emails_corporativos.json", encoding="utf-8") as arquivo:
+    emails = json.load(arquivo)
+
+padrao = r"^[^\s@]+@[^\s@]+\.[^\s@]+$"
+
+validos = []
+invalidos = []
+for registro in emails:
+    if re.match(padrao, registro["email"]):
+        validos.append(registro)
+    else:
+        invalidos.append(registro)
+
+print(f"E-mails válidos: {len(validos)}")
+print(f"E-mails inválidos: {len(invalidos)}")</pre>
+    <pre class="codeblock" style="margin-top:-8px;"><span class="c"># E-mails válidos: 25
+# E-mails inválidos: 5</span></pre>
+
+    <div class="box">
+      <strong>⚠️ Cuidado com padrões "soltos":</strong> um padrão mais simples como <code>r".+@.+\..+"</code> (sem <code>^</code>/<code>$</code> e sem excluir espaços) parece funcionar, mas na prática aceita coisas erradas, porque <code>.</code> sozinho significa "qualquer caractere" — inclusive espaço e até outro <code>@</code>. É exatamente o tipo de erro que deixaria passar o e-mail quebrado <code>"helena martins@grupoalfa.com.br"</code> (tem espaço) como se fosse válido. Teste sempre com um caso que <strong>deveria falhar</strong>, não só com um caso válido.
+    </div>
+
+    <div class="ex">
+      <strong>✏️ Atividade 7 — Quem precisa corrigir o e-mail:</strong> imprima o nome de cada funcionário da lista <code>invalidos</code>, pra avisar o time de TI.
+    </div>
+    <div class="ex">
+      <strong>✏️ Atividade 8 — Seu próprio e-mail:</strong> monte uma variável com um e-mail no padrão <code>nome.sobrenome@grupoalfa.com.br</code> usando o seu nome, e teste se ele passa no padrão.
+    </div>
+  </section>
+    <div class="checagem">
+      <strong>✅ Checagem rápida — antes de avançar:</strong>
+      Você consegue calcular quantos minutos de atraso um registro do banco de horas teve, e dizer quantos e-mails do JSON são inválidos?
+    </div>
+<!-- checagem_2._Datas -->
+
+  <section>
+    <h2>3. Funções: parâmetros, valores padrão e <code>return</code></h2>
+    <div class="ponte">
+      <strong>🔗 Por que isso agora?</strong> Você já sabe calcular horas trabalhadas e atraso de um registro. Mas se precisar repetir esse cálculo pra outro funcionário — ou pros 100 registros do banco de horas — teria que copiar e colar o código de novo, só trocando os valores. É exatamente esse problema que uma função resolve.
+    </div>
+    <p>Olhe este código que calcula o atraso de 3 funcionários diferentes, copiado e colado 3 vezes:</p>
+    <pre class="codeblock">atraso_ana = (8*60 + 30) - (8*60)      <span class="c"># 30 min</span>
+atraso_bruno = (8*60 + 30) - (8*60)    <span class="c"># 30 min</span>
+atraso_carlos = (8*60 + 9) - (8*60)    <span class="c"># 9 min</span>
+
+print(atraso_ana, atraso_bruno, atraso_carlos)</pre>
+    <div class="box">
+      <strong>⚠️ O que tem de errado aqui?</strong> A mesma conta (<code>entrada_real − entrada_prevista</code>, em minutos) está escrita 3 vezes. Se um dia a tolerância mudar, ou o horário de entrada previsto for outro por setor, você precisaria encontrar e corrigir as 3 linhas — e é fácil esquecer uma. Uma <strong>função</strong> resolve exatamente isso: você escreve a regra <strong>uma única vez</strong> e só chama ela.
+    </div>
+
+    <div class="box tip">
+      <strong>📖 Antes da função completa: a menor função possível em Python</strong>
+      <pre class="codeblock" style="margin:10px 0;">def dizer_ola():
+    return "Olá!"
+
+print(dizer_ola())    <span class="c"># Olá!</span></pre>
+      <p style="margin:8px 0;">Repare na anatomia — toda função em Python segue essa mesma receita:</p>
+      <ul style="margin:0 0 10px 20px;line-height:1.9;">
+        <li><code>def</code> é a palavra que avisa o Python "a partir daqui eu estou <strong>de</strong>finindo uma função nova" (abreviação de "definir").</li>
+        <li><code>dizer_ola</code> é o nome que você escolheu para a função — mesma regra de nomes de variáveis que você já usa.</li>
+        <li><code>()</code> é onde ficam os <strong>parâmetros</strong> — "caixinhas vazias" que a função pode pedir pra receber um valor toda vez que for chamada. Aqui está vazio porque essa função não precisa de nenhuma informação de fora.</li>
+        <li>A linha indentada (recuada) é o <strong>corpo</strong> da função — o que ela faz de fato.</li>
+        <li><code>return</code> é a palavra que diz "é isso que a função devolve pra quem chamou ela".</li>
+      </ul>
+      <p style="margin:8px 0;">Agora a mesma receita, com uma "caixinha" (parâmetro) pra preencher:</p>
+      <pre class="codeblock" style="margin:10px 0;">def dizer_ola_para(nome):
+    return f"Olá, {nome}!"
+
+print(dizer_ola_para("Ana"))    <span class="c"># Olá, Ana!</span></pre>
+      <p style="margin:8px 0 0;">É essa mesma receita — <code>def</code>, nome, parênteses com parâmetros, corpo indentado, <code>return</code> — que a função <code>calcular_atraso</code> a seguir usa. A única diferença é que ela tem 4 caixinhas (parâmetros) em vez de 1, e duas delas já vêm com um valor "pré-preenchido" (o valor padrão) caso você não informe nada.</p>
+    </div>
+
+    <pre class="codeblock">def calcular_atraso(hora_entrada, minuto_entrada, hora_prevista=8, minuto_previsto=0):
+    minutos_reais = hora_entrada * 60 + minuto_entrada
+    minutos_previstos = hora_prevista * 60 + minuto_previsto
+    return minutos_reais - minutos_previstos
+
+print(calcular_atraso(8, 30))        <span class="c"># entrada 08:30, previsto padrão 08:00 → 30</span>
+print(calcular_atraso(7, 45))        <span class="c"># chegou antes → -15</span></pre>
+    <div class="box tip">
+      <strong>💡 "Sem <code>return</code>, a função é surda — não responde nada."</strong> Uma função sem <code>return</code> pode até imprimir algo na tela, mas não devolve nenhum valor que você possa guardar em uma variável ou usar em outro cálculo.
+    </div>
+
+    <h3>Exemplo 1 — Função com retorno: horas trabalhadas</h3>
+    <pre class="codeblock">from datetime import datetime
+
+def calcular_horas_trabalhadas(entrada, saida):
+    return (saida - entrada).seconds / 3600
+
+entrada = datetime(2023, 1, 2, 8, 30)
+saida = datetime(2023, 1, 2, 16, 25)
+print(f"{calcular_horas_trabalhadas(entrada, saida):.2f}h")</pre>
+
+    <h3>Exemplo 2 — Parâmetro com valor padrão: classificar pontualidade</h3>
+    <pre class="codeblock">def classificar_pontualidade(atraso_minutos, tolerancia=10):
+    if atraso_minutos <= tolerancia:
+        return "Pontual"
+    return "Atrasado"
+
+print(classificar_pontualidade(5))          <span class="c"># dentro da tolerância padrão: Pontual</span>
+print(classificar_pontualidade(30))         <span class="c"># acima da tolerância padrão: Atrasado</span>
+print(classificar_pontualidade(12, tolerancia=15))  <span class="c"># tolerância customizada: Pontual</span></pre>
+
+    <div class="box">
+      <strong>⚠️ Veja como é um erro real do Python:</strong> chame <code>calcular_horas_trabalhadas()</code> sem passar os dois parâmetros obrigatórios. O Python recusa e mostra algo como:
+      <pre class="codeblock" style="margin:10px 0 0;">TypeError: calcular_horas_trabalhadas() missing 2 required positional arguments: 'entrada' and 'saida'</pre>
+      Diferente de <code>hora_prevista</code> e <code>minuto_previsto</code> (que têm valor padrão e podem ser omitidos), <code>entrada</code> e <code>saida</code> não têm padrão — por isso são <strong>obrigatórios</strong>.
+    </div>
+
+    <div class="ex">
+      <strong>✏️ Atividade 9 — <code>calcular_horas_trabalhadas</code>:</strong> crie a função e teste com 2 registros diferentes do banco de horas.
+    </div>
+    <div class="ex">
+      <strong>✏️ Atividade 10 — <code>calcular_atraso</code> com parâmetro padrão:</strong> crie a função (como no exemplo) e teste uma vez com a entrada prevista padrão (08:00) e outra vez com um horário customizado (ex.: turno que começa às 07:00).
+    </div>
+    <div class="ex">
+      <strong>✏️ Atividade 11 — <code>validar_email</code>:</strong> transforme a checagem de regex da Seção 2 em uma função <code>validar_email(email)</code> que retorna <code>True</code> ou <code>False</code>.
+    </div>
+    <div class="ex">
+      <strong>✏️ Atividade 12 — <code>classificar_pontualidade</code>:</strong> crie a função (como no Exemplo 2) e teste com 3 valores diferentes de atraso.
+    </div>
+
+    <div class="box tip">
+      <strong>🚀 Avançado (opcional) — parâmetros "ilimitados" com <code>*args</code>:</strong> toda função até aqui tinha um número fixo de parâmetros. Com <code>*args</code>, uma função aceita <strong>qualquer quantidade</strong> de argumentos, que chegam agrupados numa tupla:
+      <pre class="codeblock" style="margin:10px 0 0;">def media(*args):
+    return sum(args) / len(args)
+
+print(media(7, 8, 9))        <span class="c"># funciona com 3 valores</span>
+print(media(7, 8, 9, 10))    <span class="c"># e também com 4, sem mudar a função</span></pre>
+      Isso é a base do desafio opcional do notebook desta semana.
+    </div>
+  </section>
+    <div class="checagem">
+      <strong>✅ Checagem rápida — antes de avançar:</strong>
+      Você consegue escrever uma função com um parâmetro obrigatório e um parâmetro com valor padrão, e explicar a diferença entre os dois?
+    </div>
+<!-- checagem_3._Funcoes -->
+
+  <section>
+    <h2>4. Lambda e Módulos</h2>
+    <div class="ponte">
+      <strong>🔗 Por que isso agora?</strong> Uma <code>lambda</code> não é um conceito novo — é só um jeito mais curto de escrever uma função pequena como as que você acabou de criar. E um módulo é só um arquivo com as suas funções guardadas, prontas pra reusar sem copiar e colar.
+    </div>
+
+    <h3>Exemplo 1 — Função lambda (função de uma linha)</h3>
+    <pre class="codeblock">calcular_atraso_lambda = lambda entrada_min, previsto_min=8*60: entrada_min - previsto_min
+
+print(calcular_atraso_lambda(8*60 + 30))    <span class="c"># 30</span></pre>
+    <p>Uma <code>lambda</code> é equivalente a uma função criada com <code>def</code>, só que escrita em uma única linha — útil para funções pequenas e simples.</p>
+
+    <div class="box">
+      <strong>⚠️ Onde a lambda esbarra:</strong> tente escrever <code>lambda x: return x * 2</code> — o Python recusa com <code>SyntaxError: invalid syntax</code>. Lambda só aceita uma <strong>expressão</strong> (algo que produz um valor), nunca um comando como <code>return</code>, <code>if</code> sozinho ou um <code>for</code>. É por isso que lambda serve pra cálculos curtos, não pra lógica complexa.
+    </div>
+
+    <h3>Exemplo 2 — Onde o lambda realmente brilha: dentro de <code>min()</code></h3>
+    <p>Guardar uma lambda numa variável (como acima) é raro na prática. O uso real e mais comum é passar a lambda <strong>direto</strong> como argumento de outra função, como <code>sorted()</code>, <code>max()</code> ou <code>min()</code>, para dizer "ordene/compare por <em>este</em> critério":</p>
+    <pre class="codeblock">from datetime import datetime
+
+<span class="c"># registros reais do dia 02/01/2023 (banco_horas)</span>
+registros_do_dia = [
+    {"funcionario": "Ana Souza",     "entrada": datetime(2023, 1, 2, 8, 30)},
+    {"funcionario": "Bruno Lima",    "entrada": datetime(2023, 1, 2, 8, 30)},
+    {"funcionario": "Helena Martins","entrada": datetime(2023, 1, 2, 7, 25)},
+]
+
+primeiro_a_chegar = min(registros_do_dia, key=lambda r: r["entrada"])
+print(f"Primeiro a chegar: {primeiro_a_chegar['funcionario']}")</pre>
+    <div class="box tip">
+      <strong>💡 Como ler isso:</strong> <code>key=lambda r: r["entrada"]</code> diz ao <code>min()</code> "para decidir qual registro é o menor, olhe o horário de <code>entrada</code> de cada um (<code>r</code>)". Sem a lambda, você precisaria escrever um <code>for</code> manual comparando item a item — a lambda só descreve <strong>o critério</strong>, e o Python faz a comparação para você.
+    </div>
+
+    <h3>Criando seu próprio módulo</h3>
+    <p>Um módulo é só um arquivo <code>.py</code> com funções, que pode ser importado em qualquer outro script — assim você nunca precisa reescrever a mesma função duas vezes.</p>
+    <div class="box tip">
+      <strong>📁 Como criar esse arquivo no notebook desta semana?</strong> Tanto no Colab quanto no VS Code (rodando com a extensão Jupyter) você usa o comando mágico <code>%%writefile utilidades_rh.py</code> como primeira linha da célula — ele funciona nos dois ambientes porque ambos rodam sobre um kernel Jupyter. A diferença está em onde o arquivo fica: no Colab, ele cai numa pasta temporária que some quando a sessão termina (por isso reenvie os 3 arquivos originais se voltar depois); no VS Code local, ele é criado como um arquivo <code>.py</code> de verdade, permanente, na mesma pasta do notebook — e esse é o arquivo que você deve versionar no Git.
+    </div>
+    <pre class="codeblock"><span class="c"># arquivo: utilidades_rh.py</span>
+def calcular_horas_trabalhadas(entrada, saida):
+    return (saida - entrada).seconds / 3600
+
+def calcular_atraso(hora_entrada, minuto_entrada, hora_prevista=8, minuto_previsto=0):
+    minutos_reais = hora_entrada * 60 + minuto_entrada
+    minutos_previstos = hora_prevista * 60 + minuto_previsto
+    return minutos_reais - minutos_previstos
+
+def classificar_pontualidade(atraso_minutos, tolerancia=10):
+    if atraso_minutos <= tolerancia:
+        return "Pontual"
+    return "Atrasado"</pre>
+    <pre class="codeblock"><span class="c"># outro arquivo, na mesma pasta</span>
+import utilidades_rh
+
+atraso = utilidades_rh.calcular_atraso(8, 30)
+print(utilidades_rh.classificar_pontualidade(atraso))</pre>
+
+    <div class="ex">
+      <strong>✏️ Atividade 13 — Lambda:</strong> reescreva <code>calcular_horas_trabalhadas</code> (Seção 3) como uma <code>lambda</code>.
+    </div>
+    <div class="ex">
+      <strong>✏️ Atividade 14 — Ordenando por critério:</strong> monte uma lista com 3-4 registros de entrada (pode reaproveitar dados reais do banco de horas) e use <code>sorted()</code> com <code>key=lambda</code> pra ordenar do que chegou mais cedo ao mais tarde.
+    </div>
+    <div class="ex">
+      <strong>✏️ Atividade 15 — Adicionar uma função ao módulo:</strong> adicione a função <code>validar_email</code> (Atividade 11) ao arquivo <code>utilidades_rh.py</code> (reescreva o arquivo com <code>%%writefile</code>, incluindo as 3 funções anteriores + a nova).
+    </div>
+    <div class="ex">
+      <strong>✏️ Atividade 16 — Usando o módulo reimportado:</strong> reimporte o módulo (com <code>importlib.reload</code>, já que ele foi reescrito) e use <code>validar_email</code> para processar os e-mails de <code>emails_corporativos.json</code>.
+    </div>
+  </section>
+    <div class="checagem">
+      <strong>✅ Checagem rápida — antes de avançar:</strong>
+      Você consegue explicar em uma frase por que uma lambda não pode ter <code>return</code> dentro dela?
+    </div>
+<!-- checagem_4._Lambda -->
+
+  <section>
+    <h2>5. Treino em Squads — Sexta-feira (Encontro 3)</h2>
+    <p>Na sexta-feira, cada squad recebe <strong>um setor do Grupo Alfa</strong> (Comercial, Logística, Estoque ou RH) e precisa consolidar as 3 fontes de dados pra responder uma pergunta real de People Analytics:</p>
+    <div class="box tip">
+      <strong>Desafio:</strong> usando os 3 arquivos (<code>cadastro_funcionario.csv</code>, <code>emails_corporativos.json</code>, <code>recursos_humanos.xlsx</code>), filtre só os funcionários do setor do seu squad, descubra <strong>quem teve mais atraso acumulado</strong> na semana de dados disponível, e verifique se o e-mail dessa pessoa está correto. Organizem o código do squad em pelo menos uma função reutilizável.
+    </div>
+    <div class="box tip">
+      <strong>🗣️ Depois das apresentações:</strong> participe do debate — os squads chegaram ao mesmo resultado? Alguém encontrou um funcionário com e-mail inválido? As funções ficaram parecidas entre os squads, ou cada um organizou diferente?
+    </div>
+  </section>
+
+
+    <div class="fechamento">
+      <h3>🏁 Fechamento — Semana 04</h3>
+      <p><strong>Nesta semana você aprendeu:</strong></p>
+      <ul><li>Leitura e escrita de CSV, JSON e Excel — a base para trabalhar com dados reais de qualquer sistema</li><li>Funções bem definidas: parâmetros, <code>return</code>, lambda e módulos</li><li>Datas e expressões regulares para lidar com dados de ponto e cadastro</li></ul>
+      <p style="margin-top:14px;"><strong>Próxima semana:</strong> Semana 05 — Pandas e NumPy: as ferramentas centrais do analista de dados.</p>
+    </div>
+<section>
+    <h2>Quiz de Fixação</h2>
+    <p>Responda e clique em <strong>Verificar</strong> para ver o feedback de cada questão.</p>
+
+    <div class="qs" data-correct="b">
+      <p><strong>1.</strong> Qual módulo do Python é usado para ler e escrever arquivos JSON?</p>
+      <label><input type="radio" name="q1" value="a"> <code>csv</code></label>
+      <label><input type="radio" name="q1" value="b"> <code>json</code></label>
+      <label><input type="radio" name="q1" value="c"> <code>re</code></label>
+      <label><input type="radio" name="q1" value="d"> <code>datetime</code></label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="b">
+      <p><strong>2.</strong> O que uma função sem <code>return</code> devolve quando chamada?</p>
+      <label><input type="radio" name="q2" value="a"> Um erro (<code>SyntaxError</code>)</label>
+      <label><input type="radio" name="q2" value="b"> <code>None</code></label>
+      <label><input type="radio" name="q2" value="c"> O nome da função</label>
+      <label><input type="radio" name="q2" value="d"> O último valor impresso com <code>print()</code></label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="c">
+      <p><strong>3.</strong> Em <code>def classificar_pontualidade(atraso, tolerancia=10):</code>, o que é <code>tolerancia=10</code>?</p>
+      <label><input type="radio" name="q3" value="a"> Um erro de sintaxe</label>
+      <label><input type="radio" name="q3" value="b"> Um parâmetro obrigatório</label>
+      <label><input type="radio" name="q3" value="c"> Um parâmetro opcional com valor padrão</label>
+      <label><input type="radio" name="q3" value="d"> O valor de retorno da função</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="b">
+      <p><strong>4.</strong> Você abre um CSV com nomes de setores acentuados sem passar <code>encoding="utf-8"</code>. O que pode acontecer?</p>
+      <label><input type="radio" name="q4" value="a"> O Python sempre lança um erro e para</label>
+      <label><input type="radio" name="q4" value="b"> As palavras acentuadas podem vir quebradas, sem nenhum erro aparecer</label>
+      <label><input type="radio" name="q4" value="c"> O arquivo não abre de jeito nenhum</label>
+      <label><input type="radio" name="q4" value="d"> Não faz diferença nenhuma</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="a">
+      <p><strong>5.</strong> Em <code>min(registros, key=lambda r: r["entrada"])</code>, para que serve o <code>key=lambda...</code>?</p>
+      <label><input type="radio" name="q5" value="a"> Diz ao <code>min()</code> qual critério usar para comparar os itens</label>
+      <label><input type="radio" name="q5" value="b"> Ordena a lista permanentemente</label>
+      <label><input type="radio" name="q5" value="c"> É obrigatório em toda chamada de <code>min()</code></label>
+      <label><input type="radio" name="q5" value="d"> Cria uma nova lista vazia</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Exercícios da Semana</h2>
+    <div class="ex">
+      <strong>Fácil:</strong> Leia <code>cadastro_funcionario.csv</code> e conte quantos funcionários existem no setor <code>"RH"</code>.
+    </div>
+    <div class="ex">
+      <strong>Médio:</strong> Crie a função <code>calcular_atraso(hora_entrada, minuto_entrada, hora_prevista=8, minuto_previsto=0)</code> e teste com 2 registros diferentes do banco de horas.
+    </div>
+    <div class="ex">
+      <strong>Avançado:</strong> Crie o módulo <code>utilidades_rh.py</code> com 4+ funções e use-o para processar os e-mails inválidos de <code>emails_corporativos.json</code>.
+    </div>
+    <p>Lista completa em <code>04_exercicios.md</code>.</p>
+  </section>
+
+</main>
+
+<footer>
+  Curso: Análise de Dados com Python — SENAI (Turma T5) · Semana 04<br>
+  <strong>Professor: Cláudio Ferreira Neves - Especialista em Dados</strong>
+</footer>
+
+<script>
+function check(btn){
+  const qs = btn.closest('.qs');
+  const correct = qs.getAttribute('data-correct');
+  const name = qs.querySelector('input').name;
+  const selected = qs.querySelector('input[name="' + name + '"]:checked');
+  const fb = qs.querySelector('.feedback');
+
+  if(!selected){
+    fb.className = 'feedback wrong';
+    fb.textContent = '⚠️ Selecione uma alternativa antes de verificar.';
+    return;
+  }
+
+  if(selected.value === correct){
+    fb.className = 'feedback correct';
+    fb.textContent = '✅ Correto! Muito bem.';
+  } else {
+    const correctLabel = qs.querySelector('input[value="' + correct + '"]').closest('label').textContent.trim();
+    fb.className = 'feedback wrong';
+    fb.textContent = '❌ Incorreto. A resposta certa é: ' + correctLabel;
+  }
+}
+</script>
+
+</body>
+</html>
