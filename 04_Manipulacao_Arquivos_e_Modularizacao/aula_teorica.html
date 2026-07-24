@@ -399,11 +399,19 @@ id_convertido = int(id_do_csv)                    <span class="c"># 1 (número)<
     <div class="box tip">
       <strong>💡 Antes do código: como ler <code>datetime(2023, 1, 2, 8, 30)</code>?</strong> Os 5 números são sempre nessa ordem: <strong>ano, mês, dia, hora, minuto</strong>. Aqui: 2023 (ano), 1 (janeiro), 2 (dia 2), 8 (8 horas), 30 (30 minutos) — ou seja, 2 de janeiro de 2023, às 8h30.
     </div>
-    <pre class="codeblock">from datetime import datetime
+    <pre class="codeblock">from openpyxl import load_workbook
 
-<span class="c"># registro real de Ana Souza (id 1) em 02/01/2023</span>
-entrada = datetime(2023, 1, 2, 8, 30)
-saida = datetime(2023, 1, 2, 16, 25)
+planilha = load_workbook("recursos_humanos.xlsx")
+aba_ponto = planilha["banco_horas"]
+
+registro = None
+for linha in aba_ponto.iter_rows(min_row=2, values_only=True):
+    if linha[0] == 1 and linha[3].date().isoformat() == "2023-01-02":
+        registro = linha  <span class="c"># Ana Souza (id 1), 02/01/2023</span>
+        break
+
+entrada = registro[4]
+saida = registro[5]
 
 horas_trabalhadas = (saida - entrada).seconds / 3600
 print(f"Horas trabalhadas: {horas_trabalhadas:.2f}h")</pre>
@@ -411,6 +419,7 @@ print(f"Horas trabalhadas: {horas_trabalhadas:.2f}h")</pre>
     <div class="box tip">
       <strong>💡 O que aconteceu em cada linha:</strong>
       <ul style="margin:8px 0 0;padding-left:20px;line-height:1.9;">
+        <li><code>entrada</code> e <code>saida</code> vêm direto da planilha <code>recursos_humanos.xlsx</code> — a célula abre o arquivo e busca a linha certa com <code>for</code>/<code>if</code>/<code>break</code> (mesmo padrão da Atividade 4), em vez de digitar o horário à mão. <code>registro[4]</code> e <code>registro[5]</code> são <code>datahora_entrada</code> e <code>datahora_saida</code>, já entregues pelo <code>openpyxl</code> como objetos <code>datetime</code> prontos.</li>
         <li>Quando você subtrai duas datas/horas em Python (<code>saida - entrada</code>), o resultado <strong>não é um número</strong> — é um "pacote" especial chamado <code>timedelta</code> ("diferença de tempo"), que guarda quantos dias e quantos segundos existem entre as duas datas.</li>
         <li><code>.seconds</code> pega só a parte em segundos desse pacote. Como <code>entrada</code> e <code>saida</code> são no mesmo dia, isso já nos dá o total certo.</li>
         <li>1 hora tem 3600 segundos (60 minutos × 60 segundos) — por isso dividimos por <code>3600</code>: é a conversão de segundos para horas.</li>
@@ -419,10 +428,19 @@ print(f"Horas trabalhadas: {horas_trabalhadas:.2f}h")</pre>
     </div>
 
     <h4>Exemplo 2 — Calculando o atraso em minutos</h4>
-    <pre class="codeblock">from datetime import datetime
+    <pre class="codeblock">from openpyxl import load_workbook
+
+planilha = load_workbook("recursos_humanos.xlsx")
+aba_ponto = planilha["banco_horas"]
+
+registro = None
+for linha in aba_ponto.iter_rows(min_row=2, values_only=True):
+    if linha[0] == 1 and linha[3].date().isoformat() == "2023-01-02":
+        registro = linha  <span class="c"># Ana Souza (id 1), 02/01/2023</span>
+        break
 
 entrada_prevista_min = 8 * 60          <span class="c"># 08:00, em minutos</span>
-entrada_real = datetime(2023, 1, 2, 8, 30)
+entrada_real = registro[4]
 entrada_real_min = entrada_real.hour * 60 + entrada_real.minute
 
 atraso_minutos = entrada_real_min - entrada_prevista_min
@@ -468,6 +486,38 @@ else:
       <tr><td><code>$</code></td><td>Fim do texto</td></tr>
     </table>
 
+    <div class="box">
+      <strong>📌 Este exemplo ainda não usou nenhum arquivo.</strong> Testamos o padrão com um e-mail digitado direto no código, só pra entender a lógica do regex antes de aplicá-la aos dados reais. O próximo exemplo (CPF) também é assim — dado digitado na hora, sem abrir arquivo nenhum. Isso muda no Exemplo 2, que volta a trabalhar com o arquivo <code>emails_corporativos.json</code>.
+    </div>
+
+    <h4>Exemplo extra — Validando um CPF</h4>
+    <p>O mesmo raciocínio do e-mail serve pra validar qualquer formato de texto — só muda o padrão. Um CPF no formato <code>000.000.000-00</code> tem uma estrutura mais rígida que um e-mail: sempre 11 dígitos, sempre nas mesmas posições.</p>
+    <pre class="codeblock">import re
+
+cpf_valido = "123.456.789-00"
+cpf_invalido = "123.456.789-0"    <span class="c"># faltou um dígito antes do traço</span>
+
+padrao_cpf = r"^\d{3}\.\d{3}\.\d{3}-\d{2}$"
+
+for cpf in [cpf_valido, cpf_invalido]:
+    if re.match(padrao_cpf, cpf):
+        print(f"{cpf}: CPF parece válido!")
+    else:
+        print(f"{cpf}: CPF inválido.")</pre>
+    <pre class="codeblock" style="margin-top:-8px;"><span class="c"># 123.456.789-00: CPF parece válido!
+# 123.456.789-0: CPF inválido.</span></pre>
+
+    <table>
+      <tr><th>Trecho do padrão</th><th>O que verifica</th></tr>
+      <tr><td><code>\d{3}</code></td><td><code>\d</code> é qualquer dígito (0-9); <code>{3}</code> repete isso exatamente 3 vezes seguidas</td></tr>
+      <tr><td><code>\.</code></td><td>Um ponto literal, igual no exemplo do e-mail</td></tr>
+      <tr><td><code>-</code></td><td>O traço, exigido exatamente nessa posição</td></tr>
+      <tr><td><code>\d{2}</code></td><td>Os 2 últimos dígitos, depois do traço</td></tr>
+    </table>
+    <div class="box tip">
+      <strong>💡 Diferença para o padrão de e-mail:</strong> lá você usava <code>[^\s@]+</code> ("1 ou mais caracteres que não sejam espaço nem @") porque o tamanho do texto antes/depois do <code>@</code> varia de pessoa pra pessoa. Já um CPF tem <strong>tamanho fixo</strong> — por isso o padrão troca o "1 ou mais" (<code>+</code>) por uma contagem exata (<code>{3}</code>, <code>{2}</code>).
+    </div>
+
     <h4>Exemplo 2 — Separando todos os e-mails válidos dos inválidos</h4>
     <pre class="codeblock">import json, re
 
@@ -489,12 +539,32 @@ print(f"E-mails inválidos: {len(invalidos)}")</pre>
     <pre class="codeblock" style="margin-top:-8px;"><span class="c"># E-mails válidos: 25
 # E-mails inválidos: 5</span></pre>
 
+    <h4>Exemplo extra — Listando só os e-mails válidos</h4>
+    <p>Separar em duas listas (Exemplo 2) é o primeiro passo. Agora que você tem <code>validos</code> e <code>invalidos</code> prontos, dá pra usar cada lista sozinha — aqui, só pra imprimir o e-mail de quem está correto.</p>
+    <pre class="codeblock">import json, re
+
+with open("emails_corporativos.json", encoding="utf-8") as arquivo:
+    emails = json.load(arquivo)
+
+padrao = r"^[^\s@]+@[^\s@]+\.[^\s@]+$"
+
+validos = [registro for registro in emails if re.match(padrao, registro["email"])]
+
+for registro in validos:
+    print(registro["email"])</pre>
+    <div class="box tip">
+      <strong>💡 Reparou que essa célula abre o arquivo de novo</strong>, mesmo você já tendo feito isso no Exemplo 2? É de propósito: assim ela funciona sozinha, mesmo se você rodar só ela. E <code>validos = [registro for registro in emails if re.match(padrao, registro["email"])]</code> é uma <strong>list comprehension</strong> — a mesma ideia do <code>for</code> com <code>if</code> que você já usou, só que escrita numa linha: "pra cada <code>registro</code> em <code>emails</code>, guarde só quem passa no <code>re.match(...)</code>".
+    </div>
+
     <div class="box">
       <strong>⚠️ Cuidado com padrões "soltos":</strong> um padrão mais simples como <code>r".+@.+\..+"</code> (sem <code>^</code>/<code>$</code> e sem excluir espaços) parece funcionar, mas na prática aceita coisas erradas, porque <code>.</code> sozinho significa "qualquer caractere" — inclusive espaço e até outro <code>@</code>. É exatamente o tipo de erro que deixaria passar o e-mail quebrado <code>"helena martins@grupoalfa.com.br"</code> (tem espaço) como se fosse válido. Teste sempre com um caso que <strong>deveria falhar</strong>, não só com um caso válido.
     </div>
 
     <div class="ex">
-      <strong>✏️ Atividade 7 — Quem precisa corrigir o e-mail:</strong> imprima o nome de cada funcionário da lista <code>invalidos</code>, pra avisar o time de TI.
+      <strong>✏️ Atividade 7 — Quem precisa corrigir o e-mail:</strong> usando a lista <code>invalidos</code> que você já separou no Exemplo 2, imprima:
+      <br>a) o <strong>nome</strong> de cada funcionário da lista, pra avisar o time de TI;
+      <br>b) o <strong>e-mail</strong> (quebrado) de cada funcionário da lista;
+      <br>c) o <strong>nome e o e-mail juntos</strong>, no formato <code>nome: email</code>.
     </div>
     <div class="ex">
       <strong>✏️ Atividade 8 — Seu próprio e-mail:</strong> monte uma variável com um e-mail no padrão <code>nome.sobrenome@grupoalfa.com.br</code> usando o seu nome, e teste se ele passa no padrão.
@@ -555,13 +625,22 @@ print(calcular_atraso(7, 45))        <span class="c"># chegou antes → -15</spa
     </div>
 
     <h3>Exemplo 1 — Função com retorno: horas trabalhadas</h3>
-    <pre class="codeblock">from datetime import datetime
+    <pre class="codeblock">from openpyxl import load_workbook
 
 def calcular_horas_trabalhadas(entrada, saida):
     return (saida - entrada).seconds / 3600
 
-entrada = datetime(2023, 1, 2, 8, 30)
-saida = datetime(2023, 1, 2, 16, 25)
+planilha = load_workbook("recursos_humanos.xlsx")
+aba_ponto = planilha["banco_horas"]
+
+registro = None
+for linha in aba_ponto.iter_rows(min_row=2, values_only=True):
+    if linha[0] == 1 and linha[3].date().isoformat() == "2023-01-02":
+        registro = linha  <span class="c"># Ana Souza (id 1), 02/01/2023</span>
+        break
+
+entrada = registro[4]
+saida = registro[5]
 print(f"{calcular_horas_trabalhadas(entrada, saida):.2f}h")</pre>
 
     <h3>Exemplo 2 — Parâmetro com valor padrão: classificar pontualidade</h3>
@@ -627,19 +706,26 @@ print(calcular_atraso_lambda(8*60 + 30))    <span class="c"># 30</span></pre>
 
     <h3>Exemplo 2 — Onde o lambda realmente brilha: dentro de <code>min()</code></h3>
     <p>Guardar uma lambda numa variável (como acima) é raro na prática. O uso real e mais comum é passar a lambda <strong>direto</strong> como argumento de outra função, como <code>sorted()</code>, <code>max()</code> ou <code>min()</code>, para dizer "ordene/compare por <em>este</em> critério":</p>
-    <pre class="codeblock">from datetime import datetime
+    <pre class="codeblock">import csv
+from openpyxl import load_workbook
 
-<span class="c"># registros reais do dia 02/01/2023 (banco_horas)</span>
-registros_do_dia = [
-    {"funcionario": "Ana Souza",     "entrada": datetime(2023, 1, 2, 8, 30)},
-    {"funcionario": "Bruno Lima",    "entrada": datetime(2023, 1, 2, 8, 30)},
-    {"funcionario": "Helena Martins","entrada": datetime(2023, 1, 2, 7, 25)},
-]
+with open("cadastro_funcionario.csv", encoding="utf-8") as arquivo:
+    funcionarios = list(csv.DictReader(arquivo))
+nome_por_id = {int(f["id_funcionario"]): f["funcionario"] for f in funcionarios}
+
+planilha = load_workbook("recursos_humanos.xlsx")
+aba_ponto = planilha["banco_horas"]
+
+ids_do_dia = [1, 2, 8]  <span class="c"># Ana Souza, Bruno Lima, Helena Martins</span>
+registros_do_dia = []
+for linha in aba_ponto.iter_rows(min_row=2, values_only=True):
+    if linha[0] in ids_do_dia and linha[3].date().isoformat() == "2023-01-02":
+        registros_do_dia.append({"funcionario": nome_por_id[linha[0]], "entrada": linha[4]})
 
 primeiro_a_chegar = min(registros_do_dia, key=lambda r: r["entrada"])
 print(f"Primeiro a chegar: {primeiro_a_chegar['funcionario']}")</pre>
     <div class="box tip">
-      <strong>💡 Como ler isso:</strong> <code>key=lambda r: r["entrada"]</code> diz ao <code>min()</code> "para decidir qual registro é o menor, olhe o horário de <code>entrada</code> de cada um (<code>r</code>)". Sem a lambda, você precisaria escrever um <code>for</code> manual comparando item a item — a lambda só descreve <strong>o critério</strong>, e o Python faz a comparação para você.
+      <strong>💡 De onde vêm os nomes?</strong> A planilha <code>banco_horas</code> só guarda o <code>id_funcionario</code>, não o nome — por isso a célula também abre o <code>cadastro_funcionario.csv</code> e monta <code>nome_por_id</code>, um dicionário que traduz cada id pro nome da pessoa (o mesmo cruzamento CSV+Excel da Atividade 4). <strong>Como ler o <code>min()</code>:</strong> <code>key=lambda r: r["entrada"]</code> diz ao <code>min()</code> "para decidir qual registro é o menor, olhe o horário de <code>entrada</code> de cada um (<code>r</code>)". Sem a lambda, você precisaria escrever um <code>for</code> manual comparando item a item — a lambda só descreve <strong>o critério</strong>, e o Python faz a comparação para você.
     </div>
 
     <h3>Criando seu próprio módulo</h3>
