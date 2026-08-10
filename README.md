@@ -34,6 +34,8 @@
 Repositório de consulta da **Turma T5** durante o Módulo Básico (*Manipulação de Dados com Python e SQL*). Aqui ficam:
 
 - O material de estudo de cada semana (teoria + notebook prático)
+- O [Guia de configuração do GitHub](GUIA_GITHUB.md) — Git, GitHub e VS Code, num guia próprio sem prazo atrelado a uma aula
+- O [gabarito oficial das atividades e squads](gabarito_das_atividades/) de cada semana já encerrada
 
 ---
 
@@ -42,6 +44,11 @@ Repositório de consulta da **Turma T5** durante o Módulo Básico (*Manipulaç�
 ```
 turma05-analise-de-dados-com-python/
 ├── README.md
+├── GUIA_GITHUB.md                          ← configuração de Git/GitHub/VS Code (sem prazo de aula)
+├── gabarito_das_atividades/                ← gabarito oficial das semanas já encerradas
+│   └── Semana0X/
+│       ├── Semana0X_gabarito.html
+│       └── Semana0X_gabarito.ipynb
 ├── 01_Introducao_Fundamentos_Analise_Dados/
 │   └── Aluno/
 │       ├── html/aula_teorica.html   ← teoria + quiz interativo
