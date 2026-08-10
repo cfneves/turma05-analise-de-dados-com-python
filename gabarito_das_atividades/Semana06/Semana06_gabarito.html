@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 06 — Gabarito das Atividades e Squads</title>
+<style>
+  :root{
+    --red:#CC0000;
+    --red-dark:#990000;
+    --ink:#1a1a2e;
+    --bg:#f7f7fa;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Segoe UI', Roboto, Arial, sans-serif;
+    background:var(--bg);
+    color:#222;
+    line-height:1.6;
+  }
+  .hero{
+    background:linear-gradient(135deg,#0d1b2a,#1b263b,var(--red));
+    color:#fff;
+    padding:60px 24px;
+    text-align:center;
+  }
+  .hero h1{
+    margin:0 0 10px;
+    font-size:2.2rem;
+  }
+  .hero h1 span{ color:#FFD60A; }
+  .hero p{
+    max-width:760px;
+    margin:14px auto 0;
+    font-size:1.05rem;
+    opacity:.92;
+  }
+  .badge{
+    display:inline-block;
+    background:rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.4);
+    border-radius:20px;
+    padding:6px 16px;
+    margin-top:18px;
+    font-size:.9rem;
+  }
+  main{
+    max-width:980px;
+    margin:0 auto;
+    padding:40px 20px 80px;
+  }
+  section{ margin-bottom:48px; }
+  h2{
+    color:var(--red-dark);
+    border-bottom:3px solid var(--red);
+    padding-bottom:8px;
+    font-size:1.5rem;
+  }
+  h3{ color:var(--ink); }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:18px 0;
+    box-shadow:0 1px 4px rgba(0,0,0,.08);
+  }
+  th, td{
+    border:1px solid #ddd;
+    padding:10px 12px;
+    text-align:left;
+    font-size:.95rem;
+  }
+  th{
+    background:var(--red);
+    color:#fff;
+  }
+  tr:nth-child(even){ background:#fafafa; }
+  .box{
+    background:#fff3f3;
+    border-left:5px solid var(--red);
+    padding:16px 20px;
+    border-radius:6px;
+    margin:18px 0;
+  }
+  .box.tip{
+    background:#F0F7FF;
+    border-left-color:#1565C0;
+  }
+  .qs{
+    background:var(--ink);
+    color:#eee;
+    border-radius:10px;
+    padding:20px 22px;
+    margin:16px 0;
+  }
+  .qs code{
+    background:rgba(255,255,255,.15);
+    color:#E0E0E0;
+    padding:2px 6px;
+    border-radius:4px;
+    font-family:Consolas, monospace;
+  }
+  .qs label{
+    display:block;
+    background:rgba(255,255,255,.06);
+    padding:8px 12px;
+    margin:6px 0;
+    border-radius:6px;
+    cursor:pointer;
+  }
+  .qs label:hover{ background:rgba(255,255,255,.12); }
+  .qs button{
+    background:var(--red);
+    color:#fff;
+    border:none;
+    padding:8px 18px;
+    border-radius:6px;
+    cursor:pointer;
+    margin-top:10px;
+    font-weight:bold;
+  }
+  .qs button:hover{ background:var(--red-dark); }
+  .feedback{
+    margin-top:10px;
+    padding:10px 14px;
+    border-radius:6px;
+    display:none;
+    font-weight:bold;
+  }
+  .feedback.correct{ background:#1b5e20; display:block; }
+  .feedback.wrong{ background:#7a1f1f; display:block; }
+  .ex{
+    background:#F0F7FF;
+    border:1px solid #BBDEFB;
+    border-radius:8px;
+    padding:16px 20px;
+    margin:14px 0;
+  }
+  pre.codeblock{
+    background:var(--ink);
+    color:#E0E0E0;
+    padding:16px 20px;
+    border-radius:8px;
+    overflow-x:auto;
+    font-family:Consolas, monospace;
+    font-size:.9rem;
+    margin:14px 0;
+  }
+  pre.codeblock .c{ color:#8a8aa0; }
+  footer{
+    background:var(--ink);
+    color:#ccc;
+    text-align:center;
+    padding:26px 16px;
+    font-size:.9rem;
+  }
+  footer strong{ color:#fff; }
+  @media (max-width:768px){
+    .hero h1{ font-size:1.6rem; }
+  }
+
+  /* Estrutura de aula: abertura / checagem / fechamento */
+  .abertura{background:#E8F5E9;border-left:5px solid #1B5E20;border-radius:8px;padding:20px 24px;margin:0 0 32px;}
+  .abertura h3{color:#1B5E20;margin:0 0 10px;font-size:1.05rem;}
+  .abertura ul,.fechamento ul{margin:8px 0 0;padding-left:22px;line-height:1.8;}
+  .checagem{background:#FFF3E0;border-left:5px solid #E65100;border-radius:6px;padding:14px 18px;margin:0 0 28px;font-size:.95rem;}
+  .checagem strong{color:#BF360C;display:block;margin-bottom:6px;}
+  .fechamento{background:#E3F2FD;border-left:5px solid #0D47A1;border-radius:8px;padding:20px 24px;margin:0 0 32px;}
+  .fechamento h3{color:#0D47A1;margin:0 0 10px;font-size:1.05rem;}
+  .topo-autor {
+    background: #0d1b2a;
+    color: rgba(255,255,255,0.72);
+    font-size: 0.82em;
+    font-weight: 500;
+    padding: 7px 28px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    letter-spacing: 0.01em;
+  }
+  .gabarito{background:#E8F5E9;border:2px solid #2E7D32;border-radius:8px;padding:16px 20px;margin:10px 0 18px;}
+  .gabarito > strong{color:#1B5E20;display:block;margin-bottom:8px;font-size:1rem;}
+  .gabarito pre{margin:8px 0 0;background:#1a1a2e;color:#E0E0E0;padding:16px 20px;border-radius:8px;overflow-x:auto;font-family:Consolas, monospace;font-size:.9rem;}
+  .banner-gabarito{background:#1B5E20;color:#fff;text-align:center;padding:10px 16px;font-weight:bold;font-size:.95rem;}
+</style>
+</head>
+<body>
+
+<div class="topo-autor">Professor: Cláudio Ferreira Neves - Especialista em Dados</div>
+<div class="banner-gabarito">📘 Gabarito das Atividades e Squads — Semana 06</div>
+<div class="hero">
+  <h1>Semana 06 · <span>Limpeza e Transformação de Dados</span></h1>
+  <p>Unidade Curricular: <strong>Manipulação de Dados com Python e SQL</strong> (150h) — Bloco 3, Semanas 05 e 06 (fecha o bloco). Você vai limpar o DRE de um restaurante com 2 filiais — nulos, duplicatas e outliers de verdade — e entregar um arquivo pronto para o Power BI.</p>
+  <span class="badge">3 encontros · 9h · Nulos, duplicidades, outliers, normalização, colunas calculadas, concat, exportação</span>
+</div>
+
+<main>
+
+  <section>
+    <h2>Competência da Unidade Curricular</h2>
+    <div class="box tip">
+      "Desenvolver competências em lógica de programação com Python, modelagem de dados com SQL e NoSQL e utilização de bibliotecas específicas para manipulação, transformação e visualização de dados, apoiando processos de análise de dados."
+    </div>
+    <p>Na Semana 05 você explorou um dataset já "pronto". Dados reais quase nunca chegam assim. Esta semana usa um cenário novo: o <strong>Restaurante Sabor Caseiro</strong>, que tem 2 filiais (Centro e Zona Sul), e o <strong>DRE</strong> (Demonstrativo de Resultado do Exercício) de cada uma — o relatório financeiro que resume receitas e despesas de um período. Os dois relatórios chegaram direto de um sistema novo, sem nenhuma limpeza: 50 linhas ao todo, com 9 valores ausentes, linhas duplicadas e um erro de digitação em cada filial.</p>
+    <div class="box">
+      <strong>🧠 Pergunta para você pensar:</strong> o que fazer quando os dados chegam sujos — com nulos e inconsistências? É exatamente esse o trabalho que ocupa 60 a 80% do tempo de um analista de dados júnior no dia a dia, segundo estimativas de mercado.
+    </div>
+  </section>
+
+  <section>
+    <h2>Objetivos da Semana</h2>
+    <ul>
+      <li>Detectar e tratar <strong>valores ausentes</strong> (NaN) com <code>isna()</code>, <code>dropna()</code> e <code>fillna()</code></li>
+      <li>Detectar e remover <strong>duplicidades</strong> e identificar <strong>outliers</strong> com <code>describe()</code>/IQR</li>
+      <li>Aplicar <strong>normalização</strong> e criar <strong>colunas calculadas/condicionais</strong></li>
+      <li><strong>Combinar</strong> DataFrames com <code>pd.concat()</code>, montar um pipeline de limpeza completo e <strong>exportar o resultado para o time de BI</strong></li>
+    </ul>
+  </section>
+
+  <div class="abertura">
+    <h3>🧭 De onde você vem: fechando a Semana 05</h3>
+    <p>Antes de entrar na Semana 06, vale reforçar de onde você está vindo e pra onde está indo dentro do curso — e relembrar rapidinho o que cada ferramenta que você usou faz.</p>
+    <p><strong>O que você viu e estudou na Semana 05:</strong> a dupla Pandas + NumPy. Você criou <strong>arrays NumPy</strong> — uma estrutura parecida com uma lista, mas otimizada pra fazer conta em cima de todos os números de uma vez (por exemplo, <code>array * 2</code> multiplica cada elemento do array, sem precisar de um <code>for</code> percorrendo item por item). Depois leu um arquivo real com <strong><code>pd.read_csv()</code></strong> — que abre um arquivo CSV e já devolve ele pronto em formato de tabela (um DataFrame) — usando o <code>vendas_papelaria.csv</code>, da Papelaria Boa Ideia. Em cima desse DataFrame, você usou <strong><code>describe()</code></strong> (calcula estatísticas resumidas — média, desvio padrão, quartis — de cada coluna numérica, pra ter uma primeira noção dos dados antes de qualquer gráfico), <strong><code>.loc</code>/<code>.iloc</code></strong> (selecionam linhas e colunas por nome ou por posição, quando você quer só um pedaço específico da tabela, não ela inteira) e <strong><code>groupby()</code></strong> (agrupa as linhas por uma coluna categórica — por exemplo, categoria do produto — e permite somar ou tirar a média dentro de cada grupo, o mesmo papel de uma tabela dinâmica do Excel).</p>
+    <p><strong>O que você fez:</strong> cada exemplo e atividade daquela semana usou esse mesmo arquivo real (nunca dado digitado à mão) e essas mesmas ferramentas — <code>read_csv()</code> pra abrir, <code>describe()</code>/<code>.loc</code>/<code>.iloc</code>/<code>groupby()</code> pra explorar. Na sexta-feira, seu squad recebeu um cenário de negócio pra praticar essa mesma extração de informação.</p>
+    <p><strong>Qual era o objetivo:</strong> te dar as ferramentas pra abrir qualquer arquivo real e tirar dele uma resposta — quantidade, média, agrupamento por categoria — sem escrever um <code>for</code> pra cada conta.</p>
+    <p><strong>Onde você está agora:</strong> no meio do Bloco 3 desta UC ("Pandas/NumPy — você extrai e limpa informação de dados reais"). A Semana 05 resolveu a parte de <strong>extrair</strong>; a Semana 06, que começa agora, fecha esse bloco resolvendo a parte de <strong>limpar</strong> — porque, na prática, quase nenhum dado real chega pronto pra virar gráfico ou decisão.</p>
+    <h3>🔄 Retomada — o que vimos na Semana 05</h3>
+    <p>Você já sabe criar arrays NumPy, ler um CSV real com <code>pd.read_csv()</code>, usar <code>describe()</code>, <code>.loc</code>/<code>.iloc</code>, filtrar linhas, agrupar com <code>groupby()</code> e confirmar que uma coluna do Pandas é, por dentro, um array NumPy. Essa semana usa tudo isso — e adiciona o que fazer quando o dataset que você lê <strong>não está limpo</strong>.</p>
+    <h3>🟢 Abertura — Semana 06: Limpeza e Transformação de Dados</h3>
+    <p>Dados reais nunca chegam perfeitos. Estimativas de mercado apontam que <strong>60 a 80% do tempo de um analista de dados júnior</strong> vai para preparar os dados antes de qualquer gráfico ou modelo — não para a análise em si. Nesta semana você aprende exatamente esse trabalho, usando relatórios financeiros reais.</p>
+    <p><strong>O que você vai aprender nesta semana:</strong></p>
+    <ul>
+      <li>Detectar e tratar valores ausentes (NaN) com <code>isna()</code>, <code>dropna()</code> e <code>fillna()</code></li>
+      <li>Detectar e remover duplicidades e tratar outliers com <code>duplicated()</code> e IQR</li>
+      <li>Normalizar dados e criar colunas calculadas/condicionais</li>
+      <li>Limpar texto sujo (espaço sobrando, letra errada, palavra quebrada) e converter coluna de dinheiro digitada como texto</li>
+      <li>Padronizar nome de coluna e substituir valores específicos dentro de uma coluna</li>
+      <li>Combinar DataFrames com <code>pd.concat()</code>, montar um pipeline de limpeza completo e <strong>exportar o resultado para o time de BI</strong></li>
+    </ul>
+  </div>
+
+  <section>
+    <h2>📌 O dataset desta semana</h2>
+    <p>O <strong>DRE</strong> é o relatório contábil que resume, período a período, quanto uma empresa recebeu (receitas) e gastou (despesas). O Restaurante Sabor Caseiro tem 2 filiais, e cada uma manda seu próprio relatório mensal:</p>
+    <ul>
+      <li><code>dataset/dre_filial_centro.csv</code> — 25 linhas (Jan a Abr, 6 categorias por mês, mais 1 linha duplicada)</li>
+      <li><code>dataset/dre_filial_zona_sul.csv</code> — 25 linhas (mesma estrutura)</li>
+    </ul>
+    <p>Juntas, as duas filiais somam <strong>50 linhas</strong> e <strong>9 valores ausentes</strong> no total — nenhuma limpeza foi feita ainda. As 6 categorias são as mesmas em toda filial e todo mês: <code>Receita de Vendas</code>, <code>Impostos sobre Vendas</code>, <code>CMV</code>, <code>Despesas com Pessoal</code>, <code>Despesas Administrativas</code>, <code>Despesas Financeiras</code>.</p>
+    <p><strong>Rodando no Google Colab?</strong> Diferente do VS Code local, o Colab não enxerga os arquivos desta pasta automaticamente — rode a célula abaixo pra enviar os 2 arquivos; ela já coloca tudo na subpasta <code>dataset/</code> certinha.</p>
+    <pre class="codeblock">import os
+
+try:
+    from google.colab import files
+    enviados = files.upload()
+    os.makedirs("dataset", exist_ok=True)
+    for nome in enviados:
+        os.replace(nome, f"dataset/{nome}")
+except ImportError:
+    print("Rodando localmente (VS Code) — os arquivos já estão em dataset/, na pasta desta semana.")</pre>
+    <div class="box tip">
+      <strong>💡 Lembrando das semanas anteriores: o que é o módulo <code>os</code>?</strong> <code>os</code> é o módulo de sistema operacional do Python — já vem pronto, sem precisar instalar (<code>import os</code>, sem <code>%pip install</code>). <code>os.makedirs("dataset", exist_ok=True)</code> cria a subpasta <code>dataset/</code> (sem erro caso ela já exista); <code>os.replace(nome, f"dataset/{nome}")</code>, dentro do <code>for</code>, move cada arquivo enviado da raiz da sessão pra dentro dessa subpasta.
+    </div>
+  </section>
+
+  <section>
+    <h2>1. Valores Ausentes (NaN)</h2>
+
+    <h3>Exemplo 1 — Vendo os dados brutos, sem filtro nenhum</h3>
+    <pre class="codeblock">import pandas as pd
+from IPython.display import display
+
+centro = pd.read_csv("dataset/dre_filial_centro.csv")
+display(centro)
+print(centro.shape)   # (25, 4)</pre>
+    <p>Olhando esse DRE de 25 linhas, dá pra ver pelo menos 3 problemas diferentes, mesmo sem rodar nenhum comando ainda: várias linhas de <code>valor</code> aparecem em branco (<code>NaN</code>), a última linha repete exatamente a primeira (<code>Receita de Vendas</code>, Janeiro, <code>45000</code>), e <code>Despesas com Pessoal</code> de Abril está em <code>125000</code> — bem mais alto que o esperado (as outras despesas ficam na casa dos milhares, não das centenas de milhares).</p>
+
+    <h3>Exemplo 2 — Conhecendo a estrutura antes de limpar: head(), tail() e info()</h3>
+    <div class="box tip">
+      <strong>📖 Antes do código:</strong> antes de sair caçando problema por problema, um analista sempre roda um punhado de comandos padrão pra ter uma primeira impressão do dataset. <code>head()</code> <strong>mostra as primeiras linhas da tabela</strong> — por padrão, as 5 primeiras (dá pra pedir outro número, ex.: <code>head(10)</code>) — e <strong>devolve</strong> um novo DataFrame só com essas linhas; é o comando mais comum pra conferir, logo depois de um <code>read_csv()</code>, se o arquivo foi lido do jeito esperado. <code>tail()</code> funciona igual a <code>head()</code>, só que <strong>com as últimas linhas</strong> (5 por padrão) — também devolve um DataFrame, e costuma ser usado pra checar o final de um arquivo grande, ou pra comparar com o início. <code>info()</code> <strong>resume a estrutura inteira da tabela</strong> numa tacada só: quantas linhas e colunas existem, o tipo de dado (<code>Dtype</code>) de cada coluna, e a coluna <code>Non-Null Count</code>, que mostra quantos valores <strong>não são nulos</strong> em cada uma — diferente de <code>head()</code>/<code>tail()</code>, <code>info()</code> <strong>já imprime o resumo sozinho</strong> e devolve <code>None</code>, por isso aparece puro na célula, sem <code>print(...)</code> nem <code>display(...)</code> em volta (se você envolvesse <code>centro.info()</code> num <code>print(...)</code>, veria um <code>None</code> sobrando no final da saída). São os 3 comandos que valem a pena rodar toda vez que você abre um arquivo novo, nesta semana e no resto da carreira.
+    </div>
+    <pre class="codeblock">import pandas as pd
+from IPython.display import display
+
+centro = pd.read_csv("dataset/dre_filial_centro.csv")
+
+display(centro.head())
+display(centro.tail())
+centro.info()</pre>
+    <p><strong>💡 Lembrando da Semana 05:</strong> <code>head()</code>, <code>tail()</code> e <code>describe()</code> devolvem um DataFrame — por isso aparecem dentro de <code>display(...)</code>, não de <code>print(...)</code> (a regra é: <code>display()</code> para DataFrame/Series, <code>print()</code> para número, texto, array, lista ou dicionário).</p>
+    <p>Repare que a última linha mostrada por <code>tail()</code> (<code>Receita de Vendas</code>, Janeiro, <code>45000</code>) é idêntica à primeira linha que <code>head()</code> mostrou — um indício, só de olhar, de que existe alguma duplicidade. E o <code>info()</code> já revela o primeiro problema de verdade: <code>valor</code> mostra <code>20 non-null</code> num total de <code>25</code> linhas — ou seja, <code>5</code> valores estão faltando, exatamente o problema que esta seção vai aprender a tratar.</p>
+
+    <div class="box tip">
+      <strong>📖 Antes do código: o que <code>describe()</code> faz?</strong> <code>describe()</code> <strong>calcula estatísticas resumidas</strong> de cada coluna numérica — <code>count</code> (quantos valores não-nulos existem), <code>mean</code> (média), <code>std</code> (desvio padrão, que mede o quanto os valores de uma coluna se espalham em torno da média; quanto maior o <code>std</code>, mais inconsistentes são os números dessa coluna), <code>min</code>, <code>max</code> e os quartis (<code>25%</code>, <code>50%</code>, <code>75%</code> — você vai ver exatamente o que cada quartil significa na Seção 2, quando forem usados pra encontrar outliers). Ela <strong>devolve</strong> um novo DataFrame com essas estatísticas como linhas.
+    </div>
+    <pre class="codeblock">import pandas as pd
+from IPython.display import display
+
+centro = pd.read_csv("dataset/dre_filial_centro.csv")
+display(centro.describe())</pre>
+    <p>Aqui, só <code>valor</code> é numérica: <code>count</code> mostra <code>20</code> (os 5 nulos já ficam de fora da conta automaticamente), <code>mean</code> de <code>22277.50</code> e um <code>std</code> de <code>30077.65</code> — bem próximo da própria média, sinal de que tem algo estranho, que a Seção 2 vai investigar com o método IQR. Por enquanto, repare que esse <code>describe()</code> está misturando <code>Receita de Vendas</code> com as despesas na mesma conta — a Seção 2 explica por que isso não é ideal.</p>
+
+    <h3>Exemplo 3 — Detectando valores ausentes com isna()</h3>
+    <div class="box tip">
+      <strong>📖 Antes do código:</strong> você já viu, com <code>info()</code>, que a coluna <code>valor</code> tem 5 valores ausentes — mas isso foi no olho, lendo o resumo. <code>isna()</code> faz a mesma detecção de um jeito programático: marca <code>True</code>/<code>False</code> em <strong>cada célula</strong> da tabela (<code>True</code> = valor ausente). Encadeado com <code>.sum()</code>, que soma esses <code>True</code>/<code>False</code> <strong>por coluna</strong>, você chega no total de nulos de cada coluna de uma vez — um número que o código consegue usar, em vez de um texto que só o seu olho lê.
+    </div>
+    <pre class="codeblock">print(centro.isna().sum())</pre>
+    <p>Só <code>valor</code> tem valores ausentes — 5 no total, espalhados em meses e categorias diferentes.</p>
+
+    <div class="box tip">
+      <strong>📖 Antes do erro: o que é o <code>subset</code> do <code>dropna()</code>?</strong> Por padrão, <code>dropna()</code> (que você vai usar de verdade daqui a pouco, no Exemplo 4) olha a linha inteira: se qualquer coluna tiver <code>NaN</code>, a linha inteira é removida. <code>subset=["nome_da_coluna"]</code> restringe essa checagem a uma coluna específica — só remove a linha se <em>aquela</em> coluna estiver vazia, ignorando <code>NaN</code> que existam em outras colunas. É útil quando só uma coluna realmente importa pra decidir se a linha deve ficar ou sair.
+    </div>
+    <div class="box">
+      <strong>⚠️ Veja como é um erro real do Python:</strong> mas se o nome dentro de <code>subset=[...]</code> estiver errado —
+      <pre class="codeblock" style="margin:10px 0 0;">centro.dropna(subset=["valor_errado"])</pre>
+      <pre class="codeblock" style="margin:10px 0 0;">KeyError: ['valor_errado']</pre>
+      Confira <code>centro.columns</code> antes de informar o nome de uma coluna.
+    </div>
+
+    <h3>Exemplo 4 — Tratando valores ausentes: dropna() x fillna()</h3>
+    <div class="box tip">
+      <strong>📖 Antes do código:</strong> os dois tratam valor ausente, mas de jeitos opostos. <code>dropna()</code> <strong>remove a linha inteira</strong> sempre que ela tiver pelo menos 1 valor ausente (em qualquer coluna, a não ser que você limite com <code>subset=[...]</code>, como viu no aviso de erro acima) — devolve um novo DataFrame, sem alterar o original. <code>fillna(valor)</code> faz o oposto: <strong>mantém todas as linhas</strong>, e substitui cada <code>NaN</code> pelo <code>valor</code> que você passar — também devolve uma cópia nova, sem alterar o original. <strong>Qual usar entre os dois?</strong> <code>dropna()</code> quando a linha sem aquele dado não serve pra análise; <code>fillna()</code> quando faz mais sentido estimar um valor razoável no lugar do vazio.
+    </div>
+    <pre class="codeblock">sem_nulos = centro.dropna()              # remove a LINHA inteira que tem nulo
+print(sem_nulos.shape)                   # (20, 4)
+
+valor_corrigido = centro["valor"].fillna(centro["valor"].mean())
+print(valor_corrigido)</pre>
+    <p>De 25 linhas, <code>centro.dropna()</code> derruba pra 20 — a linha inteira some se <code>valor</code> estiver vazio. Já <code>centro["valor"].fillna(centro["valor"].mean())</code> preenche cada vazio com <code>22277.50</code>, a média da própria coluna. Esse número ainda está longe de confiável por três motivos que as próximas seções vão resolver: ele foi calculado <strong>com a linha duplicada contando em dobro</strong>, <strong>com o outlier de <code>125000</code> puxando pra cima</strong>, e ainda <strong>misturando receita com despesa</strong> numa única média.</p>
+    <div class="box">
+      <strong>⚠️ Armadilha real:</strong> <code>centro["valor"].fillna(0)</code> sozinho <strong>não altera</strong> <code>centro</code> — ele só devolve uma cópia com os nulos preenchidos. Para o DataFrame original mudar de fato, reatribua: <code>centro["valor"] = centro["valor"].fillna(0)</code>. Esquecer isso é o erro mais comum desta semana.
+    </div>
+
+    <div class="ex">
+      <strong>✏️ Atividade Prática 1 — Sua vez de programar</strong><br>
+      <strong>Contextualização:</strong> o financeiro do Restaurante Sabor Caseiro recebeu o DRE de Centro direto do sistema novo e precisa confirmar quantos valores estão faltando antes de fechar o mês.<br>
+      <strong>Comando:</strong> usando o mesmo <code>dre_filial_centro.csv</code>, comece rodando <code>head()</code>, <code>tail()</code> e <code>info()</code> pra confirmar a estrutura da tabela (como no Exemplo 2). Depois, detecte os valores ausentes com <code>isna().sum()</code> e trate com <code>fillna()</code>, preenchendo com a <strong>mediana</strong> da coluna, o valor bem no meio quando você ordena todos os números da coluna do menor pro maior (diferente da média, ela não é puxada por um valor muito alto ou muito baixo — em pandas, isso é o método <code>.median()</code>, no lugar do <code>.mean()</code> do Exemplo 4). Reatribua o resultado. O valor da mediana é bem diferente do valor da média do Exemplo 4? Por quê (pense na linha duplicada, no outlier e na mistura de receita com despesa)?
+    </div>
+    <div class="gabarito">
+      <strong>✅ Gabarito:</strong>
+      <pre>import pandas as pd
+from IPython.display import display
+
+centro = pd.read_csv("dataset/dre_filial_centro.csv")
+display(centro.head())
+display(centro.tail())
+centro.info()
+
+print(centro["valor"].isna().sum())   # 5
+
+centro["valor"] = centro["valor"].fillna(centro["valor"].median())
+print(centro["valor"])</pre>
+    </div>
+  </section>
+  <div class="checagem">
+    <strong>✅ Checagem rápida — antes de avançar:</strong>
+    Você consegue explicar, em uma frase, a diferença entre <code>dropna()</code> e <code>fillna()</code> — e por que <code>fillna()</code> sozinho, sem reatribuir, não muda o DataFrame original?
+  </div>
+<!-- checagem_1._Valores_Ausentes -->
+
+  <section>
+    <h2>2. Duplicidades e Outliers</h2>
+
+    <h3>Exemplo 1 — Detectando e removendo duplicidades</h3>
+    <div class="box tip">
+      <strong>📖 Antes do código:</strong> <code>duplicated()</code> compara cada linha da tabela com todas as anteriores e devolve uma Series de <code>True</code>/<code>False</code> — <code>True</code> só na 2ª (ou 3ª, 4ª...) ocorrência de uma linha idêntica; a primeira ocorrência sempre fica <code>False</code>, porque ainda não é repetição de nada. <code>drop_duplicates()</code> usa essa mesma lógica por trás, mas já devolve um novo DataFrame sem as linhas marcadas como repetidas — mantendo sempre a primeira ocorrência de cada uma.
+    </div>
+    <pre class="codeblock">print(centro.duplicated())          # True na 2ª ocorrência de uma linha idêntica
+
+centro_sem_duplicatas = centro.drop_duplicates()
+display(centro_sem_duplicatas)
+print(centro_sem_duplicatas.shape)   # (24, 4)</pre>
+    <p>Aqui, <code>duplicated()</code> marca <code>True</code> só no índice 24 (<code>Receita de Vendas</code>, Janeiro, repetido do índice 0). <code>drop_duplicates()</code> devolve uma cópia sem essa linha: de 25 linhas, sobram 24. Repare que isso não mexeu nos valores ausentes (continuam lá) — duplicidade e valor ausente são dois problemas independentes.</p>
+
+    <div class="box">
+      <strong>⚠️ Veja como é um erro real do Python:</strong> um erro de digitação comum é esquecer o "s" do plural:
+      <pre class="codeblock" style="margin:10px 0 0;">centro.drop_duplicate()</pre>
+      <pre class="codeblock" style="margin:10px 0 0;">AttributeError: 'DataFrame' object has no attribute 'drop_duplicate'</pre>
+      O método certo é <code>drop_duplicates()</code>, sempre no plural.
+    </div>
+
+    <h3>Exemplo 2 — Detectando outliers com describe() e IQR</h3>
+    <div class="box tip">
+      <strong>📖 Antes do código:</strong> <code>Receita de Vendas</code> e as categorias de despesa têm naturezas bem diferentes — uma é dinheiro que entra, as outras são dinheiro que sai, em escalas bem diferentes (a receita do mês é sempre maior que qualquer despesa isolada). Comparar os dois numa única conta de outlier não faz sentido: a receita pareceria "outlier" das despesas, sem ser. Por isso, a partir daqui, o <code>describe()</code>/IQR roda só nas linhas de <strong>despesa</strong>.
+    </div>
+    <pre class="codeblock">despesas = centro_sem_duplicatas[centro_sem_duplicatas["tipo"] == "Despesa"]
+print(despesas["valor"].describe())</pre>
+    <p>Filtrando só as 20 linhas de despesa (das 24 sem duplicata), o <code>std</code> fica bem maior que a <code>mean</code> — sinal forte de que existe algum valor bem fora do padrão. O <code>max</code> confirma: nenhuma outra despesa do relatório chega perto desse valor.</p>
+    <div class="box tip">
+      <strong>📖 Antes do código: o que são quartis e o que é IQR?</strong> Quando você ordena todos os valores de uma coluna do menor pro maior, os <strong>quartis</strong> são os 3 pontos que dividem essa lista em 4 partes iguais (25% dos dados em cada parte):
+      <ul>
+        <li><strong>Q1</strong> (1º quartil) é o valor abaixo do qual ficam os 25% menores valores.</li>
+        <li><strong>Q2</strong> é a <strong>mediana</strong> — o valor bem no meio, com 50% dos dados abaixo e 50% acima. É a mesma "mediana" que você já usou na Atividade Prática 1, e é exatamente a linha <code>50%</code> que <code>describe()</code> mostra.</li>
+        <li><strong>Q3</strong> (3º quartil) é o valor abaixo do qual ficam os 75% menores valores (ou seja, os 25% maiores ficam acima dele).</li>
+      </ul>
+      Em pandas, <code>.quantile(0.25)</code> calcula Q1 e <code>.quantile(0.75)</code> calcula Q3 diretamente — é exatamente isso que o código a seguir faz.
+      <p style="margin:10px 0 0;">O <strong>IQR</strong> ("Interquartile Range", amplitude interquartil) é <code>Q3 - Q1</code>: a distância entre o quartil de baixo e o de cima, ou seja, o intervalo onde ficam os 50% "do meio" dos dados — nem os valores mais baixos, nem os mais altos. Quanto maior o IQR, mais espalhados estão os valores centrais.</p>
+      <p style="margin:10px 0 0;"><strong>Por que multiplicar o IQR por 1,5?</strong> É uma regra prática amplamente usada em análise de dados (conhecida como regra de Tukey): qualquer valor que fique mais de 1,5 vez o IQR acima de Q3 (ou abaixo de Q1) é considerado estatisticamente distante o suficiente do resto pra ser tratado como outlier. O <code>1,5</code> não é uma lei fixa, é uma margem generosa, testada e adotada como padrão de mercado — um número menor, como <code>1,0</code>, marcaria outlier com mais frequência (mais falsos positivos); um número maior, como <code>3,0</code>, só pegaria valores muito mais extremos. Para o volume e o tipo de dado financeiro desta semana, <code>1,5</code> é o padrão que você vai usar.</p>
+    </div>
+    <pre class="codeblock">q1 = despesas["valor"].quantile(0.25)
+q3 = despesas["valor"].quantile(0.75)
+iqr = q3 - q1
+limite_superior = q3 + 1.5 * iqr
+
+print(f"Q1={q1}, Q3={q3}, IQR={iqr}, limite superior={limite_superior}")
+print(despesas[despesas["valor"] > limite_superior])</pre>
+    <p><code>Q1</code> (<code>3150.0</code>) e <code>Q3</code> (<code>12300.0</code>) marcam onde ficam os 25% menores e os 25% maiores valores de despesa; <code>IQR</code> (<code>9150.0</code>) mede a dispersão típica entre eles. O limite superior (<code>Q3 + 1,5 × IQR = 26025.0</code>) é o ponto a partir do qual uma despesa é considerada outlier — e só <code>Despesas com Pessoal</code> de Abril, o <code>125000.0</code>, ultrapassa esse limite. Esse valor quase certamente é um erro de digitação: um zero a mais no lugar dos <code>12500</code> que a folha de pagamento dessa filial costuma custar.</p>
+
+    <div class="box tip">
+      <strong>💡 Ordem importa:</strong> se você calcular a média de <code>valor</code> (Exemplo 4 da Seção 1) <em>antes</em> de tratar esse outlier — e antes de separar despesa de receita — a média vem bem distorcida. Trate duplicidade e outlier, e separe receita de despesa, <em>antes</em> de usar qualquer média/desvio padrão para preencher nulos ou tomar decisões.
+    </div>
+
+    <h3>Exemplo extra — Um cuidado real ao remover o outlier</h3>
+    <div class="box tip">
+      <strong>📖 Antes do código:</strong> parece natural filtrar assim: <code>despesas[despesas["valor"] &lt;= limite_superior]</code> — "mantenha só quem está dentro do limite". Só que isso esconde uma armadilha quando a coluna tem valor ausente. A correção usa <code>~</code>, que inverte <code>True</code> e <code>False</code> numa coluna inteira de uma vez — é o mesmo <code>not</code> que você já usa desde a Semana 02, só que aplicado a um <code>Series</code> inteiro (todas as linhas de uma vez), não a um valor só.
+    </div>
+    <pre class="codeblock">filtro_errado = despesas[despesas["valor"] <= limite_superior]
+filtro_certo = despesas[~(despesas["valor"] > limite_superior)]
+
+print("Filtro <= (errado):", filtro_errado.shape)   # (14, 4)
+print("Filtro ~ > (certo):", filtro_certo.shape)     # (19, 4)</pre>
+    <div class="box">
+      <strong>⚠️ Veja como é um erro real (e silencioso):</strong> o filtro <code>&lt;= limite_superior</code> devolve <code>(14, 4)</code>: além de remover o outlier de verdade, ele <strong>também removeu as 5 linhas com <code>valor</code> ausente</strong>. Isso acontece porque, em pandas, qualquer comparação (<code>&gt;</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;=</code>) com <code>NaN</code> sempre devolve <code>False</code> — então <code>NaN &lt;= limite_superior</code> é <code>False</code>, e a linha some sem nenhum aviso. O filtro <code>~(valor &gt; limite_superior)</code> devolve <code>(19, 4)</code>: ele nega a condição de outlier, e como <code>NaN &gt; limite_superior</code> também é <code>False</code>, a negação <code>~False</code> é <code>True</code> — as 5 linhas com valor ausente ficam. <strong>Regra prática:</strong> ao remover outlier por comparação numérica, use a negação da condição de outlier (<code>~(coluna &gt; limite)</code>), nunca a condição "oposta" escrita à mão (<code>coluna &lt;= limite</code>) — os dois só são equivalentes quando não existe nenhum valor ausente na coluna.
+    </div>
+
+    <div class="ex">
+      <strong>✏️ Atividade Prática 2 — Sua vez de programar</strong><br>
+      <strong>Contextualização:</strong> o contador do Restaurante Sabor Caseiro vai usar o DRE de Centro pra fechar o resultado do mês, mas antes precisa confirmar, sem depender do seu olho, que só existe mesmo 1 outlier no relatório.<br>
+      <strong>Comando:</strong> repita a técnica completa desta seção, sozinho e sem olhar os exemplos: <code>duplicated()</code> + <code>drop_duplicates()</code>, filtro por <code>tipo == "Despesa"</code>, seguido de Q1/Q3/IQR/limite superior. Confirme que chega nos mesmos números (24 linhas após remover a duplicata, outlier só em <code>Despesas com Pessoal</code> de Abril).
+    </div>
+    <div class="gabarito">
+      <strong>✅ Gabarito:</strong>
+      <pre>import pandas as pd
+
+centro = pd.read_csv("dataset/dre_filial_centro.csv")
+centro_sem_duplicatas = centro.drop_duplicates()
+print(centro_sem_duplicatas.shape)   # (24, 4)
+
+despesas = centro_sem_duplicatas[centro_sem_duplicatas["tipo"] == "Despesa"]
+q1 = despesas["valor"].quantile(0.25)
+q3 = despesas["valor"].quantile(0.75)
+limite_superior = q3 + 1.5 * (q3 - q1)
+print(despesas[despesas["valor"] > limite_superior])</pre>
+    </div>
+  </section>
+  <div class="checagem">
+    <strong>✅ Checagem rápida — antes de avançar:</strong>
+    Você consegue explicar por que faz sentido separar receita de despesa antes de calcular o limite de outlier — e por que <code>coluna &lt;= limite</code> e <code>~(coluna &gt; limite)</code> podem devolver resultados diferentes quando a coluna tem valores ausentes?
+  </div>
+<!-- checagem_2._Duplicidades_e_Outliers -->
+
+  <section>
+    <h2>3. Normalização e Colunas Calculadas/Condicionais</h2>
+
+    <h3>Exemplo 1 — Normalização min-max</h3>
+    <div class="box tip">
+      <strong>📖 Antes do código:</strong> esta célula refaz, em ordem, o que as Seções 1 e 2 ensinaram (remove duplicata, separa despesa, remove outlier preservando valor ausente) pra só então calcular uma média confiável — mas repare no <code>.copy()</code> depois de cada filtro. <code>dados[dados["tipo"] == "Despesa"]</code> devolve, tecnicamente, uma "fatia" do DataFrame original, e tentar alterar essa fatia diretamente (como a linha <code>despesas["valor"] = ...</code> faz mais adiante) pode disparar um aviso do pandas (<code>SettingWithCopyWarning</code>) avisando que não está claro se você queria alterar a fatia ou o original. <code>.copy()</code> resolve isso na raiz: cria uma tabela nova e independente, então qualquer alteração em <code>despesas</code> daqui pra frente é inequivocamente só em <code>despesas</code>. É um hábito comum sempre que você filtra um DataFrame e pretende <strong>modificar</strong> o resultado do filtro em seguida.
+    </div>
+    <pre class="codeblock">dados = centro.drop_duplicates()
+despesas = dados[dados["tipo"] == "Despesa"].copy()
+
+q1 = despesas["valor"].quantile(0.25)
+q3 = despesas["valor"].quantile(0.75)
+limite_superior = q3 + 1.5 * (q3 - q1)
+despesas = despesas[~(despesas["valor"] > limite_superior)].copy()
+
+media_confiavel = despesas["valor"].mean()
+despesas["valor"] = despesas["valor"].fillna(media_confiavel)</pre>
+    <p>O resultado: uma média de <code>6539.29</code> — bem menor que a <code>22277.50</code> distorcida do Exemplo 4 da Seção 1. Essa é a média <strong>confiável</strong>, porque já não tem outlier, duplicata nem receita misturada puxando o número pra um lugar errado.</p>
+    <div class="box tip">
+      <strong>📖 Antes do código: a fórmula min-max.</strong> Pra reescalar uma coluna pro intervalo de 0 a 1 sem perder a proporção entre os valores, a fórmula é <code>(valor - mínimo) / (máximo - mínimo)</code>: o menor valor da coluna sempre vira <code>0.0</code> (porque <code>mínimo - mínimo = 0</code>), o maior sempre vira <code>1.0</code> (porque <code>máximo - máximo</code>, dividido por si mesmo, dá <code>1</code>), e os valores do meio ficam proporcionalmente entre os dois extremos.
+    </div>
+    <pre class="codeblock">despesas["valor_normalizado"] = (
+    (despesas["valor"] - despesas["valor"].min())
+    / (despesas["valor"].max() - despesas["valor"].min())
+)
+print(despesas[["categoria", "mes", "valor", "valor_normalizado"]])</pre>
+    <p>Normalizar é útil quando você precisa comparar categorias de despesa em uma mesma escala, sem que a categoria com o maior número em reais "domine" qualquer cálculo que combine as duas.</p>
+
+    <h3>Exemplo 2 — Coluna calculada com transformação condicional</h3>
+    <div class="box tip">
+      <strong>📖 Antes do código:</strong> <code>np.where(condição, valor_se_true, valor_se_false)</code> cria uma coluna nova numa linha só: pra cada linha da tabela, testa a <code>condição</code> e devolve <code>valor_se_true</code> quando ela é verdadeira, ou <code>valor_se_false</code> quando é falsa — sem precisar de um <code>for</code> percorrendo linha a linha nem de um <code>if</code> dentro dele. É a mesma ideia de operação vetorizada, sem <code>for</code>, que você já viu com arrays NumPy na Semana 05.
+    </div>
+    <pre class="codeblock">despesas["classificacao"] = np.where(despesas["valor"] > 10000, "Alto Impacto", "Baixo Impacto")
+print(despesas[["categoria", "mes", "valor", "classificacao"]])</pre>
+    <p>Aqui, onde <code>valor &gt; 10000</code>, o resultado é <code>"Alto Impacto"</code> (algumas linhas de <code>CMV</code> e <code>Despesas com Pessoal</code>); o resto vira <code>"Baixo Impacto"</code>.</p>
+
+    <div class="ex">
+      <strong>✏️ Atividade Prática 3 — Sua vez de programar</strong><br>
+      <strong>Contextualização:</strong> a diretoria do Restaurante Sabor Caseiro quer identificar quais despesas têm o maior peso relativo no DRE de Centro, numa escala comparável (não no valor bruto em reais) — pra decidir onde vale mais a pena investir tempo de auditoria mês a mês.<br>
+      <strong>Comando:</strong> usando as <code>despesas</code> já limpas (duplicata e outlier tratados, nulos preenchidos), normalize a coluna <code>valor</code> (min-max, como no Exemplo 1) e crie uma coluna <code>peso_relativo</code>, classificando com <code>np.where()</code> como <code>"Peso Alto"</code> quando <code>valor_normalizado &gt; 0.5</code> e <code>"Peso Baixo"</code> caso contrário. O resultado é diferente do <code>classificacao</code> do Exemplo 2 (baseado no valor bruto)? Por quê?
+    </div>
+    <div class="gabarito">
+      <strong>✅ Gabarito:</strong>
+      <pre>import pandas as pd
+import numpy as np
+
+centro = pd.read_csv("dataset/dre_filial_centro.csv")
+dados = centro.drop_duplicates()
+despesas = dados[dados["tipo"] == "Despesa"].copy()
+q1 = despesas["valor"].quantile(0.25)
+q3 = despesas["valor"].quantile(0.75)
+limite_superior = q3 + 1.5 * (q3 - q1)
+despesas = despesas[~(despesas["valor"] > limite_superior)].copy()
+despesas["valor"] = despesas["valor"].fillna(despesas["valor"].mean())
+
+despesas["valor_normalizado"] = (
+    (despesas["valor"] - despesas["valor"].min())
+    / (despesas["valor"].max() - despesas["valor"].min())
+)
+despesas["classificacao"] = np.where(despesas["valor"] > 10000, "Alto Impacto", "Baixo Impacto")
+despesas["peso_relativo"] = np.where(despesas["valor_normalizado"] > 0.5, "Peso Alto", "Peso Baixo")
+
+print(despesas[["categoria", "mes", "valor", "valor_normalizado", "classificacao", "peso_relativo"]])</pre>
+    </div>
+  </section>
+  <div class="checagem">
+    <strong>✅ Checagem rápida — antes de avançar:</strong>
+    Você consegue explicar por que <code>np.where()</code> é preferível a um <code>for</code> com <code>if</code> dentro para criar uma coluna condicional?
+  </div>
+<!-- checagem_3._Normalização -->
+
+  <section>
+    <h2>4. Concatenação e Pipeline Completo</h2>
+
+    <h3>A segunda filial: Zona Sul, ainda sem limpeza nenhuma</h3>
+    <pre class="codeblock">zona_sul = pd.read_csv("dataset/dre_filial_zona_sul.csv")
+display(zona_sul)
+print(zona_sul.shape)   # (25, 4)</pre>
+    <p>Mesma estrutura do Centro (25 linhas, 6 categorias, 4 meses), mas com seus próprios problemas: 4 valores ausentes, 1 linha duplicada (<code>Receita de Vendas</code>, Fevereiro) e 1 outlier (<code>Despesas com Pessoal</code> de Fevereiro, em <code>105000</code>). Antes de juntar as duas filiais, cada uma precisa passar pela mesma limpeza que o Centro já passou.</p>
+
+    <h3>Combinando as duas filiais com pd.concat()</h3>
+    <div class="box tip">
+      <strong>📖 Antes do código: por que juntar as duas filiais?</strong> Até agora, Centro e Zona Sul são 2 tabelas separadas — cada uma mostra só o resultado de uma filial. Só que a diretoria do Restaurante Sabor Caseiro não toma decisão olhando uma filial de cada vez: ela quer saber, por exemplo, "quanto a empresa INTEIRA gastou com CMV neste período?" — uma pergunta que nenhuma das duas tabelas sozinha responde, porque cada uma só tem a metade do dado. <code>pd.concat()</code> resolve exatamente isso: pega duas tabelas com as mesmas colunas e empilha uma embaixo da outra, virando uma única tabela com a empresa toda — é esse DataFrame consolidado que faz sentido alimentar, por exemplo, um dashboard de Power BI.
+    </div>
+    <pre class="codeblock">dre_consolidado = pd.concat([centro_limpo, zona_sul_limpo], ignore_index=True)
+print(dre_consolidado.shape)   # (46, 4)
+print(dre_consolidado.groupby("categoria")["valor"].sum().sort_values(ascending=False))</pre>
+    <p><code>pd.concat([centro_limpo, zona_sul_limpo], ignore_index=True)</code> empilha as linhas das duas filiais já limpas em um único DataFrame: <code>23 + 23 = 46</code> linhas. <code>ignore_index=True</code> refaz a numeração do índice de 0 a 45, em vez de repetir os índices originais de cada DataFrame. O <code>groupby("categoria")["valor"].sum()</code> no final mostra, pela primeira vez, o resultado <strong>consolidado das 2 filiais juntas</strong> — a visão que a diretoria realmente precisa, e que nenhuma das duas filiais sozinha mostra.</p>
+
+    <h3>Pipeline completo — juntando tudo em ordem, e exportando para o Power BI</h3>
+    <p>Você acabou de ver a consolidação funcionando, escrita direto na célula. Agora vamos organizar essas mesmas etapas num formato reutilizável — a versão que rodaria de verdade todo mês, sem precisar reescrever nada à mão. <strong>A ordem das etapas não é arbitrária:</strong></p>
+    <ol>
+      <li>Ler os arquivos reais (<code>pd.read_csv</code>) de cada filial</li>
+      <li>Remover duplicidades (<code>drop_duplicates</code>)</li>
+      <li>Separar receita de despesa, e remover outlier nas despesas, preservando valores ausentes (<code>~(coluna &gt; limite)</code>)</li>
+      <li>Só então tratar os nulos restantes (<code>fillna</code>, com a média já confiável)</li>
+      <li>Reunir receita + despesa de cada filial, e consolidar as 2 filiais (<code>pd.concat</code>)</li>
+      <li>Exportar o resultado limpo para um arquivo novo — é esse arquivo que o time de BI vai conectar no Power BI</li>
+    </ol>
+    <div class="box tip">
+      <strong>📖 Antes do código, sobre a última etapa:</strong> <code>dataframe.to_csv("nome_do_arquivo.csv", index=False)</code> grava um DataFrame inteiro num arquivo <code>.csv</code> novo — <code>index=False</code> evita gravar uma coluna extra só com o número da linha, que ninguém pediu. Se o arquivo já existir, ele é sobrescrito.
+    </div>
+    <pre class="codeblock">def limpar_filial(caminho_arquivo):
+    dados = pd.read_csv(caminho_arquivo).drop_duplicates()
+    receitas = dados[dados["tipo"] == "Receita"]
+    despesas = dados[dados["tipo"] == "Despesa"].copy()
+
+    q1 = despesas["valor"].quantile(0.25)
+    q3 = despesas["valor"].quantile(0.75)
+    limite_superior = q3 + 1.5 * (q3 - q1)
+    despesas = despesas[~(despesas["valor"] > limite_superior)].copy()
+    despesas["valor"] = despesas["valor"].fillna(despesas["valor"].mean())
+
+    return pd.concat([receitas, despesas], ignore_index=True)
+
+centro_limpo = limpar_filial("dataset/dre_filial_centro.csv")
+zona_sul_limpo = limpar_filial("dataset/dre_filial_zona_sul.csv")
+
+dre_consolidado = pd.concat([centro_limpo, zona_sul_limpo], ignore_index=True)
+print(f"Linhas consolidadas: {len(centro_limpo)} (Centro) + {len(zona_sul_limpo)} (Zona Sul) = {len(dre_consolidado)}")
+
+dre_consolidado.to_csv("dre_consolidado.csv", index=False)
+print("Arquivo dre_consolidado.csv criado com sucesso.")</pre>
+    <p>A função <code>limpar_filial(caminho_arquivo)</code> empacota as etapas 2 a 4 (que antes você via espalhadas em várias células) num único bloco reutilizável — a mesma ideia de função que você já pratica desde a Semana 04, agora aplicada a um pipeline de limpeza inteiro. Chamá-la duas vezes, uma pra cada filial, evita repetir o mesmo código duas vezes. Esse <code>dre_consolidado.csv</code> é exatamente o tipo de arquivo que um time de BI conecta no Power BI (ou Tableau, ou qualquer outra ferramenta de dashboard): eles não tratam nulo, duplicata nem outlier lá — esperam receber o dado já limpo, pronto pra virar gráfico.</p>
+
+    <div class="ex">
+      <strong>✏️ Atividade Prática 4 — Sua vez de programar</strong><br>
+      <strong>Contextualização:</strong> o Restaurante Sabor Caseiro vai automatizar esse pipeline pra rodar todo mês automaticamente, sem revisão manual, entregando o arquivo pronto pro time de BI — antes de aprovar isso, a diretoria pediu uma confirmação de que o pipeline completo funciona do início ao fim, incluindo a exportação.<br>
+      <strong>Comando:</strong> rode o pipeline completo (as 6 etapas acima) numa única célula, confirme o <code>shape</code> final do <code>dre_consolidado</code>, e confirme que o arquivo <code>dre_consolidado.csv</code> foi criado (uma forma simples: <code>import os; print(os.path.exists("dre_consolidado.csv"))</code> — <code>os.path.exists(caminho)</code> devolve <code>True</code> se existir um arquivo naquele caminho, <code>False</code> se não existir). Depois, responda em uma frase: por que faz mais sentido o Python gerar esse arquivo pronto do que o time de BI receber os 2 arquivos sujos e ter que limpar tudo de novo dentro do Power BI?
+    </div>
+    <div class="gabarito">
+      <strong>✅ Gabarito:</strong>
+      <pre>import pandas as pd
+import os
+
+def limpar_filial(caminho_arquivo):
+    dados = pd.read_csv(caminho_arquivo).drop_duplicates()
+    receitas = dados[dados["tipo"] == "Receita"]
+    despesas = dados[dados["tipo"] == "Despesa"].copy()
+    q1 = despesas["valor"].quantile(0.25)
+    q3 = despesas["valor"].quantile(0.75)
+    limite_superior = q3 + 1.5 * (q3 - q1)
+    despesas = despesas[~(despesas["valor"] > limite_superior)].copy()
+    despesas["valor"] = despesas["valor"].fillna(despesas["valor"].mean())
+    return pd.concat([receitas, despesas], ignore_index=True)
+
+centro_limpo = limpar_filial("dataset/dre_filial_centro.csv")
+zona_sul_limpo = limpar_filial("dataset/dre_filial_zona_sul.csv")
+dre_consolidado = pd.concat([centro_limpo, zona_sul_limpo], ignore_index=True)
+print(dre_consolidado.shape)
+
+dre_consolidado.to_csv("dre_consolidado.csv", index=False)
+print(os.path.exists("dre_consolidado.csv"))</pre>
+    </div>
+  </section>
+
+  <section>
+    <h2>5. Limpeza de Texto e Padronização</h2>
+    <div class="ponte">
+      <strong>🔗 Por que isso agora?</strong> Tudo que você fez nas Seções 1 a 4 foi limpeza de <strong>número</strong> (<code>NaN</code>, duplicata, outlier). Mas o dia a dia de quem trabalha com dados também lida o tempo inteiro com <strong>texto sujo</strong>: espaço sobrando na ponta de um nome, letra trocada por engano, palavra quebrada ao digitar, coluna de dinheiro com <code>"-"</code> em vez de número. É o tipo de erro que aparece em qualquer planilha real, do RH, do financeiro, de cadastro de cliente, e as técnicas desta seção são a versão em texto do que você já aprendeu em número: os mesmos passos (detectar, decidir, corrigir, reatribuir), aplicados a outro tipo de dado.
+    </div>
+
+    <h3>Um novo arquivo: cadastro de fornecedores do Restaurante Sabor Caseiro</h3>
+    <p>O financeiro te passou mais um arquivo, <code>fornecedores_despesas.csv</code>, com os 14 fornecedores que geram as despesas do DRE. Ele chegou com os mesmos tipos de erro que você provavelmente já viu numa planilha real: espaço sobrando no nome, letra trocada por engano (<code>@</code> no lugar de <code>a</code>), palavra quebrada com hífen e vírgula sobrando, e uma coluna de valor com <code>"-"</code> em vez de número. <strong>Rodando no Colab?</strong> Envie (ou confirme que já tem na pasta) o arquivo <code>fornecedores_despesas.csv</code>, do mesmo jeito que você já fez com os arquivos da semana.</p>
+
+    <h3>Exemplo 1 — Vendo os dados brutos, sem filtro nenhum</h3>
+    <div class="box tip">
+      <strong>📖 Antes do código:</strong> assim como fez com o DRE na Seção 1, antes de corrigir qualquer coisa, vale ver os dados exatamente como chegaram.
+    </div>
+    <pre class="codeblock">import pandas as pd
+from IPython.display import display
+
+fornecedores = pd.read_csv("dataset/fornecedores_despesas.csv")
+display(fornecedores)
+print(fornecedores.dtypes)</pre>
+    <p>Repare em pelo menos 4 problemas diferentes, mesmo sem rodar nenhum comando de limpeza ainda: nomes com espaço sobrando no início ou no fim (<code>" Distribuidora Boa Carne"</code>), um <code>@</code> no lugar de uma letra (<code>"Frigorífico S@o Jorge"</code>, <code>"Cont@bil"</code>), palavras quebradas com hífen e uma vírgula sobrando (<code>"Pre-ço Justo,"</code>, <code>"Sil-va,"</code>), e a coluna <code>valor_mensal</code> com <code>"-"</code> em algumas linhas. Por causa desse <code>"-"</code> misturado com números, <code>dtypes</code> mostra <code>valor_mensal</code> como texto, não como número, o mesmo problema que você teria se tentasse somar essa coluna agora.</p>
+
+    <h3>Exemplo 2 — Espaço sobrando e caractere errado: <code>.str.strip()</code> e <code>.str.replace()</code></h3>
+    <div class="box tip">
+      <strong>📖 Antes do código:</strong> toda Series de texto no pandas tem um conjunto de métodos que começam com <code>.str</code>, é assim que você aplica uma operação de texto em toda a coluna de uma vez, sem <code>for</code>. <code>.str.strip()</code> remove espaços do início e do fim do texto, sem mexer nos espaços que estão no meio. <code>.str.replace("@", "a")</code> troca toda ocorrência de um pedaço de texto por outro, em qualquer posição, em cada valor da coluna, aqui, troca qualquer <code>@</code> digitado por engano pela letra <code>a</code> de verdade.
+    </div>
+    <pre class="codeblock">fornecedores["fornecedor"] = fornecedores["fornecedor"].str.strip()
+fornecedores["fornecedor"] = fornecedores["fornecedor"].str.replace("@", "a")
+
+display(fornecedores)</pre>
+    <p><code>.str.strip()</code> tira o espaço antes de <code>"Distribuidora Boa Carne"</code> e depois de <code>"Frigorífico S@o Jorge"</code>/<code>"Dedetizadora Limpa Tudo"</code>, sem isso, esses valores seriam tratados como diferentes dos equivalentes sem espaço, mesmo parecendo iguais aos seus olhos. Em seguida, <code>.str.replace("@", "a")</code> corrige <code>"S@o Jorge"</code> → <code>"Sao Jorge"</code>, <code>"Cont@bil"</code> → <code>"Contabil"</code>, <code>"Cred@amigo"</code> → <code>"Credaamigo"</code> e <code>"Vigi@"</code> → <code>"Vigia"</code>.</p>
+
+    <h3>Exemplo 3 — Palavra quebrada com hífen e vírgula sobrando</h3>
+    <div class="box tip">
+      <strong>📖 Antes do código:</strong> é comum alguém digitar uma palavra grande e, sem querer, quebrar ela ao meio com um hífen (<code>"dife-rentes"</code> em vez de <code>"diferentes"</code>), às vezes com uma vírgula colada no final. A correção é a mesma lógica do Exemplo 2: mais um <code>.str.replace()</code>, agora removendo o hífen e a vírgula.
+    </div>
+    <pre class="codeblock">fornecedores["fornecedor"] = fornecedores["fornecedor"].str.replace("-", "")
+fornecedores["fornecedor"] = fornecedores["fornecedor"].str.replace(",", "")
+
+fornecedores["categoria_despesa"] = fornecedores["categoria_despesa"].str.strip()
+fornecedores["categoria_despesa"] = fornecedores["categoria_despesa"].str.replace("-", "")
+fornecedores["categoria_despesa"] = fornecedores["categoria_despesa"].str.replace(",", "")
+
+display(fornecedores)</pre>
+    <p><code>"Pre-ço Justo,"</code> vira <code>"Preço Justo"</code>, <code>"Sil-va,"</code> vira <code>"Silva"</code>, <code>"Emb-alagens,"</code> vira <code>"Embalagens"</code> e <code>"Rapi-da,"</code> vira <code>"Rapida"</code>. A mesma limpeza foi aplicada em <code>categoria_despesa</code>, garantindo que as 3 categorias deste arquivo (<code>Despesas Administrativas</code>, <code>CMV</code>, <code>Despesas Financeiras</code>) fiquem sempre escritas do mesmo jeito, essencial pra qualquer <code>groupby()</code> funcionar direito: um <code>"CMV"</code> e um <code>"CMV "</code> com espaço formariam dois grupos diferentes, mesmo sendo a mesma categoria.</p>
+
+    <h3>Exemplo 4 — Coluna de dinheiro digitada com "-": <code>pd.to_numeric()</code></h3>
+    <div class="box tip">
+      <strong>📖 Antes do código:</strong> é comum, numa planilha financeira, alguém digitar <code>"-"</code> numa célula de valor pra dizer "não teve nada aqui neste mês", só que isso transforma a coluna inteira em texto. <code>pd.to_numeric(coluna, errors="coerce")</code> tenta converter cada valor pra número; quando não consegue (como no <code>"-"</code>), em vez de travar com erro, troca esse valor por <code>NaN</code>, o mesmo <code>NaN</code> que você já trata desde a Seção 1.
+    </div>
+    <pre class="codeblock">fornecedores["valor_mensal"] = pd.to_numeric(fornecedores["valor_mensal"], errors="coerce")
+display(fornecedores)
+print(f"Valores que viraram NaN: {fornecedores['valor_mensal'].isna().sum()}")</pre>
+    <p>Os 3 <code>"-"</code> do arquivo (fornecedores que não geraram despesa naquele mês) viram <code>NaN</code>, e a coluna inteira passa a ser número, pronta pra soma ou média. A decisão de preencher esse <code>NaN</code> é diferente da que você tomou na Seção 1: lá, o <code>NaN</code> significava "não sei o valor real", e fazia sentido estimar com a média. Aqui, o <code>"-"</code> já significa "não teve despesa nenhuma", então o valor certo pra preencher não é uma média, é <code>0</code>:</p>
+    <pre class="codeblock">fornecedores["valor_mensal"] = fornecedores["valor_mensal"].fillna(0)
+display(fornecedores)
+print(f"Total gasto com todos os fornecedores: R$ {fornecedores['valor_mensal'].sum():.2f}")</pre>
+    <p>O total (<code>R$ 24640.00</code>) já considera os 3 fornecedores sem despesa naquele mês como <code>0</code>, não como um valor estimado, a diferença entre "não sei quanto foi" (preenche com média) e "sei que foi zero" (preenche com <code>0</code>). Essa escolha depende sempre do que o <code>"-"</code>/<code>NaN</code> significa no contexto do dado, nunca de uma regra fixa.</p>
+
+    <div class="ex">
+      <strong>✏️ Atividade Prática 5 — Sua vez de programar</strong><br>
+      <strong>Contextualização:</strong> o financeiro do Restaurante Sabor Caseiro quer o total gasto por categoria de despesa já com o cadastro de fornecedores limpo, pra comparar com o que o DRE consolidado (Seção 4) mostrou.<br>
+      <strong>Comando:</strong> leia <code>fornecedores_despesas.csv</code> de novo, aplique a limpeza completa desta seção (<code>.str.strip()</code>, <code>.str.replace()</code> pro <code>@</code> e pro hífen/vírgula em <code>fornecedor</code> e em <code>categoria_despesa</code>, e <code>pd.to_numeric(...).fillna(0)</code> em <code>valor_mensal</code>), e calcule <code>groupby("categoria_despesa")["valor_mensal"].sum()</code>, ordenado do maior pro menor.
+    </div>
+    <div class="gabarito">
+      <strong>✅ Gabarito:</strong>
+      <pre>import pandas as pd
+from IPython.display import display
+
+fornecedores = pd.read_csv("dataset/fornecedores_despesas.csv")
+
+fornecedores["fornecedor"] = fornecedores["fornecedor"].str.strip().str.replace("@", "a").str.replace("-", "").str.replace(",", "")
+fornecedores["categoria_despesa"] = fornecedores["categoria_despesa"].str.strip().str.replace("-", "").str.replace(",", "")
+fornecedores["valor_mensal"] = pd.to_numeric(fornecedores["valor_mensal"], errors="coerce").fillna(0)
+
+display(fornecedores)
+print(fornecedores.groupby("categoria_despesa")["valor_mensal"].sum().sort_values(ascending=False))</pre>
+    </div>
+  </section>
+  <div class="checagem">
+    <strong>✅ Checagem rápida — antes de avançar:</strong>
+    Você consegue explicar, em uma frase, a diferença entre <code>.str.strip()</code> e <code>.str.replace()</code>, e por que preencher o <code>"-"</code> com <code>0</code> faz mais sentido aqui do que preencher com a média?
+  </div>
+
+  <section>
+    <h3>Exemplo 5 — Padronizando o cabeçalho das colunas</h3>
+    <div class="box tip">
+      <strong>📖 Antes do código:</strong> o cabeçalho de uma tabela também pode precisar de padronização, principalmente quando você recebe arquivos de sistemas diferentes, cada um com sua própria convenção. <code>df.columns</code> é a lista com os nomes das colunas, e ela também aceita os métodos <code>.str</code>: <code>.str.upper()</code> deixa tudo maiúsculo, <code>.str.lower()</code> deixa tudo minúsculo, e <code>.str.title()</code> deixa a primeira letra de cada palavra maiúscula, útil pra nomes com <code>_</code>, como <code>categoria_despesa</code> → <code>Categoria_Despesa</code>. (Existe também <code>.str.capitalize()</code>, que deixa maiúscula só a primeira letra de todo o texto, mas na prática <code>.title()</code> é o que você vai usar quase sempre com nome de coluna.)
+    </div>
+    <pre class="codeblock">print("Maiúsculo:", list(fornecedores.columns.str.upper()))
+print("Minúsculo:", list(fornecedores.columns.str.lower()))
+print("Título (cada palavra):", list(fornecedores.columns.str.title()))</pre>
+    <p>Nenhum desses comandos altera <code>fornecedores.columns</code> sozinho, cada um só devolve uma nova lista de nomes; pra aplicar de verdade, você reatribui: <code>fornecedores.columns = fornecedores.columns.str.title()</code> (a mesma regra de sempre reatribuir que você já viu com <code>fillna()</code>, na Seção 1). Pra renomear uma única coluna, sem mexer nas outras, use <code>.rename(columns={...})</code>:</p>
+    <pre class="codeblock">fornecedores = fornecedores.rename(columns={"valor_mensal": "valor_mensal_reais"})
+display(fornecedores)</pre>
+    <p><code>.rename(columns={"nome_antigo": "nome_novo"})</code> troca só o nome que você especificar, mantendo os outros como estavam, diferente de <code>.str.upper()</code>/<code>.str.title()</code>, que mexem em todas as colunas de uma vez.</p>
+
+    <h3>Exemplo 6 — Substituindo um valor específico dentro de uma coluna</h3>
+    <div class="box tip">
+      <strong>📖 Antes do código:</strong> existe uma diferença importante entre os dois <code>.replace()</code> que você já viu nesta semana. <code>.str.replace("@", "a")</code> (Exemplo 2) troca um pedaço de texto, em qualquer posição, dentro de cada valor. Já <code>.replace("valor_antigo", "valor_novo")</code>, sem o <code>.str</code> na frente, troca o valor inteiro, só quando ele bate certinho com <code>"valor_antigo"</code>, o comando certo pra corrigir ou expandir uma categoria inteira, como a sigla <code>"CMV"</code> (Custo da Mercadoria Vendida).
+    </div>
+    <pre class="codeblock">fornecedores["categoria_despesa"] = fornecedores["categoria_despesa"].replace("CMV", "Custo da Mercadoria Vendida")
+display(fornecedores)</pre>
+    <p>Toda linha que tinha exatamente <code>"CMV"</code> agora tem <code>"Custo da Mercadoria Vendida"</code>. <strong>Regra prática:</strong> valor inteiro conhecido (uma categoria, uma sigla, um nome específico) usa <code>.replace()</code>; pedaço de texto que pode aparecer em qualquer posição (um caractere errado, um trecho repetido) usa <code>.str.replace()</code>.</p>
+
+    <div class="ex">
+      <strong>✏️ Atividade Prática 6 — Sua vez de programar</strong><br>
+      <strong>Contextualização:</strong> o financeiro pediu pra padronizar o arquivo de fornecedores antes de importar num sistema novo: o cabeçalho precisa seguir o padrão da empresa (primeira letra de cada palavra maiúscula), e a categoria <code>"Despesas Administrativas"</code> precisa virar <code>"Despesas Operacionais"</code> (novo nome adotado pela contabilidade).<br>
+      <strong>Comando:</strong> padronize o cabeçalho das colunas com <code>.str.title()</code> (reatribuindo em <code>fornecedores.columns</code>), e substitua o valor <code>"Despesas Administrativas"</code> por <code>"Despesas Operacionais"</code> na coluna de categoria, usando o comando certo (pense: é um valor inteiro conhecido, ou um pedaço de texto solto?).
+    </div>
+    <div class="gabarito">
+      <strong>✅ Gabarito:</strong>
+      <pre>import pandas as pd
+from IPython.display import display
+
+fornecedores = pd.read_csv("dataset/fornecedores_despesas.csv")
+
+fornecedores["fornecedor"] = fornecedores["fornecedor"].str.strip().str.replace("@", "a").str.replace("-", "").str.replace(",", "")
+fornecedores["categoria_despesa"] = fornecedores["categoria_despesa"].str.strip().str.replace("-", "").str.replace(",", "")
+fornecedores["valor_mensal"] = pd.to_numeric(fornecedores["valor_mensal"], errors="coerce").fillna(0)
+
+fornecedores.columns = fornecedores.columns.str.title()
+fornecedores["Categoria_Despesa"] = fornecedores["Categoria_Despesa"].replace("Despesas Administrativas", "Despesas Operacionais")
+
+display(fornecedores)</pre>
+    </div>
+  </section>
+  <div class="checagem">
+    <strong>✅ Checagem rápida — antes de avançar:</strong>
+    Você consegue explicar, em uma frase, quando usar <code>.replace()</code> e quando usar <code>.str.replace()</code>?
+  </div>
+
+  <section>
+    <h3>Exportando o cadastro de fornecedores limpo</h3>
+    <div class="box tip">
+      <strong>📖 Antes do código:</strong> assim como você fez na Seção 4 com o DRE consolidado, o passo final de qualquer limpeza é entregar um arquivo pronto, não deixar o resultado preso só na memória do notebook, que se perde quando a sessão termina. <code>to_csv(...)</code> grava o <code>fornecedores</code> já limpo num arquivo novo.
+    </div>
+    <pre class="codeblock">fornecedores.to_csv("fornecedores_despesas_limpo.csv", index=False)
+print("Arquivo fornecedores_despesas_limpo.csv criado com sucesso.")
+
+conferencia_fornecedores = pd.read_csv("fornecedores_despesas_limpo.csv")
+display(conferencia_fornecedores)</pre>
+    <p><code>fornecedores_despesas_limpo.csv</code> é a mesma ideia de entrega da Seção 4: um dado que chegou sujo (nome com espaço/caractere errado, valor como texto) e agora sai como arquivo limpo, pronto pra qualquer ferramenta usar sem precisar tratar nada de novo. Reabrir o arquivo com <code>pd.read_csv(...)</code> logo depois de exportar não é redundante, é a forma de confirmar que ele realmente foi salvo do jeito esperado, sem depender só da mensagem de sucesso.</p>
+  </section>
+
+  <div class="fechamento">
+    <h3>🏁 Fechamento — Semana 06</h3>
+    <p><strong>Nesta semana você aprendeu:</strong></p>
+    <ul>
+      <li>Detectar e tratar valores ausentes (NaN) com <code>isna()</code>, <code>dropna()</code> e <code>fillna()</code> — e por que reatribuir importa</li>
+      <li>Detectar e remover duplicidades com <code>duplicated()</code>/<code>drop_duplicates()</code>, e outliers com <code>describe()</code>/IQR — separando naturezas diferentes de dado e preservando valores ausentes no filtro</li>
+      <li>Normalizar colunas (min-max) e criar colunas condicionais com <code>np.where()</code></li>
+      <li>Limpar texto sujo com <code>.str.strip()</code>/<code>.str.replace()</code>, converter coluna de dinheiro com <code>pd.to_numeric(errors="coerce")</code>, padronizar cabeçalho de coluna e substituir valores com <code>.replace()</code></li>
+      <li>Combinar DataFrames com <code>pd.concat()</code>, montar um pipeline de limpeza completo reutilizável, e <strong>exportar o resultado para um arquivo novo, pronto para ferramentas como o Power BI</strong></li>
+    </ul>
+    <p style="margin-top:14px;"><strong>Próxima semana:</strong> Semana 07 — Visualização e Pipelines: comunicar insights com gráficos e montar um pipeline de dados completo.</p>
+  </div>
+
+  <section>
+    <h2>6. Treino em Squads — Sexta-feira (Encontro 3)</h2>
+    <p>Esta seção é usada em sala (ou em salas remotas/breakout) na sexta-feira. Cada squad recebe <strong>um dataset real diferente</strong>, cada um com <strong>um problema principal diferente</strong> — a missão é decidir a estratégia certa para aquele problema, não aplicar a mesma receita nos 4.</p>
+    <table>
+      <tr><th>Squad</th><th>Dataset</th><th>Problema principal</th><th>Comando</th></tr>
+      <tr><td>B</td><td>Cadastro de funcionários</td><td>Valores ausentes no salário</td><td><code>head()</code>/<code>info()</code> → <code>isna().sum()</code> → <code>dropna()</code>/<code>fillna()</code></td></tr>
+      <tr><td>C</td><td>Pedidos de outro restaurante</td><td>Linhas duplicadas</td><td><code>head()</code>/<code>info()</code> → <code>duplicated()</code>/<code>drop_duplicates()</code></td></tr>
+      <tr><td>D</td><td>Leituras de um sensor de temperatura</td><td>Outlier evidente</td><td><code>head()</code>/<code>info()</code> → <code>describe()</code> + IQR</td></tr>
+      <tr><td>E</td><td>Notas de turmas em escalas diferentes</td><td>Escalas incompatíveis — precisa normalizar</td><td><code>head()</code>/<code>info()</code> → normalização min-max <strong>por turma</strong></td></tr>
+    </table>
+    <div class="box">
+      <strong>⚠️ Cuidado com uma armadilha real no Squad E:</strong> se você normalizar <code>nota</code> usando o mínimo e o máximo de <strong>todo o dataset</strong> (as duas turmas juntas), o resultado não fica justo — a turma avaliada de 0 a 10 fica espremida perto de 0, e a turma avaliada de 0 a 100 fica perto de 1, não importa o quão bem cada aluno foi <strong>dentro da própria turma</strong>. O jeito certo é normalizar <strong>turma por turma</strong>: filtre as notas de cada turma separadamente (mesmo padrão de filtro que você já usou nas Seções 2 e 3, trocando <code>tipo == "Despesa"</code> por <code>turma == "A"</code>) e aplique a fórmula min-max (Seção 3, Exemplo 1) em cada filtro, separadamente:
+      <pre class="codeblock" style="margin:10px 0 0;">turma_a = dataset_squad_e[dataset_squad_e["turma"] == "A"].copy()
+turma_b = dataset_squad_e[dataset_squad_e["turma"] == "B"].copy()
+
+turma_a["nota_normalizada"] = (turma_a["nota"] - turma_a["nota"].min()) / (turma_a["nota"].max() - turma_a["nota"].min())
+turma_b["nota_normalizada"] = (turma_b["nota"] - turma_b["nota"].min()) / (turma_b["nota"].max() - turma_b["nota"].min())</pre>
+      Assim cada turma vira uma escala de 0 a 1 baseada só nela mesma, e aí sim dá pra comparar o desempenho relativo de cada uma.
+    </div>
+    <div class="box tip">
+      <strong>🗣️ Depois das apresentações:</strong> participe do debate — por que a mesma técnica (ex.: <code>dropna()</code>) não era a melhor escolha para todos os datasets? O que aconteceria se o Squad D tivesse usado <code>fillna()</code> com a média sem antes tratar o outlier? E se cada squad tivesse aplicado a solução de outro squad no seu próprio dataset?
+    </div>
+
+    <h3>✅ Gabarito — os 4 datasets de squad, resolvidos</h3>
+    <p>Cada squad recebeu só <strong>um</strong> dos datasets abaixo. Aqui estão os 4 resolvidos, para conferência.</p>
+
+    <div class="gabarito">
+      <strong>Squad B — Cadastro de funcionários (valores ausentes no salário)</strong>
+      <pre>import pandas as pd
+
+dataset_squad_b = pd.read_csv("dataset/dataset_squad_b_funcionarios.csv")
+
+display(dataset_squad_b.head())
+dataset_squad_b.info()
+
+print(dataset_squad_b.isna().sum())
+print(f"Média salarial (sem os nulos): {dataset_squad_b['salario'].mean():.2f}")</pre>
+      <p style="margin:10px 0 0;color:#1B5E20;">A estratégia mais adequada é <code>fillna()</code> com a média ou a mediana da coluna <code>salario</code> — <code>dropna()</code> derrubaria a linha inteira, perdendo nome e departamento do funcionário só por causa de 1 coluna vazia. Como <code>mean()</code> já ignora os <code>NaN</code> sozinho, a média sai direto: <code>R$ 3.441,67</code>.</p>
+    </div>
+
+    <div class="gabarito">
+      <strong>Squad C — Pedidos de um outro restaurante (linhas duplicadas)</strong>
+      <pre>import pandas as pd
+
+dataset_squad_c = pd.read_csv("dataset/dataset_squad_c_pedidos.csv")
+
+display(dataset_squad_c.head())
+dataset_squad_c.info()
+
+print(dataset_squad_c.duplicated())
+sem_duplicatas = dataset_squad_c.drop_duplicates()
+print(sem_duplicatas.shape)
+print(f"Valor total (sem duplicata): {sem_duplicatas['valor'].sum()}")</pre>
+      <p style="margin:10px 0 0;color:#1B5E20;">Os pedidos duplicados precisam sair <strong>antes</strong> de somar, senão o faturamento conta o mesmo pedido 2 vezes. Depois do <code>drop_duplicates()</code>, o valor total real é <code>R$ 135,00</code> — menor que a soma ingênua com as duplicatas ainda dentro.</p>
+    </div>
+
+    <div class="gabarito">
+      <strong>Squad D — Leituras de um sensor de temperatura (outlier)</strong>
+      <pre>import pandas as pd
+
+dataset_squad_d = pd.read_csv("dataset/dataset_squad_d_sensor.csv")
+
+display(dataset_squad_d.head())
+dataset_squad_d.info()
+
+print(dataset_squad_d["temperatura_celsius"].describe())
+
+q1 = dataset_squad_d["temperatura_celsius"].quantile(0.25)
+q3 = dataset_squad_d["temperatura_celsius"].quantile(0.75)
+limite_superior = q3 + 1.5 * (q3 - q1)
+
+print(dataset_squad_d[dataset_squad_d["temperatura_celsius"] > limite_superior])</pre>
+      <p style="margin:10px 0 0;color:#1B5E20;">O método IQR aponta a leitura de <code>999,0°C</code> como outlier — quase certamente erro de medição do sensor, não uma temperatura real. Antes de remover, o outlier sempre precisa ser investigado no contexto: às vezes é erro de coleta, às vezes é um evento raro mas legítimo.</p>
+    </div>
+
+    <div class="gabarito">
+      <strong>Squad E — Notas de turmas em escalas diferentes (precisa normalizar)</strong>
+      <pre>import pandas as pd
+from IPython.display import display
+
+dataset_squad_e = pd.read_csv("dataset/dataset_squad_e_notas.csv")
+
+display(dataset_squad_e.head())
+dataset_squad_e.info()
+
+turma_a = dataset_squad_e[dataset_squad_e["turma"] == "A"].copy()
+turma_b = dataset_squad_e[dataset_squad_e["turma"] == "B"].copy()
+
+turma_a["nota_normalizada"] = (turma_a["nota"] - turma_a["nota"].min()) / (turma_a["nota"].max() - turma_a["nota"].min())
+turma_b["nota_normalizada"] = (turma_b["nota"] - turma_b["nota"].min()) / (turma_b["nota"].max() - turma_b["nota"].min())
+
+dataset_squad_e_normalizado = pd.concat([turma_a, turma_b], ignore_index=True)
+print(dataset_squad_e_normalizado.groupby("turma")["nota_normalizada"].mean())</pre>
+      <p style="margin:10px 0 0;color:#1B5E20;">Normalizando as duas turmas juntas (min/máx do dataset inteiro), a média da turma A cai pra <code>0,015</code> e a da B sobe pra <code>0,927</code> — uma diferença artificial, só da escala. Normalizando <strong>turma por turma</strong>, as médias ficam em <code>0,50</code> (A) e <code>0,55</code> (B), bem mais próximas, porque cada aluno passa a ser comparado só com os colegas da própria turma.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Quiz de Fixação</h2>
+    <p>Responda e clique em <strong>Verificar</strong> para ver o feedback de cada questão.</p>
+
+    <div class="qs" data-correct="c">
+      <p><strong>1.</strong> Por que o código usa <code>centro.info()</code> puro, sem <code>print(...)</code> nem <code>display(...)</code> em volta?</p>
+      <label><input type="radio" name="q1" value="a"> Porque info() só funciona se não estiver dentro de outra função</label>
+      <label><input type="radio" name="q1" value="b"> Porque display() e print() não existem para DataFrame</label>
+      <label><input type="radio" name="q1" value="c"> Porque info() já imprime o resumo sozinho e devolve None — print(info()) mostraria um None sobrando</label>
+      <label><input type="radio" name="q1" value="d"> Porque info() precisa ser a última linha da célula, sempre</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="b">
+      <p><strong>2.</strong> Depois de <code>centro["valor"].fillna(0)</code> (sem reatribuir), o que aconteceu com <code>centro</code>?</p>
+      <label><input type="radio" name="q2" value="a"> Os nulos foram preenchidos com 0 permanentemente</label>
+      <label><input type="radio" name="q2" value="b"> Nada mudou em centro — fillna() devolveu uma cópia</label>
+      <label><input type="radio" name="q2" value="c"> Deu erro (TypeError)</label>
+      <label><input type="radio" name="q2" value="d"> A coluna valor foi removida</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="b">
+      <p><strong>3.</strong> Por que separar <code>Receita de Vendas</code> das despesas antes de calcular o limite de outlier (IQR)?</p>
+      <label><input type="radio" name="q3" value="a"> Porque o pandas não aceita misturar tipos de categoria numa mesma conta</label>
+      <label><input type="radio" name="q3" value="b"> Porque a receita tem uma escala bem maior e pareceria "outlier" das despesas sem ser</label>
+      <label><input type="radio" name="q3" value="c"> Porque IQR só funciona com uma categoria por vez, por limitação técnica</label>
+      <label><input type="radio" name="q3" value="d"> Não faz diferença separar ou não</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="b">
+      <p><strong>4.</strong> Por que <code>coluna &lt;= limite</code> pode remover uma linha com valor ausente (NaN) sem querer?</p>
+      <label><input type="radio" name="q4" value="a"> Porque NaN sempre é maior que qualquer limite</label>
+      <label><input type="radio" name="q4" value="b"> Porque qualquer comparação com NaN devolve False, inclusive <code>&lt;=</code></label>
+      <label><input type="radio" name="q4" value="c"> Porque o Pandas converte NaN em 0 antes de comparar</label>
+      <label><input type="radio" name="q4" value="d"> Isso nunca acontece</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="c">
+      <p><strong>5.</strong> O que <code>pd.concat([centro_limpo, zona_sul_limpo], ignore_index=True)</code> faz?</p>
+      <label><input type="radio" name="q5" value="a"> Calcula a média entre as duas filiais</label>
+      <label><input type="radio" name="q5" value="b"> Remove as linhas duplicadas entre as duas filiais</label>
+      <label><input type="radio" name="q5" value="c"> Empilha as linhas das duas filiais em um só DataFrame, com índice renumerado</label>
+      <label><input type="radio" name="q5" value="d"> Normaliza as colunas numéricas das duas filiais</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="a">
+      <p><strong>6.</strong> Por que o pipeline exporta <code>dre_consolidado.csv</code> em vez de deixar o time de BI receber os 2 arquivos sujos?</p>
+      <label><input type="radio" name="q6" value="a"> Porque assim a limpeza fica documentada uma única vez, sem cada pessoa reinventar sua própria versão dentro do Power BI</label>
+      <label><input type="radio" name="q6" value="b"> Porque o Power BI não consegue abrir arquivos CSV</label>
+      <label><input type="radio" name="q6" value="c"> Porque arquivos exportados do Python ficam automaticamente mais rápidos</label>
+      <label><input type="radio" name="q6" value="d"> Não há nenhuma vantagem, é só um passo a mais</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Exercícios da Semana</h2>
+    <div class="ex">
+      <strong>Fácil:</strong> Crie um DataFrame com pelo menos 4 linhas, com 1 valor ausente numa coluna numérica, e detecte com <code>isna().sum()</code>.
+    </div>
+    <div class="ex">
+      <strong>Médio:</strong> Calcule o limite superior de outlier (Q3 + 1,5×IQR) de uma coluna numérica e identifique valores acima desse limite.
+    </div>
+    <div class="ex">
+      <strong>Avançado:</strong> Monte um pipeline completo (duplicatas → outlier → nulos → coluna calculada → concat) e exporte o resultado com <code>to_csv()</code>.
+    </div>
+    <p>Lista completa em <code>04_exercicios.md</code>.</p>
+  </section>
+
+</main>
+
+<footer>
+  Curso: Análise de Dados com Python — SENAI (Turma T5) · Semana 06 · Gabarito<br>
+  <strong>Professor: Cláudio Ferreira Neves - Especialista em Dados</strong>
+</footer>
+
+<script>
+function check(btn){
+  const qs = btn.closest('.qs');
+  const correct = qs.getAttribute('data-correct');
+  const name = qs.querySelector('input').name;
+  const selected = qs.querySelector('input[name="' + name + '"]:checked');
+  const fb = qs.querySelector('.feedback');
+
+  if(!selected){
+    fb.className = 'feedback wrong';
+    fb.textContent = '⚠️ Selecione uma alternativa antes de verificar.';
+    return;
+  }
+
+  if(selected.value === correct){
+    fb.className = 'feedback correct';
+    fb.textContent = '✅ Correto! Muito bem.';
+  } else {
+    const correctLabel = qs.querySelector('input[value="' + correct + '"]').closest('label').textContent.trim();
+    fb.className = 'feedback wrong';
+    fb.textContent = '❌ Incorreto. A resposta certa é: ' + correctLabel;
+  }
+}
+</script>
+
+</body>
+</html>
