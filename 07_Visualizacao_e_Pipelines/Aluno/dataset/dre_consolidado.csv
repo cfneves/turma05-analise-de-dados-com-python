@@ -1,0 +1,47 @@
+categoria,tipo,mes,valor
+Receita de Vendas,Receita,Jan,45000.0
+Receita de Vendas,Receita,Fev,42000.0
+Receita de Vendas,Receita,Mar,47000.0
+Receita de Vendas,Receita,Abr,50000.0
+Impostos sobre Vendas,Despesa,Jan,4500.0
+CMV,Despesa,Jan,6539.285714285715
+Despesas com Pessoal,Despesa,Jan,12000.0
+Despesas Administrativas,Despesa,Jan,3200.0
+Despesas Financeiras,Despesa,Jan,800.0
+Impostos sobre Vendas,Despesa,Fev,4200.0
+CMV,Despesa,Fev,12600.0
+Despesas com Pessoal,Despesa,Fev,12000.0
+Despesas Administrativas,Despesa,Fev,3100.0
+Despesas Financeiras,Despesa,Fev,6539.285714285715
+Impostos sobre Vendas,Despesa,Mar,6539.285714285715
+CMV,Despesa,Mar,14100.0
+Despesas com Pessoal,Despesa,Mar,6539.285714285715
+Despesas Administrativas,Despesa,Mar,3300.0
+Despesas Financeiras,Despesa,Mar,900.0
+Impostos sobre Vendas,Despesa,Abr,5000.0
+CMV,Despesa,Abr,15000.0
+Despesas Administrativas,Despesa,Abr,6539.285714285715
+Despesas Financeiras,Despesa,Abr,850.0
+Receita de Vendas,Receita,Jan,38000.0
+Receita de Vendas,Receita,Fev,36000.0
+Receita de Vendas,Receita,Mar,40000.0
+Receita de Vendas,Receita,Abr,41000.0
+Impostos sobre Vendas,Despesa,Jan,3800.0
+CMV,Despesa,Jan,11000.0
+Despesas com Pessoal,Despesa,Jan,10500.0
+Despesas Administrativas,Despesa,Jan,2800.0
+Despesas Financeiras,Despesa,Jan,5930.0
+Impostos sobre Vendas,Despesa,Fev,3600.0
+CMV,Despesa,Fev,5930.0
+Despesas Administrativas,Despesa,Fev,2700.0
+Despesas Financeiras,Despesa,Fev,680.0
+Impostos sobre Vendas,Despesa,Mar,4000.0
+CMV,Despesa,Mar,11800.0
+Despesas com Pessoal,Despesa,Mar,10800.0
+Despesas Administrativas,Despesa,Mar,5930.0
+Despesas Financeiras,Despesa,Mar,720.0
+Impostos sobre Vendas,Despesa,Abr,5930.0
+CMV,Despesa,Abr,12000.0
+Despesas com Pessoal,Despesa,Abr,10800.0
+Despesas Administrativas,Despesa,Abr,3000.0
+Despesas Financeiras,Despesa,Abr,750.0
