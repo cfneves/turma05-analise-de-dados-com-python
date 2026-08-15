@@ -1,0 +1,807 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 07 — Gabarito das Atividades e Squads</title>
+<style>
+  :root{
+    --red:#CC0000;
+    --red-dark:#990000;
+    --ink:#1a1a2e;
+    --bg:#f7f7fa;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Segoe UI', Roboto, Arial, sans-serif;
+    background:var(--bg);
+    color:#222;
+    line-height:1.6;
+  }
+  .hero{
+    background:linear-gradient(135deg,#0d1b2a,#1b263b,var(--red));
+    color:#fff;
+    padding:60px 24px;
+    text-align:center;
+  }
+  .hero h1{
+    margin:0 0 10px;
+    font-size:2.2rem;
+  }
+  .hero h1 span{ color:#FFD60A; }
+  .hero p{
+    max-width:760px;
+    margin:14px auto 0;
+    font-size:1.05rem;
+    opacity:.92;
+  }
+  .badge{
+    display:inline-block;
+    background:rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.4);
+    border-radius:20px;
+    padding:6px 16px;
+    margin-top:18px;
+    font-size:.9rem;
+  }
+  main{
+    max-width:980px;
+    margin:0 auto;
+    padding:40px 20px 80px;
+  }
+  section{ margin-bottom:48px; }
+  h2{
+    color:var(--red-dark);
+    border-bottom:3px solid var(--red);
+    padding-bottom:8px;
+    font-size:1.5rem;
+  }
+  h3{ color:var(--ink); }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:18px 0;
+    box-shadow:0 1px 4px rgba(0,0,0,.08);
+  }
+  th, td{
+    border:1px solid #ddd;
+    padding:10px 12px;
+    text-align:left;
+    font-size:.95rem;
+  }
+  th{
+    background:var(--red);
+    color:#fff;
+  }
+  tr:nth-child(even){ background:#fafafa; }
+  .box{
+    background:#fff3f3;
+    border-left:5px solid var(--red);
+    padding:16px 20px;
+    border-radius:6px;
+    margin:18px 0;
+  }
+  .box.tip{
+    background:#F0F7FF;
+    border-left-color:#1565C0;
+  }
+  .qs{
+    background:var(--ink);
+    color:#eee;
+    border-radius:10px;
+    padding:20px 22px;
+    margin:16px 0;
+  }
+  .qs code{
+    background:rgba(255,255,255,.15);
+    color:#E0E0E0;
+    padding:2px 6px;
+    border-radius:4px;
+    font-family:Consolas, monospace;
+  }
+  .qs label{
+    display:block;
+    background:rgba(255,255,255,.06);
+    padding:8px 12px;
+    margin:6px 0;
+    border-radius:6px;
+    cursor:pointer;
+  }
+  .qs label:hover{ background:rgba(255,255,255,.12); }
+  .qs button{
+    background:var(--red);
+    color:#fff;
+    border:none;
+    padding:8px 18px;
+    border-radius:6px;
+    cursor:pointer;
+    margin-top:10px;
+    font-weight:bold;
+  }
+  .qs button:hover{ background:var(--red-dark); }
+  .feedback{
+    margin-top:10px;
+    padding:10px 14px;
+    border-radius:6px;
+    display:none;
+    font-weight:bold;
+  }
+  .feedback.correct{ background:#1b5e20; display:block; }
+  .feedback.wrong{ background:#7a1f1f; display:block; }
+  .ex{
+    background:#F0F7FF;
+    border:1px solid #BBDEFB;
+    border-radius:8px;
+    padding:16px 20px;
+    margin:14px 0;
+  }
+  pre.codeblock{
+    background:var(--ink);
+    color:#E0E0E0;
+    padding:16px 20px;
+    border-radius:8px;
+    overflow-x:auto;
+    font-family:Consolas, monospace;
+    font-size:.9rem;
+    margin:14px 0;
+  }
+  pre.codeblock .c{ color:#8a8aa0; }
+  footer{
+    background:var(--ink);
+    color:#ccc;
+    text-align:center;
+    padding:26px 16px;
+    font-size:.9rem;
+  }
+  footer strong{ color:#fff; }
+  @media (max-width:768px){
+    .hero h1{ font-size:1.6rem; }
+  }
+
+  /* Estrutura de aula: abertura / checagem / fechamento */
+  .abertura{background:#E8F5E9;border-left:5px solid #1B5E20;border-radius:8px;padding:20px 24px;margin:0 0 32px;}
+  .abertura h3{color:#1B5E20;margin:0 0 10px;font-size:1.05rem;}
+  .abertura ul,.fechamento ul{margin:8px 0 0;padding-left:22px;line-height:1.8;}
+  .checagem{background:#FFF3E0;border-left:5px solid #E65100;border-radius:6px;padding:14px 18px;margin:0 0 28px;font-size:.95rem;}
+  .checagem strong{color:#BF360C;display:block;margin-bottom:6px;}
+  .fechamento{background:#E3F2FD;border-left:5px solid #0D47A1;border-radius:8px;padding:20px 24px;margin:0 0 32px;}
+  .fechamento h3{color:#0D47A1;margin:0 0 10px;font-size:1.05rem;}
+  .topo-autor {
+    background: #0d1b2a;
+    color: rgba(255,255,255,0.72);
+    font-size: 0.82em;
+    font-weight: 500;
+    padding: 7px 28px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    letter-spacing: 0.01em;
+  }
+  .gabarito{background:#E8F5E9;border:2px solid #2E7D32;border-radius:8px;padding:16px 20px;margin:10px 0 18px;}
+  .gabarito > strong{color:#1B5E20;display:block;margin-bottom:8px;font-size:1rem;}
+  .gabarito pre{margin:8px 0 0;background:#1a1a2e;color:#E0E0E0;padding:16px 20px;border-radius:8px;overflow-x:auto;font-family:Consolas, monospace;font-size:.9rem;}
+  .banner-gabarito{background:#1B5E20;color:#fff;text-align:center;padding:10px 16px;font-weight:bold;font-size:.95rem;}
+</style>
+</head>
+<body>
+
+<div class="banner-gabarito">📘 Gabarito das Atividades e Squads — Semana 07</div>
+
+<div class="topo-autor">Professor: Cláudio Ferreira Neves - Especialista em Dados</div>
+<div class="hero">
+  <h1>Semana 07 · <span>Visualização e Pipelines</span></h1>
+  <p>Unidade Curricular: <strong>Manipulação de Dados com Python e SQL</strong> (150h) — Bloco 4, Semana 07 (fecha os 105h documentados do módulo). Você transforma dados limpos em gráficos que comunicam, conhece classes, ETL e integração com SQL — e fecha com o Mini Projeto.</p>
+  <span class="badge">3 encontros · 9h · Matplotlib, classes, ETL, SQL + Mini Projeto</span>
+</div>
+
+<main>
+
+  <section>
+    <h2>Competência da Unidade Curricular</h2>
+    <div class="box tip">
+      "Desenvolver competências em lógica de programação com Python, modelagem de dados com SQL e NoSQL e utilização de bibliotecas específicas para manipulação, transformação e visualização de dados, apoiando processos de análise de dados."
+    </div>
+    <p>Você já sabe limpar e transformar dados (Semana 06). Esta semana continua com o mesmo cenário — o Restaurante Sabor Caseiro — e fecha o ciclo: transformar esses dados já limpos em gráficos que comunicam, organizar seu código de forma mais profissional e entender como ele se conecta a bancos de dados — tudo isso aplicado no seu Mini Projeto.</p>
+    <div class="box">
+      <strong>🧠 Pergunta para você pensar:</strong> por que um gráfico bem feito vale mais que uma tabela de 1000 linhas? A resposta está no que você vai praticar nesta semana.
+    </div>
+  </section>
+
+  <section>
+    <h2>Objetivos da Semana</h2>
+    <ul>
+      <li>Criar gráficos de <strong>linha</strong>, <strong>barra</strong> e <strong>dispersão</strong> com Matplotlib</li>
+      <li><strong>Customizar</strong>, organizar em <strong>subplots</strong> e <strong>exportar</strong> gráficos</li>
+      <li>Organizar código com <strong>funções reutilizáveis</strong> e uma primeira <strong>classe</strong></li>
+      <li>Entender <strong>ETL</strong> e os primeiros passos de <strong>integração Python-SQL</strong></li>
+    </ul>
+  </section>
+    <div class="abertura">
+      <h3>🧭 De onde você vem: fechando a Semana 06</h3>
+      <p>Antes de entrar na Semana 07, vale reforçar de onde você está vindo e pra onde está indo dentro do curso.</p>
+      <p><strong>O que você viu e estudou na Semana 06:</strong> o DRE do Restaurante Sabor Caseiro, com 2 filiais (Centro e Zona Sul), 50 linhas, 9 valores ausentes, linhas duplicadas e um erro de digitação em cada filial. Você aprendeu a detectar valor ausente com <strong><code>isna()</code></strong> (marca cada célula como <code>True</code>/<code>False</code> conforme está vazia ou não), tratar com <strong><code>dropna()</code></strong> (remove a linha) ou <strong><code>fillna()</code></strong> (preenche com um valor, geralmente a média), detectar duplicidade com <strong><code>duplicated()</code></strong> e outlier com a técnica do <strong>IQR</strong> (intervalo interquartil), normalizar colunas numa escala de 0 a 1, limpar texto sujo com <strong><code>.str.strip()</code></strong>/<strong><code>.str.replace()</code></strong>, e combinar as duas filiais com <strong><code>pd.concat()</code></strong>.</p>
+      <p><strong>O que você fez:</strong> no final da semana, você montou um pipeline completo (as etapas de limpeza, uma atrás da outra) e exportou o resultado com <strong><code>to_csv()</code></strong> — gerando o <code>dre_consolidado.csv</code>, o arquivo que esta semana usa desde a primeira célula.</p>
+      <p><strong>Qual era o objetivo:</strong> te dar as ferramentas pra pegar um dado real sujo e devolver um dado real confiável — pronto pra virar gráfico, relatório ou entrar num banco de dados.</p>
+      <p><strong>Onde você está agora:</strong> encerrando o Bloco 4 desta UC ("Visualização e Pipelines — você comunica insights e entrega um projeto completo"). A Semana 06 resolveu a parte de <strong>limpar</strong>; a Semana 07, que começa agora, fecha o módulo resolvendo a parte de <strong>comunicar</strong> — transformando esse mesmo <code>dre_consolidado.csv</code> em gráfico, e organizando o código que faz isso num pipeline de verdade.</p>
+      <h3>🔄 Retomada — o que vimos na Semana 06</h3>
+      <p>Você já sabe detectar e tratar valor ausente, duplicidade e outlier, normalizar colunas, limpar texto sujo e combinar DataFrames com <code>pd.concat()</code> — e já tem, como resultado de tudo isso, o <code>dre_consolidado.csv</code> pronto. Esta semana usa esse mesmo arquivo do início ao fim: primeiro pra criar gráficos, depois pra organizar o código que gera esses gráficos, e por fim pra montar um pipeline completo que termina reintegrando esse dado a um banco de dados.</p>
+      <h3>🟢 Abertura — Semana 07: Visualização e Pipelines</h3>
+      <p>Última semana do Módulo Básico! <strong>Você vai aprender a comunicar insights com gráficos</strong>, usando o DRE já limpo do Restaurante Sabor Caseiro, e montar um pipeline de dados de ponta a ponta.</p>
+      <p><strong>O que você vai aprender nesta semana:</strong></p>
+      <ul><li>Criar gráficos com Matplotlib: linhas, barras e dispersão</li><li>Organizar código em funções reutilizáveis e introdução a classes</li><li>Montar um pipeline ETL completo e integrar Python com SQL</li></ul>
+    </div>
+
+  <section>
+    <h2>📌 O dataset desta semana</h2>
+    <p>Esta semana usa o mesmo <code>dre_consolidado.csv</code> que você gerou no fechamento da Semana 06 — o DRE das 2 filiais do Restaurante Sabor Caseiro (Centro e Zona Sul), já limpo: sem valor ausente, sem duplicata, sem outlier. São <strong>46 linhas</strong>, com 4 colunas: <code>categoria</code> (ex.: <code>Receita de Vendas</code>, <code>CMV</code>, <code>Despesas com Pessoal</code>), <code>tipo</code> (<code>Receita</code> ou <code>Despesa</code>), <code>mes</code> (<code>Jan</code> a <code>Abr</code>) e <code>valor</code>.</p>
+    <ul>
+      <li><code>dataset/dre_consolidado.csv</code> — 46 linhas, já limpo (saída da Semana 06)</li>
+    </ul>
+    <p><strong>Rodando no Google Colab?</strong> Diferente do VS Code local, o Colab não enxerga os arquivos desta pasta automaticamente — rode a célula abaixo pra enviar o arquivo; ela já coloca tudo na subpasta <code>dataset/</code> certinha. Os datasets dos squads (seção 5) só precisam ser enviados na sexta-feira.</p>
+    <pre class="codeblock">import os
+
+try:
+    from google.colab import files
+    enviados = files.upload()
+    os.makedirs("dataset", exist_ok=True)
+    for nome in enviados:
+        os.replace(nome, f"dataset/{nome}")
+except ImportError:
+    print("Rodando localmente (VS Code) — o arquivo já está em dataset/, na pasta desta semana.")</pre>
+    <div class="box tip">
+      <strong>💡 Lembrando da Semana 04:</strong> <code>os</code> é o módulo de sistema operacional do Python — já vem pronto, sem precisar instalar. <code>os.makedirs("dataset", exist_ok=True)</code> cria a subpasta <code>dataset/</code> (sem erro caso ela já exista); <code>os.replace(nome, f"dataset/{nome}")</code>, dentro do <code>for</code>, move o arquivo enviado da raiz da sessão pra dentro dessa subpasta.
+    </div>
+  </section>
+
+  <section>
+    <h2>1. Matplotlib: Gráficos Básicos</h2>
+    <p>Depois de limpar os dados na Semana 06, chegou a hora de mostrá-los. Todo gráfico em Matplotlib começa com a mesma receita:</p>
+    <pre class="codeblock">import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots()   # fig = a "folha"; ax = os "eixos" onde o gráfico é desenhado
+ax.plot(...)                # ou ax.bar(...), ax.scatter(...)
+plt.show()</pre>
+    <div class="box tip">
+      <strong>💡 Por que <code>fig, ax = plt.subplots()</code> desde o início?</strong> Existe um jeito mais curto (<code>plt.plot(...)</code> direto), mas ele só funciona bem para 1 gráfico isolado. O padrão <code>fig, ax</code> é o que você vai usar sempre — inclusive quando tiver vários gráficos juntos (Seção 2) — então já aprenda do jeito que escala.
+    </div>
+
+    <h3>Exemplo 1 — Gráfico de linha: receita mensal</h3>
+    <div class="box tip">
+      <strong>💡 Antes do código:</strong> vamos usar o <code>dre_consolidado.csv</code> que você já conhece da Semana 06. Para ver a receita mês a mês, filtramos as linhas onde <code>tipo == "Receita"</code> e agrupamos por <code>mes</code> somando <code>valor</code> com <code>groupby("mes")["valor"].sum()</code> — <code>groupby()</code> agrupa linhas que têm o mesmo valor numa coluna (aqui, o mês) e permite aplicar uma conta (soma) dentro de cada grupo, a mesma ideia que você já usou na Semana 05. Como os nomes dos meses não ficam em ordem cronológica sozinhos (o Pandas ordena em ordem alfabética), pedimos a ordem certa selecionando com uma lista: <code>receita_mensal[["Jan", "Fev", "Mar", "Abr"]]</code>.
+    </div>
+    <pre class="codeblock">import pandas as pd
+
+dre = pd.read_csv("dataset/dre_consolidado.csv")
+
+ordem_meses = ["Jan", "Fev", "Mar", "Abr"]
+receita_mensal = dre[dre["tipo"] == "Receita"].groupby("mes")["valor"].sum()
+receita_mensal = receita_mensal[ordem_meses]
+
+fig, ax = plt.subplots()
+ax.plot(receita_mensal.index, receita_mensal.values)
+plt.show()</pre>
+    <p>Gráfico de <strong>linha</strong> é o melhor para mostrar <strong>evolução ao longo do tempo</strong> (meses, dias, anos).</p>
+
+    <h3>Exemplo 2 — Gráfico de barras: despesa por categoria</h3>
+    <div class="box tip">
+      <strong>💡 Antes do código:</strong> agora agrupamos por <code>categoria</code> em vez de <code>mes</code>, filtrando só as linhas de despesa (<code>tipo == "Despesa"</code>) — o mesmo <code>groupby()</code> do Exemplo 1, só que somando dentro de cada categoria de despesa (<code>CMV</code>, <code>Despesas com Pessoal</code>, etc.), não de cada mês. Como esses nomes de categoria são compridos, <code>ax.tick_params(axis="x", labelrotation=30)</code> inclina os rótulos do eixo X em 30 graus, pra eles não ficarem espremidos e ilegíveis embaixo do gráfico.
+    </div>
+    <pre class="codeblock">import pandas as pd
+
+dre = pd.read_csv("dataset/dre_consolidado.csv")
+
+despesa_por_categoria = dre[dre["tipo"] == "Despesa"].groupby("categoria")["valor"].sum()
+
+fig, ax = plt.subplots()
+ax.bar(despesa_por_categoria.index, despesa_por_categoria.values)
+ax.tick_params(axis="x", labelrotation=30)
+plt.show()</pre>
+    <p>Gráfico de <strong>barras</strong> é o melhor para <strong>comparar categorias</strong> entre si.</p>
+
+    <h3>Exemplo 3 — Gráfico de dispersão: receita x despesa por mês</h3>
+    <div class="box tip">
+      <strong>💡 Antes do código:</strong> aqui calculamos DUAS séries mensais — receita e despesa — e colocamos uma no eixo X e outra no eixo Y. Cada ponto do gráfico é um mês: isso mostra se, quando a receita sobe, a despesa também sobe junto.
+    </div>
+    <pre class="codeblock">import pandas as pd
+
+dre = pd.read_csv("dataset/dre_consolidado.csv")
+
+ordem_meses = ["Jan", "Fev", "Mar", "Abr"]
+receita_mensal = dre[dre["tipo"] == "Receita"].groupby("mes")["valor"].sum()[ordem_meses]
+despesa_mensal = dre[dre["tipo"] == "Despesa"].groupby("mes")["valor"].sum()[ordem_meses]
+
+fig, ax = plt.subplots()
+ax.scatter(receita_mensal.values, despesa_mensal.values)  # x = receita do mês, y = despesa do mês
+plt.show()</pre>
+    <p>Gráfico de <strong>dispersão</strong> (scatter) é o melhor para mostrar a <strong>relação entre duas variáveis numéricas</strong>.</p>
+
+    <table>
+      <tr><th>Tipo de gráfico</th><th>Quando usar</th></tr>
+      <tr><td>Linha (<code>ax.plot</code>)</td><td>Evolução ao longo do tempo</td></tr>
+      <tr><td>Barra (<code>ax.bar</code>)</td><td>Comparar categorias</td></tr>
+      <tr><td>Dispersão (<code>ax.scatter</code>)</td><td>Relação entre 2 variáveis numéricas</td></tr>
+    </table>
+
+    <div class="box tip">
+      <strong>💡 Esqueceu de exibir o gráfico no Colab?</strong> Se nada aparecer, confira se a célula termina com <code>plt.show()</code> (ou se o notebook está com <code>%matplotlib inline</code> ativo — no Colab isso já vem configurado por padrão).
+    </div>
+
+    <div class="ex">
+      <strong>✏️ Agora é sua vez:</strong> <strong>Contextualização:</strong> a diretoria do Restaurante Sabor Caseiro quer visualizar, num único olhar, qual categoria de despesa pesa mais no orçamento — pra decidir com qual fornecedor negociar primeiro. <strong>Comando:</strong> no notebook, usando o mesmo <code>dre_consolidado.csv</code>, crie um gráfico de barras mostrando o valor total de cada categoria de despesa, ordenado da maior para a menor.
+    </div>
+    <div class="gabarito">
+      <strong>✅ Gabarito:</strong>
+      <pre>import matplotlib.pyplot as plt
+import pandas as pd
+
+dre = pd.read_csv("dataset/dre_consolidado.csv")
+despesa_por_categoria = dre[dre["tipo"] == "Despesa"].groupby("categoria")["valor"].sum().sort_values(ascending=False)
+
+fig, ax = plt.subplots()
+ax.bar(despesa_por_categoria.index, despesa_por_categoria.values)
+ax.tick_params(axis="x", labelrotation=30)
+plt.show()</pre>
+    </div>
+  </section>
+    <div class="checagem">
+      <strong>✅ Checagem rápida — antes de avançar:</strong>
+      Você consegue criar um gráfico de barras, um de linha e um de dispersão a partir do <code>dre_consolidado.csv</code>, escolhendo o tipo certo pra cada pergunta?
+    </div>
+<!-- checagem_1._Matplotlib -->
+
+  <section>
+    <h2>2. Customização, Subplots e Exportação</h2>
+
+    <h3>Exemplo 1 — Customizando um gráfico</h3>
+    <div class="box tip">
+      <strong>💡 Antes do código:</strong> <code>color</code> aceita um código hexadecimal (<code>#RRGGBB</code> — 2 dígitos para vermelho, 2 para verde, 2 para azul, de <code>00</code> a <code>ff</code>; <code>#CC0000</code> é um vermelho forte) ou nomes simples como <code>"red"</code>/<code>"blue"</code>. <code>marker</code> desenha um símbolo em cada ponto do gráfico — <code>"o"</code> é um círculo; outras opções comuns são <code>"s"</code> (quadrado) e <code>"^"</code> (triângulo). Nenhum dos dois é obrigatório — sem eles, o Matplotlib usa cor e estilo padrão.
+    </div>
+    <pre class="codeblock">import pandas as pd
+
+dre = pd.read_csv("dataset/dre_consolidado.csv")
+
+ordem_meses = ["Jan", "Fev", "Mar", "Abr"]
+receita_mensal = dre[dre["tipo"] == "Receita"].groupby("mes")["valor"].sum()[ordem_meses]
+
+fig, ax = plt.subplots()
+ax.plot(receita_mensal.index, receita_mensal.values, color="#CC0000", marker="o", label="Receita")
+ax.set_title("Receita mensal — Restaurante Sabor Caseiro")
+ax.set_xlabel("Mês")
+ax.set_ylabel("Receita (R$)")
+ax.legend()
+plt.show()</pre>
+    <p><code>set_title()</code>, <code>set_xlabel()</code>/<code>set_ylabel()</code> e <code>legend()</code> são o mínimo para um gráfico profissional — sem eles, ninguém além de quem criou o gráfico entende o que está vendo.</p>
+
+    <h3>Exemplo 2 — Subplots: vários gráficos lado a lado</h3>
+    <div class="box tip">
+      <strong>💡 Antes do código:</strong> até aqui, <code>plt.subplots()</code> sempre devolveu 1 <code>ax</code> só (Seção 1). Quando você pede mais de 1 gráfico — <code>plt.subplots(1, 2)</code>, por exemplo — ele devolve uma <strong>lista de eixos</strong>, guardada em <code>axs</code> (com "s", de plural). Por isso você acessa cada gráfico individual com <code>axs[0]</code>, <code>axs[1]</code>, etc. — a mesma ideia de indexar uma lista que você já usa desde a Semana 02.
+    </div>
+    <pre class="codeblock">import pandas as pd
+
+dre = pd.read_csv("dataset/dre_consolidado.csv")
+
+ordem_meses = ["Jan", "Fev", "Mar", "Abr"]
+receita_mensal = dre[dre["tipo"] == "Receita"].groupby("mes")["valor"].sum()[ordem_meses]
+despesa_por_categoria = dre[dre["tipo"] == "Despesa"].groupby("categoria")["valor"].sum()
+
+fig, axs = plt.subplots(1, 2, figsize=(10, 4))  # 1 linha, 2 colunas de gráficos
+
+axs[0].plot(receita_mensal.index, receita_mensal.values)
+axs[0].set_title("Receita mensal")
+
+axs[1].bar(despesa_por_categoria.index, despesa_por_categoria.values)
+axs[1].set_title("Despesa por categoria")
+axs[1].tick_params(axis="x", labelrotation=30)
+
+plt.show()</pre>
+    <p><code>axs</code> (no plural) é uma lista de eixos — <code>axs[0]</code> é o primeiro gráfico, <code>axs[1]</code> é o segundo, e assim por diante.</p>
+
+    <h3>Exportação de gráficos</h3>
+    <div class="box tip">
+      <strong>💡 Antes do código:</strong> <code>fig.savefig()</code> salva a figura inteira (não a tela) em um arquivo de imagem — essencial para colocar o gráfico num relatório ou apresentação.
+    </div>
+    <pre class="codeblock">fig.savefig("receita_mensal.png", dpi=150)</pre>
+
+    <div class="ex">
+      <strong>✏️ Agora é sua vez:</strong> <strong>Contextualização:</strong> o contador quer levar pra reunião mensal uma figura só, já pronta pra apresentar, comparando receita e despesa lado a lado. <strong>Comando:</strong> no notebook, usando o <code>dre_consolidado.csv</code>, crie uma figura com 2 subplots (receita mensal e despesa mensal), customize com título e rótulos, e exporte com <code>savefig()</code>.
+    </div>
+    <div class="gabarito">
+      <strong>✅ Gabarito:</strong>
+      <pre>import matplotlib.pyplot as plt
+import pandas as pd
+
+dre = pd.read_csv("dataset/dre_consolidado.csv")
+
+ordem_meses = ["Jan", "Fev", "Mar", "Abr"]
+receita_mensal = dre[dre["tipo"] == "Receita"].groupby("mes")["valor"].sum()[ordem_meses]
+despesa_mensal = dre[dre["tipo"] == "Despesa"].groupby("mes")["valor"].sum()[ordem_meses]
+
+fig, axs = plt.subplots(1, 2, figsize=(13, 4))
+
+axs[0].plot(receita_mensal.index, receita_mensal.values, color="#009D3F")
+axs[0].set_title("Receita mensal")
+axs[0].set_xlabel("Mês")
+axs[0].set_ylabel("Receita (R$)")
+
+axs[1].plot(despesa_mensal.index, despesa_mensal.values, color="#CC0000")
+axs[1].set_title("Despesa mensal")
+axs[1].set_xlabel("Mês")
+axs[1].set_ylabel("Despesa (R$)")
+
+fig.savefig("receita_despesa_mensal.png", dpi=150)
+print("Gráfico exportado.")</pre>
+    </div>
+  </section>
+    <div class="checagem">
+      <strong>✅ Checagem rápida — antes de avançar:</strong>
+      Você consegue colocar dois subplots lado a lado e exportar a figura como PNG?
+    </div>
+<!-- checagem_2._Customização -->
+
+  <section>
+    <h2>3. Funções Reutilizáveis e Introdução a Classes</h2>
+    <p>Você já cria funções desde a Semana 04. Mas há situações em que uma função não basta: quando você precisa agrupar <strong>dados</strong> e <strong>comportamento</strong> juntos, e manter esses dados entre uma chamada e outra.</p>
+
+    <h3>Exemplo 1 — Função de transformação reutilizável: normalizando a despesa por categoria</h3>
+    <div class="box tip">
+      <strong>💡 Antes do código:</strong> a função abaixo aplica a fórmula de <strong>normalização min-max</strong> — ela pega cada valor de uma coluna e recalcula numa escala de 0 a 1, usando <code>(valor - mínimo) / (máximo - mínimo)</code>. O menor valor da coluna vira 0, o maior vira 1, e os demais ficam proporcionalmente entre os dois. Vamos aplicar isso na despesa por categoria: assim dá pra comparar <code>CMV</code> (o maior valor em reais) com <code>Despesas Financeiras</code> (o menor) numa escala comum, sem o tamanho em reais distorcer a comparação.
+    </div>
+    <pre class="codeblock">import pandas as pd
+
+dre = pd.read_csv("dataset/dre_consolidado.csv")
+despesa_por_categoria = dre[dre["tipo"] == "Despesa"].groupby("categoria")["valor"].sum()
+
+def normalizar(coluna):
+    return (coluna - coluna.min()) / (coluna.max() - coluna.min())
+
+despesa_normalizada = normalizar(despesa_por_categoria)
+print(despesa_normalizada)</pre>
+    <p>Uma função pura assim (recebe dados, devolve dados) é o suficiente quando você só precisa transformar um valor — é o que você já fazia desde a Semana 04.</p>
+
+    <h3>Exemplo 2 — Sua primeira classe: participação de uma categoria no total</h3>
+    <div class="box tip">
+      <strong>💡 Antes do código:</strong> uma <strong>classe</strong> é um molde — define o que todo objeto desse tipo vai ter (dados) e o que ele vai saber fazer (comportamento). Um <strong>objeto</strong> é uma "cópia preenchida" desse molde, com valores próprios. Vamos criar uma classe <code>Categoria</code>, que guarda o nome e o valor total de uma categoria de despesa, e sabe calcular sozinha qual porcentagem representa do total.
+    </div>
+    <pre class="codeblock">import pandas as pd
+
+dre = pd.read_csv("dataset/dre_consolidado.csv")
+despesa_por_categoria = dre[dre["tipo"] == "Despesa"].groupby("categoria")["valor"].sum()
+
+class Categoria:
+    def __init__(self, nome, valor_total):
+        self.nome = nome
+        self.valor_total = valor_total
+
+    def participacao(self, total_geral):
+        return self.valor_total / total_geral * 100
+
+cmv = Categoria("CMV", despesa_por_categoria["CMV"])
+print(cmv.nome, round(cmv.participacao(despesa_por_categoria.sum()), 1))</pre>
+    <table>
+      <tr><th>Termo</th><th>O que é</th></tr>
+      <tr><td><code>class Categoria:</code></td><td>Define o "molde" — o que toda Categoria vai ter/fazer</td></tr>
+      <tr><td><code>__init__</code></td><td>Roda automaticamente ao criar uma Categoria nova, guardando seus dados iniciais</td></tr>
+      <tr><td><code>self</code></td><td>Representa "esta Categoria específica" — é como o método acessa os dados guardados nele</td></tr>
+      <tr><td><code>cmv = Categoria(...)</code></td><td>Cria um <strong>objeto</strong> — uma "cópia preenchida" do molde Categoria</td></tr>
+    </table>
+    <div class="box tip">
+      <strong>💡 Função x Classe:</strong> uma função recebe dados, processa, devolve um resultado — e esquece tudo depois. Uma classe <strong>guarda</strong> dados (no <code>self</code>) e empacota junto as ações que fazem sentido para aqueles dados — útil quando o "dado" e o "comportamento" pertencem juntos (ex.: uma Categoria sempre sabe seu próprio valor total, e sempre sabe calcular sua própria participação no total).
+    </div>
+    <div class="box">
+      <strong>⚠️ Veja como é um erro real do Python:</strong> se você esquecer o <code>self</code> ao definir um método:
+      <pre class="codeblock" style="margin:10px 0 0;">class Categoria:
+    def mostrar():  # faltou o self
+        print("categoria")
+
+Categoria("Impostos sobre Vendas", 37569.29).mostrar()</pre>
+      <pre class="codeblock" style="margin:10px 0 0;">TypeError: Categoria.mostrar() takes 0 positional arguments but 1 was given</pre>
+      Todo método de uma classe precisa do <code>self</code> como primeiro parâmetro — é assim que Python passa "qual objeto" está chamando aquele método.
+    </div>
+
+    <div class="ex">
+      <strong>✏️ Agora é sua vez:</strong> <strong>Contextualização:</strong> a diretoria também quer saber, mês a mês, qual fatia da receita total do quadrimestre cada mês representa — pra identificar sazonalidade. <strong>Comando:</strong> no notebook, crie uma classe <code>Mes</code> com <code>nome</code> e <code>receita</code>, e um método <code>participacao(total_periodo)</code> que devolve a porcentagem que a receita daquele mês representa do total do período.
+    </div>
+    <div class="gabarito">
+      <strong>✅ Gabarito:</strong>
+      <pre>import pandas as pd
+
+dre = pd.read_csv("dataset/dre_consolidado.csv")
+ordem_meses = ["Jan", "Fev", "Mar", "Abr"]
+receita_mensal = dre[dre["tipo"] == "Receita"].groupby("mes")["valor"].sum()[ordem_meses]
+
+class Mes:
+    def __init__(self, nome, receita):
+        self.nome = nome
+        self.receita = receita
+
+    def participacao(self, total_periodo):
+        return self.receita / total_periodo * 100
+
+abril = Mes("Abr", receita_mensal["Abr"])
+print(abril.nome, round(abril.participacao(receita_mensal.sum()), 1))</pre>
+    </div>
+  </section>
+    <div class="checagem">
+      <strong>✅ Checagem rápida — antes de avançar:</strong>
+      Você consegue transformar um trecho de código repetitivo em uma função com parâmetros e retorno?
+    </div>
+<!-- checagem_3._Funções_Reutilizáveis -->
+
+  <section>
+    <h2>4. ETL e Integração Python-SQL</h2>
+    <p><strong>ETL</strong> significa <strong>E</strong>xtract (extrair) → <strong>T</strong>ransform (transformar) → <strong>L</strong>oad (carregar). Você já faz isso desde a Semana 04 — só não tinha esse nome:</p>
+    <table>
+      <tr><th>Etapa do ETL</th><th>O que você já aprendeu que se encaixa aqui</th></tr>
+      <tr><td><strong>E</strong>xtract</td><td>Ler um arquivo (<code>pd.read_csv</code>) — o <code>dre_consolidado.csv</code></td></tr>
+      <tr><td><strong>T</strong>ransform</td><td>Limpar e transformar com Pandas (Semana 06) — agora, normalizar</td></tr>
+      <tr><td><strong>L</strong>oad</td><td>Salvar o resultado — em arquivo (<code>to_csv</code>) ou em um banco de dados (nesta seção)</td></tr>
+    </table>
+
+    <h3>Exemplo 1 — Um pipeline ETL completo: despesa por categoria, normalizada</h3>
+    <div class="box tip">
+      <strong>💡 Antes do código:</strong> depois de agrupar a despesa por categoria, o resultado do <code>groupby()</code> fica com <code>categoria</code> como índice, não como coluna comum — <code>.reset_index()</code> devolve <code>categoria</code> pra uma coluna normal, o que facilita adicionar a coluna <code>valor_normalizado</code> do lado.
+    </div>
+    <pre class="codeblock">import pandas as pd
+
+dre = pd.read_csv("dataset/dre_consolidado.csv")                                                     # E — Extract
+
+despesa_por_categoria = dre[dre["tipo"] == "Despesa"].groupby("categoria")["valor"].sum().reset_index()
+
+def normalizar(coluna):
+    return (coluna - coluna.min()) / (coluna.max() - coluna.min())
+
+despesa_por_categoria["valor_normalizado"] = normalizar(despesa_por_categoria["valor"])              # T — Transform
+
+despesa_por_categoria.to_csv("despesa_por_categoria.csv", index=False)                               # L — Load (em arquivo)
+print("Pipeline concluído.")</pre>
+
+    <h3>Exemplo 2 — Load num banco de dados com sqlite3</h3>
+    <div class="box tip">
+      <strong>💡 Antes do código:</strong> depois de carregar os dados numa tabela, você pode consultá-los com <strong>SQL</strong> — a linguagem usada para conversar com bancos de dados. Neste exemplo, <code>SELECT * FROM despesas WHERE valor > 30000</code> lê quase como uma frase: "selecione tudo (<code>*</code>) da tabela <code>despesas</code> onde o valor é maior que 30000" — as categorias de maior peso no orçamento. Você vai aprender SQL de verdade, a fundo, no Bloco 5 do curso (Semanas 09-10) — aqui é só uma prévia de como Python e SQL conversam.
+    </div>
+    <pre class="codeblock">import pandas as pd
+import sqlite3
+
+dre = pd.read_csv("dataset/dre_consolidado.csv")
+despesa_por_categoria = dre[dre["tipo"] == "Despesa"].groupby("categoria")["valor"].sum().reset_index()  # repetindo o Extract+Transform do Exemplo 1
+
+def normalizar(coluna):
+    return (coluna - coluna.min()) / (coluna.max() - coluna.min())
+
+despesa_por_categoria["valor_normalizado"] = normalizar(despesa_por_categoria["valor"])
+
+conexao = sqlite3.connect("dados.db")
+despesa_por_categoria.to_sql("despesas", conexao, index=False, if_exists="replace")  # L — Load (em banco)
+
+resultado = pd.read_sql("SELECT * FROM despesas WHERE valor > 30000", conexao)
+print(resultado)
+
+conexao.close()</pre>
+    <div class="box tip">
+      <strong>💡 Por que <code>sqlite3</code> e não PostgreSQL aqui?</strong> <code>sqlite3</code> não precisa de servidor nem configuração — é o jeito mais simples de praticar a <strong>ideia</strong> de Python conversando com SQL. No mercado, o mesmo `pandas.to_sql()`/`pd.read_sql()` funciona com PostgreSQL (via `SQLAlchemy`), só muda a conexão.
+    </div>
+
+    <div class="ex">
+      <strong>✏️ Agora é sua vez:</strong> <strong>Contextualização:</strong> o time de BI quer receber, num banco de dados, a receita mensal já calculada — pra plugar direto num painel, sem reprocessar nada. <strong>Comando:</strong> no notebook, monte um pipeline ETL com o <code>dre_consolidado.csv</code>: extraia a receita mensal, transforme aplicando a normalização, e carregue o resultado numa tabela SQLite chamada <code>receitas</code>.
+    </div>
+    <div class="gabarito">
+      <strong>✅ Gabarito:</strong>
+      <pre>import pandas as pd
+import sqlite3
+
+dre = pd.read_csv("dataset/dre_consolidado.csv")
+
+ordem_meses = ["Jan", "Fev", "Mar", "Abr"]
+receita_mensal = dre[dre["tipo"] == "Receita"].groupby("mes")["valor"].sum()[ordem_meses].reset_index()
+def normalizar(coluna):
+    return (coluna - coluna.min()) / (coluna.max() - coluna.min())
+
+receita_mensal["valor_normalizado"] = normalizar(receita_mensal["valor"])
+
+minha_conexao = sqlite3.connect("meu_banco.db")
+receita_mensal.to_sql("receitas", minha_conexao, index=False, if_exists="replace")
+print(pd.read_sql("SELECT * FROM receitas", minha_conexao))
+minha_conexao.close()</pre>
+    </div>
+  </section>
+    <div class="checagem">
+      <strong>✅ Checagem rápida — antes de avançar:</strong>
+      Você consegue descrever as 3 etapas de um pipeline ETL e dar um exemplo de cada uma?
+    </div>
+<!-- checagem_4._ETL -->
+
+  <section>
+    <h2>5. Treino em Squads e o Mini Projeto — Sexta-feira (Encontro 3)</h2>
+    <p>Na sexta-feira, seu squad recebe um dataset novo para visualizar (pelo menos 2 tipos de gráfico diferentes + 1 insight). Depois do treino, o professor apresenta o <strong>Mini Projeto</strong> — a Situação de Aprendizagem Integradora que fecha o módulo.</p>
+    <div class="box">
+      <strong>📌 Mini Projeto (Situação de Aprendizagem Integradora):</strong> escolha um dataset público real (IBGE, Dados Abertos, Kaggle ou Portal Brasileiro de Dados Abertos) e aplique, em squad, tudo o que você aprendeu nos Blocos 1–4: importar → limpar → transformar → visualizar → comunicar insights. Detalhes completos, rubrica e entrega em <code>05_atividade_avaliativa.md</code>.
+    </div>
+  
+
+    <h3>✅ Gabarito — os 4 datasets de squad, resolvidos</h3>
+    <p>Cada squad recebeu só <strong>um</strong> dos datasets abaixo. Aqui estão os 4 resolvidos, para conferência.</p>
+
+    <div class="gabarito">
+      <strong>Squad B — Vendas mensais de uma loja</strong>
+      <pre>import pandas as pd
+import matplotlib.pyplot as plt
+
+dataset_squad_b = pd.DataFrame({
+    "mes": ["Jan", "Fev", "Mar", "Abr"],
+    "receita": [4200, 3900, 5100, 4800],
+})
+
+fig, axs = plt.subplots(1, 2, figsize=(10, 4))
+axs[0].plot(dataset_squad_b["mes"], dataset_squad_b["receita"], marker="o")
+axs[0].set_title("Evolução das vendas")
+axs[1].bar(dataset_squad_b["mes"], dataset_squad_b["receita"])
+axs[1].set_title("Vendas por mês")
+plt.show()</pre>
+      <p style="margin:10px 0 0;color:#1B5E20;">linha (evolução) + barra (comparação mensal) — os dois tipos mais diretos pra um dataset com mês e valor. <strong>Insight:</strong> Março foi o melhor mês (R$ 5.100), Fevereiro o mais fraco (R$ 3.900) — uma queda antes de recuperar em Abril.</p>
+    </div>
+
+    <div class="gabarito">
+      <strong>Squad C — Avaliações de apps por categoria</strong>
+      <pre>import pandas as pd
+import matplotlib.pyplot as plt
+
+dataset_squad_c = pd.DataFrame({
+    "categoria_app": ["Jogos", "Produtividade", "Educação"],
+    "nota_media": [4.2, 4.7, 4.6],
+})
+
+fig, axs = plt.subplots(1, 2, figsize=(10, 4))
+axs[0].bar(dataset_squad_c["categoria_app"], dataset_squad_c["nota_media"])
+axs[0].set_title("Nota média por categoria")
+axs[1].barh(dataset_squad_c["categoria_app"], dataset_squad_c["nota_media"])
+axs[1].set_title("Nota média (barras horizontais)")
+plt.show()</pre>
+      <p style="margin:10px 0 0;color:#1B5E20;"><code>ax.bar()</code> e <code>ax.barh()</code> (barra horizontal) — mesma ideia de comparar categorias, em duas orientações diferentes. Só existe 1 coluna numérica (<code>nota_media</code>), então dispersão não se aplica aqui — ela exige 2. <strong>Insight:</strong> Produtividade tem a maior nota média (4,7), Jogos a menor (4,2).</p>
+    </div>
+
+    <div class="gabarito">
+      <strong>Squad D — Tempo de espera x satisfação de clientes</strong>
+      <pre>import pandas as pd
+import matplotlib.pyplot as plt
+
+dataset_squad_d = pd.DataFrame({
+    "tempo_espera_min": [10, 25, 15, 40, 5],
+    "satisfacao": [5, 3, 4, 2, 5],
+})
+
+fig, axs = plt.subplots(1, 2, figsize=(10, 4))
+axs[0].scatter(dataset_squad_d["tempo_espera_min"], dataset_squad_d["satisfacao"])
+axs[0].set_title("Tempo de espera x satisfação")
+axs[0].set_xlabel("Tempo de espera (min)")
+axs[0].set_ylabel("Satisfação")
+
+ordenado = dataset_squad_d.sort_values("tempo_espera_min")
+axs[1].plot(ordenado["tempo_espera_min"], ordenado["satisfacao"], marker="o")
+axs[1].set_title("Satisfação conforme o tempo cresce")
+axs[1].set_xlabel("Tempo de espera (min)")
+plt.show()</pre>
+      <p style="margin:10px 0 0;color:#1B5E20;">este é o único dataset com 2 colunas numéricas de verdade, então dispersão é a escolha natural — o segundo gráfico usa <code>.sort_values("tempo_espera_min")</code> pra desenhar uma linha coerente da esquerda pra direita. <strong>Insight:</strong> relação claramente inversa — os clientes que esperaram menos de 10 minutos deram nota 5, o que esperou 40 minutos deu nota 2.</p>
+    </div>
+
+    <div class="gabarito">
+      <strong>Squad E — Vendas por região</strong>
+      <pre>import pandas as pd
+import matplotlib.pyplot as plt
+
+dataset_squad_e = pd.DataFrame({
+    "regiao": ["Sudeste", "Sul", "Nordeste", "Norte"],
+    "vendas": [12000, 5400, 4300, 2100],
+})
+
+fig, axs = plt.subplots(1, 2, figsize=(10, 4))
+axs[0].bar(dataset_squad_e["regiao"], dataset_squad_e["vendas"])
+axs[0].set_title("Vendas por região")
+
+ordenado = dataset_squad_e.sort_values("vendas", ascending=False)
+axs[1].barh(ordenado["regiao"], ordenado["vendas"])
+axs[1].set_title("Ranking de vendas")
+plt.show()</pre>
+      <p style="margin:10px 0 0;color:#1B5E20;">barra simples + barra horizontal ordenada (reaproveitando <code>.sort_values()</code>, já visto na Atividade Prática 1). <strong>Insight:</strong> o Sudeste concentra mais que o dobro das vendas da segunda região (Sul) — sozinho, vende mais que Nordeste e Norte somados.</p>
+    </div>
+</section>
+
+  
+    <div class="fechamento">
+      <h3>🏁 Fechamento — Módulo Básico Completo</h3>
+      <p><strong>Nesta semana você aprendeu:</strong></p>
+      <ul><li>Gráficos profissionais com Matplotlib: tipos, customização e exportação</li><li>Funções reutilizáveis e introdução a classes para organizar pipelines</li><li>Pipeline ETL completo: coletar → limpar → analisar → visualizar → comunicar</li></ul>
+      <p style="margin-top:14px;"><strong>Próxima semana:</strong> <strong>Parabéns — você concluiu o Módulo Básico de Análise de Dados com Python!</strong> Prepare-se para o Módulo Específico: Gestão de Dados com Arquitetura Moderna.</p>
+    </div>
+<section>
+    <h2>Quiz de Fixação</h2>
+    <p>Responda e clique em <strong>Verificar</strong> para ver o feedback de cada questão.</p>
+
+    <div class="qs" data-correct="c">
+      <p><strong>1.</strong> Qual gráfico é o mais indicado para comparar categorias entre si?</p>
+      <label><input type="radio" name="q1" value="a"> Linha</label>
+      <label><input type="radio" name="q1" value="b"> Dispersão</label>
+      <label><input type="radio" name="q1" value="c"> Barra</label>
+      <label><input type="radio" name="q1" value="d"> Não importa, todos servem igualmente</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="b">
+      <p><strong>2.</strong> O que <code>fig, axs = plt.subplots(1, 2)</code> cria?</p>
+      <label><input type="radio" name="q2" value="a"> Um único gráfico maior</label>
+      <label><input type="radio" name="q2" value="b"> Uma figura com 2 gráficos lado a lado</label>
+      <label><input type="radio" name="q2" value="c"> Um gráfico de dispersão</label>
+      <label><input type="radio" name="q2" value="d"> Um erro de sintaxe</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="d">
+      <p><strong>3.</strong> Em uma classe Python, para que serve o <code>self</code>?</p>
+      <label><input type="radio" name="q3" value="a"> É opcional, pode ser omitido</label>
+      <label><input type="radio" name="q3" value="b"> Serve só para nomear a classe</label>
+      <label><input type="radio" name="q3" value="c"> Substitui o `__init__`</label>
+      <label><input type="radio" name="q3" value="d"> Representa o próprio objeto, dando acesso aos seus dados dentro do método</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="b">
+      <p><strong>4.</strong> O que significa a etapa "L" do ETL?</p>
+      <label><input type="radio" name="q4" value="a"> Limpar (Limp)</label>
+      <label><input type="radio" name="q4" value="b"> Carregar o resultado em um destino final (Load)</label>
+      <label><input type="radio" name="q4" value="c"> Ligar ao banco de dados (Link)</label>
+      <label><input type="radio" name="q4" value="d"> Listar os dados (List)</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Exercícios da Semana</h2>
+    <div class="ex">
+      <strong>Fácil:</strong> Usando o <code>dre_consolidado.csv</code>, crie um gráfico de linha e um de barras.
+    </div>
+    <div class="ex">
+      <strong>Médio:</strong> Crie uma classe com pelo menos 2 atributos e 1 método que altere um desses atributos.
+    </div>
+    <div class="ex">
+      <strong>Avançado:</strong> Monte um pipeline ETL completo, carregando o resultado final numa tabela SQLite.
+    </div>
+    <p>Lista completa (formativa, sem nota) em <code>04_exercicios.md</code>. A atividade avaliada da semana é o <strong>Mini Projeto</strong> — ver <code>05_atividade_avaliativa.md</code>.</p>
+  </section>
+
+</main>
+
+<footer>
+  Curso: Análise de Dados com Python — SENAI (Turma T5) · Semana 07 · Gabarito<br>
+  <strong>Professor: Cláudio Ferreira Neves - Especialista em Dados</strong>
+</footer>
+
+<script>
+function check(btn){
+  const qs = btn.closest('.qs');
+  const correct = qs.getAttribute('data-correct');
+  const name = qs.querySelector('input').name;
+  const selected = qs.querySelector('input[name="' + name + '"]:checked');
+  const fb = qs.querySelector('.feedback');
+
+  if(!selected){
+    fb.className = 'feedback wrong';
+    fb.textContent = '⚠️ Selecione uma alternativa antes de verificar.';
+    return;
+  }
+
+  if(selected.value === correct){
+    fb.className = 'feedback correct';
+    fb.textContent = '✅ Correto! Muito bem.';
+  } else {
+    const correctLabel = qs.querySelector('input[value="' + correct + '"]').closest('label').textContent.trim();
+    fb.className = 'feedback wrong';
+    fb.textContent = '❌ Incorreto. A resposta certa é: ' + correctLabel;
+  }
+}
+</script>
+
+</body>
+</html>
