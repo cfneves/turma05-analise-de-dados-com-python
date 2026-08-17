@@ -1,0 +1,19 @@
+id_pedido,cliente,filial,item,valor,data_hora
+1,Marcos Silva,Centro,Marmita Executiva,32.90,2025-06-02 12:15
+2,Marcos Silva,Centro,Suco Natural,9.50,2025-06-02 12:15
+3,Juliana Alves,Zona Sul,Feijoada Completa,45.00,2025-06-02 12:40
+4,Marcos Silva,Centro,Marmita Executiva,32.90,2025-06-05 12:05
+5,Ricardo Nunes,Zona Sul,Sobremesa do Dia,12.00,2025-06-05 13:10
+6,Juliana Alves,Zona Sul,Feijoada Completa,45.00,2025-06-06 12:30
+7,Fernanda Costa,Centro,Marmita Executiva,32.90,2025-06-06 12:50
+8,Ricardo Nunes,Zona Sul,Feijoada Completa,45.00,2025-06-07 12:20
+9,Marcos Silva,Centro,Suco Natural,9.50,2025-06-08 12:10
+10,Fernanda Costa,Centro,Sobremesa do Dia,12.00,2025-06-08 13:00
+11,Juliana Alves,Zona Sul,Marmita Executiva,32.90,2025-06-09 12:15
+12,Patrícia Gomes,Centro,Feijoada Completa,45.00,2025-06-09 12:35
+13,Ricardo Nunes,Zona Sul,Suco Natural,9.50,2025-06-10 12:05
+14,Patrícia Gomes,Centro,Marmita Executiva,32.90,2025-06-10 12:45
+15,Fernanda Costa,Centro,Feijoada Completa,45.00,2025-06-11 12:20
+16,Juliana Alves,Zona Sul,Sobremesa do Dia,12.00,2025-06-11 13:05
+17,Marcos Silva,Centro,Feijoada Completa,45.00,2025-06-12 12:30
+18,Patrícia Gomes,Centro,Suco Natural,9.50,2025-06-12 12:50

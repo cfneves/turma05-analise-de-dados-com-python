@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 08 — Banco de Dados Relacionais e Não Relacionais</title>
+<style>
+  :root{
+    --red:#CC0000;
+    --red-dark:#990000;
+    --ink:#1a1a2e;
+    --bg:#f7f7fa;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Segoe UI', Roboto, Arial, sans-serif;
+    background:var(--bg);
+    color:#222;
+    line-height:1.6;
+  }
+  .hero{
+    background:linear-gradient(135deg,#0d1b2a,#1b263b,var(--red));
+    color:#fff;
+    padding:60px 24px;
+    text-align:center;
+  }
+  .hero h1{
+    margin:0 0 10px;
+    font-size:2.2rem;
+  }
+  .hero h1 span{ color:#FFD60A; }
+  .hero p{
+    max-width:760px;
+    margin:14px auto 0;
+    font-size:1.05rem;
+    opacity:.92;
+  }
+  .badge{
+    display:inline-block;
+    background:rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.4);
+    border-radius:20px;
+    padding:6px 16px;
+    margin-top:18px;
+    font-size:.9rem;
+  }
+  main{
+    max-width:980px;
+    margin:0 auto;
+    padding:40px 20px 80px;
+  }
+  section{ margin-bottom:48px; }
+  h2{
+    color:var(--red-dark);
+    border-bottom:3px solid var(--red);
+    padding-bottom:8px;
+    font-size:1.5rem;
+  }
+  h3{ color:var(--ink); }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:18px 0;
+    box-shadow:0 1px 4px rgba(0,0,0,.08);
+  }
+  th, td{
+    border:1px solid #ddd;
+    padding:10px 12px;
+    text-align:left;
+    font-size:.95rem;
+  }
+  th{
+    background:var(--red);
+    color:#fff;
+  }
+  tr:nth-child(even){ background:#fafafa; }
+  .box{
+    background:#fff3f3;
+    border-left:5px solid var(--red);
+    padding:16px 20px;
+    border-radius:6px;
+    margin:18px 0;
+  }
+  .box.tip{
+    background:#F0F7FF;
+    border-left-color:#1565C0;
+  }
+  .qs{
+    background:var(--ink);
+    color:#eee;
+    border-radius:10px;
+    padding:20px 22px;
+    margin:16px 0;
+  }
+  .qs code{
+    background:rgba(255,255,255,.15);
+    color:#E0E0E0;
+    padding:2px 6px;
+    border-radius:4px;
+    font-family:Consolas, monospace;
+  }
+  .qs label{
+    display:block;
+    background:rgba(255,255,255,.06);
+    padding:8px 12px;
+    margin:6px 0;
+    border-radius:6px;
+    cursor:pointer;
+  }
+  .qs label:hover{ background:rgba(255,255,255,.12); }
+  .qs button{
+    background:var(--red);
+    color:#fff;
+    border:none;
+    padding:8px 18px;
+    border-radius:6px;
+    cursor:pointer;
+    margin-top:10px;
+    font-weight:bold;
+  }
+  .qs button:hover{ background:var(--red-dark); }
+  .feedback{
+    margin-top:10px;
+    padding:10px 14px;
+    border-radius:6px;
+    display:none;
+    font-weight:bold;
+  }
+  .feedback.correct{ background:#1b5e20; display:block; }
+  .feedback.wrong{ background:#7a1f1f; display:block; }
+  .ex{
+    background:#F0F7FF;
+    border:1px solid #BBDEFB;
+    border-radius:8px;
+    padding:16px 20px;
+    margin:14px 0;
+  }
+  pre.codeblock{
+    background:var(--ink);
+    color:#E0E0E0;
+    padding:16px 20px;
+    border-radius:8px;
+    overflow-x:auto;
+    font-family:Consolas, monospace;
+    font-size:.9rem;
+    margin:14px 0;
+  }
+  pre.codeblock .c{ color:#8a8aa0; }
+  footer{
+    background:var(--ink);
+    color:#ccc;
+    text-align:center;
+    padding:26px 16px;
+    font-size:.9rem;
+  }
+  footer strong{ color:#fff; }
+  @media (max-width:768px){
+    .hero h1{ font-size:1.6rem; }
+  }
+
+  /* Estrutura de aula: abertura / checagem / fechamento */
+  .abertura{background:#E8F5E9;border-left:5px solid #1B5E20;border-radius:8px;padding:20px 24px;margin:0 0 32px;}
+  .abertura h3{color:#1B5E20;margin:0 0 10px;font-size:1.05rem;}
+  .abertura ul,.fechamento ul{margin:8px 0 0;padding-left:22px;line-height:1.8;}
+  .checagem{background:#FFF3E0;border-left:5px solid #E65100;border-radius:6px;padding:14px 18px;margin:0 0 28px;font-size:.95rem;}
+  .checagem strong{color:#BF360C;display:block;margin-bottom:6px;}
+  .fechamento{background:#E3F2FD;border-left:5px solid #0D47A1;border-radius:8px;padding:20px 24px;margin:0 0 32px;}
+  .fechamento h3{color:#0D47A1;margin:0 0 10px;font-size:1.05rem;}
+  .topo-autor {
+    background: #0d1b2a;
+    color: rgba(255,255,255,0.72);
+    font-size: 0.82em;
+    font-weight: 500;
+    padding: 7px 28px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    letter-spacing: 0.01em;
+  }
+  .checklist{margin:8px 0 0;padding-left:22px;line-height:1.9;}
+</style>
+</head>
+<body>
+
+<div class="topo-autor">Professor: Cláudio Ferreira Neves - Especialista em Dados</div>
+<div class="hero">
+  <h1>Semana 08 · <span>Banco de Dados Relacionais e Não Relacionais</span></h1>
+  <p>Unidade Curricular: <strong>Manipulação de Dados com Python e SQL</strong> (150h) — Bloco 5, Semana 08 (abre o bloco final do módulo). Você instala o PostgreSQL e o pgAdmin, entende a diferença entre banco relacional e NoSQL, e modela as entidades, atributos e relacionamentos do Restaurante Sabor Caseiro.</p>
+  <span class="badge">3 encontros · 9h · PostgreSQL, pgAdmin, modelagem conceitual e NoSQL</span>
+</div>
+
+<main>
+
+  <section>
+    <h2>Competência da Unidade Curricular</h2>
+    <div class="box tip">
+      "Desenvolver competências em lógica de programação com Python, modelagem de dados com SQL e NoSQL e utilização de bibliotecas específicas para manipulação, transformação e visualização de dados, apoiando processos de análise de dados."
+    </div>
+    <p>Você já sabe transformar dado limpo em gráfico e montar um pipeline ETL simples (Semana 07). Esta semana muda de ambiente: o Restaurante Sabor Caseiro, que até aqui te mandou um arquivo por vez, passa a guardar a informação de verdade num banco de dados — e você aprende a modelar essa informação antes mesmo de escrever qualquer comando SQL.</p>
+    <div class="box">
+      <strong>🧠 Pergunta para você pensar:</strong> por que um restaurante que já usa CSV direitinho precisaria trocar por um banco de dados de verdade? A resposta está no que você vai entender logo na Seção 1.
+    </div>
+  </section>
+
+  <section>
+    <h2>Objetivos da Semana</h2>
+    <ul>
+      <li>Entender a diferença entre banco <strong>relacional</strong> e <strong>NoSQL</strong>, entre <strong>OLTP</strong> e <strong>OLAP</strong>, e como bancos analíticos organizam dado em <strong>fato e dimensão</strong></li>
+      <li><strong>Instalar e configurar</strong> o PostgreSQL e o pgAdmin, e testar a conexão a partir do Python</li>
+      <li>Modelar <strong>entidades, atributos (e seus tipos de dado), relacionamentos e cardinalidade</strong> — a base de um DER</li>
+      <li>Conhecer os 4 modelos de banco NoSQL: <strong>documento, chave-valor, colunar e grafo</strong></li>
+    </ul>
+  </section>
+
+  <div class="abertura">
+    <h3>🧭 De onde você vem: fechando o Bloco 4</h3>
+    <p>Antes de entrar na Semana 08, vale reforçar de onde você está vindo e pra onde está indo dentro do curso.</p>
+    <p><strong>O que você viu e estudou na Semana 07:</strong> o mesmo <code>dre_consolidado.csv</code> do Restaurante Sabor Caseiro, já limpo desde a Semana 06, virando gráfico com <strong>Matplotlib</strong> (linha, barra, dispersão, customização, subplots e exportação). Você também aprendeu a organizar código em <strong>funções reutilizáveis</strong> e conheceu sua primeira <strong>classe</strong> (<code>class</code>, <code>__init__</code>, <code>self</code>, método), e fechou com um <strong>pipeline ETL</strong> completo — Extract, Transform, Load — carregando o resultado num banco <code>sqlite3</code> e consultando com um primeiro <code>SELECT</code>.</p>
+    <p><strong>O que você fez:</strong> criou gráficos customizados e exportados em <code>.png</code>, escreveu uma classe do zero, e montou 2 pipelines ETL de ponta a ponta (um salvando em CSV, outro num banco <code>sqlite3</code>), fechando o Mini Projeto do módulo.</p>
+    <p><strong>Qual era o objetivo:</strong> te dar as ferramentas pra comunicar um dado já limpo (gráfico) e organizar o código que faz esse trabalho (funções, classes, pipeline) de ponta a ponta.</p>
+    <p><strong>Onde você está agora:</strong> encerrando o Módulo Básico e abrindo o <strong>Bloco 5</strong> desta UC — o bloco final, sobre <strong>Bancos de Dados, SQL e integração Python-PostgreSQL</strong>. A Semana 08, que começa agora, resolve a pergunta que ficou em aberto no <code>sqlite3</code> da Semana 07: como um banco de dados de verdade guarda e organiza a informação.</p>
+    <h3>🔄 Retomada — o que vimos na Semana 07</h3>
+    <p>Você já sabe transformar dado limpo em gráfico com Matplotlib, organizar código em funções e classes, e montar um pipeline ETL simples salvando o resultado num banco <code>sqlite3</code>. Esta semana usa essa base: o <code>SELECT * FROM despesas WHERE valor > 30000</code> que você rodou no fechamento da Semana 07 foi sua primeira consulta SQL — esta semana explica, antes de tudo, COMO um banco de dados guarda a informação que aquele <code>SELECT</code> consultou.</p>
+    <h3>🟢 Abertura — Semana 08: Banco de Dados Relacionais e Não Relacionais</h3>
+    <p>Começa o Bloco 5, o bloco final do curso! Nesta semana você entende <strong>como bancos de dados relacionais e não relacionais organizam a informação</strong>, instala o PostgreSQL e o pgAdmin na sua máquina, e aprende a modelar — no papel e em código — as entidades, atributos e relacionamentos do Restaurante Sabor Caseiro antes de guardar qualquer dado de verdade num banco.</p>
+    <p><strong>O que você vai aprender nesta semana:</strong></p>
+    <ul>
+      <li>A diferença entre banco relacional e NoSQL, entre OLTP e OLAP, e a organização em fato e dimensão</li>
+      <li>Instalar e configurar o PostgreSQL e o pgAdmin, e testar a conexão a partir do Python</li>
+      <li>Modelagem conceitual: entidades, atributos, tipos de dado, relacionamentos, cardinalidade e o DER</li>
+      <li>Modelagem NoSQL: documento, chave-valor, colunar e grafos</li>
+    </ul>
+  </div>
+
+  <section>
+    <h2>📌 Ambiente e dataset desta semana</h2>
+    <p><strong>Esta semana roda no VS Code local, não no Google Colab.</strong> O Google Colab não mantém um serviço de banco de dados instalado e rodando entre sessões — e a partir de agora você vai conectar o Python a um PostgreSQL de verdade, instalado na sua própria máquina. Se você ainda não tem o VS Code e o Python configurados localmente, retome o <code>GUIA_GITHUB.md</code> (raiz do repositório) e o material da Semana 03 antes de continuar.</p>
+    <p>Esta semana usa um arquivo novo do Restaurante Sabor Caseiro: <code>pedidos_sabor_caseiro.csv</code>, com 18 pedidos das 2 filiais já conhecidas (Centro e Zona Sul), com as colunas <code>id_pedido</code>, <code>cliente</code>, <code>filial</code>, <code>item</code>, <code>valor</code> e <code>data_hora</code>. Diferente do <code>dre_consolidado.csv</code> (o relatório mensal consolidado que você já conhece, da Semana 06), este arquivo é o tipo de dado que o restaurante gera <strong>a cada venda individual</strong> — e essa diferença é exatamente o assunto da Seção 1.</p>
+    <ul>
+      <li><code>dataset/pedidos_sabor_caseiro.csv</code> — 18 linhas, um pedido por linha</li>
+      <li><code>dataset/dre_consolidado.csv</code> — o mesmo relatório consolidado da Semana 07 (você usa de novo, como contraste)</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>1. Banco de Dados Relacional x Não Relacional (NoSQL) — e OLTP x OLAP</h2>
+
+    <h3>O que é, afinal, um banco de dados?</h3>
+    <p>Até agora, todo dado que você usou no curso morava num <strong>arquivo</strong> — um CSV, um JSON, uma planilha Excel — que você abria com <code>pd.read_csv()</code> (ou equivalente), lia, e fechava. Um <strong>banco de dados</strong> é um programa diferente: fica <strong>sempre ligado</strong>, rodando em segundo plano, guardando o dado de forma organizada e permitindo que várias pessoas (ou vários programas, ao mesmo tempo) leiam e alterem essa informação sem esbarrar uma na outra — e sem correr o risco de duas pessoas sobrescreverem o mesmo arquivo sem perceber.</p>
+    <p>É por isso que o Restaurante Sabor Caseiro, que até aqui te mandou um CSV por vez para você limpar e analisar, passa a guardar a informação de verdade num banco: conforme o número de pedidos cresce e mais gente (caixa, cozinha, gerência) precisa consultar e atualizar esse dado ao mesmo tempo, um arquivo solto não aguenta o volume nem o número de pessoas mexendo nele junto.</p>
+
+    <p>Um banco de dados <strong>relacional</strong> guarda a informação em <strong>tabelas</strong>: linhas (registros) e colunas (atributos), com uma estrutura fixa definida antes de qualquer dado entrar — o chamado <strong>esquema</strong> (<em>schema</em>). PostgreSQL, MySQL e SQL Server são bancos relacionais. Um banco de dados <strong>não relacional</strong> (NoSQL) guarda a informação em outros formatos — documento, chave-valor, colunar ou grafo (você vê os 4 na Seção 4) — geralmente sem exigir um esquema fixo antes de gravar. MongoDB, Redis e Cassandra são bancos NoSQL.</p>
+
+    <img src="../img/diagrama_relacional_documento.svg" alt="Diagrama comparando o modelo relacional (tabelas) com o modelo documento (JSON aninhado)" style="max-width:100%;height:auto;">
+    <p style="text-align:center;font-size:.9rem;color:#555;margin-top:-14px;">Relacional separa cliente e pedido em 2 tabelas ligadas pela FK; documento guarda tudo junto, num registro só.</p>
+
+    <p>Além do formato, existe outra pergunta importante: para que aquele dado vai ser usado?</p>
+
+    <table>
+      <tr><th>Sigla</th><th>Nome completo</th><th>Para que serve</th><th>Exemplo no Sabor Caseiro</th></tr>
+      <tr><td>OLTP</td><td><em>Online Transaction Processing</em></td><td>Registrar operações do dia a dia, uma de cada vez, rápido</td><td>Cada pedido sendo lançado no caixa (<code>pedidos_sabor_caseiro.csv</code>)</td></tr>
+      <tr><td>OLAP</td><td><em>Online Analytical Processing</em></td><td>Analisar um grande volume de dados já acumulado, para tomar decisão</td><td>O relatório mensal consolidado que a diretoria usa (<code>dre_consolidado.csv</code>)</td></tr>
+    </table>
+
+    <p>Um sistema OLTP prioriza velocidade de gravação e a exatidão de um registro por vez; um sistema OLAP prioriza consultas agregadas sobre muitos registros de uma vez — a mesma soma com <code>groupby()</code> que você já faz desde a Semana 05.</p>
+
+    <h3>Bancos analíticos organizam o dado em fato e dimensão</h3>
+    <p>Um banco <strong>OLAP</strong> normalmente separa a informação em 2 tipos de tabela: a <strong>tabela fato</strong> guarda os eventos que você quer medir — números que dá pra somar, contar, tirar média (ex.: cada pedido, com seu <code>valor</code>); as <strong>tabelas dimensão</strong> guardam o "quem, o quê, quando" que descreve aquele evento (ex.: o cliente que fez o pedido, o item pedido, o mês em que aconteceu).</p>
+
+    <table>
+      <tr><th>Tabela</th><th>Tipo</th><th>O que guarda</th></tr>
+      <tr><td><code>fato_pedidos</code></td><td>Fato</td><td>1 linha por pedido: <code>id_cliente</code> (FK), <code>id_item</code> (FK), <code>id_tempo</code> (FK), <code>valor</code></td></tr>
+      <tr><td><code>dim_cliente</code></td><td>Dimensão</td><td><code>id_cliente</code>, <code>nome</code></td></tr>
+      <tr><td><code>dim_item</code></td><td>Dimensão</td><td><code>id_item</code>, <code>nome_item</code></td></tr>
+      <tr><td><code>dim_tempo</code></td><td>Dimensão</td><td><code>id_tempo</code>, <code>data</code>, <code>mes</code>, <code>ano</code></td></tr>
+    </table>
+
+    <p>Esse jeito de organizar (1 tabela fato cercada de tabelas dimensão) se chama <strong>esquema estrela</strong> — é assim que o <code>dre_consolidado.csv</code> que você já usou nas Semanas 06 e 07 foi construído por trás: os valores agregados (fato) cruzados com filial/mês/categoria (dimensões).</p>
+
+    <h3>Exemplo 1 — O mesmo pedido, representado como dado relacional</h3>
+    <div class="box tip">
+      <strong>💡 Antes do código:</strong> num banco relacional, a informação de um pedido fica separada em 2 tabelas que se relacionam por uma coluna em comum (o <strong>id</strong>): uma tabela <code>clientes</code> (1 registro por cliente) e uma tabela <code>pedidos</code> (1 registro por pedido, guardando só o <code>id_cliente</code>, não o nome do cliente de novo). <code>pedidos[["cliente"]].drop_duplicates()</code> pega só a coluna <code>cliente</code> e remove as repetições, sobrando 1 linha por cliente; <code>.reset_index(drop=True)</code> renumera o índice do zero, e <code>clientes.index + 1</code> cria a coluna <code>id_cliente</code> — o mesmo papel de "código único" que uma chave primária tem num banco relacional. <code>.merge(clientes, on="cliente")</code> — o mesmo comando de combinar tabelas que você já usa desde a Semana 05 — devolve <code>id_cliente</code> para dentro da tabela de pedidos.
+    </div>
+    <pre class="codeblock">import pandas as pd
+
+pedidos = pd.read_csv("dataset/pedidos_sabor_caseiro.csv")
+
+clientes = pedidos[["cliente"]].drop_duplicates().reset_index(drop=True)
+clientes["id_cliente"] = clientes.index + 1
+display(clientes)
+
+tabela_pedidos = pedidos.merge(clientes, on="cliente")[["id_pedido", "id_cliente", "filial", "item", "valor", "data_hora"]]
+display(tabela_pedidos.head())</pre>
+
+    <h3>Exemplo 2 — O mesmo pedido, representado como documento NoSQL</h3>
+    <div class="box tip">
+      <strong>💡 Antes do código:</strong> num banco de documentos (o modelo NoSQL mais comum — você vê os outros 3 na Seção 4), a informação de um pedido fica <strong>inteira dentro de um único registro</strong>, sem separar cliente e pedido em 2 tabelas — chamado de dado <strong>desnormalizado</strong>. O módulo <code>json</code>, nativo do Python, tem a função <code>dumps()</code>, que transforma um dicionário Python num texto formatado JSON — o mesmo formato de arquivo que você já leu na Semana 04; <code>indent=2</code> organiza o texto com recuo, e <code>ensure_ascii=False</code> mantém os acentos.
+    </div>
+    <pre class="codeblock">import pandas as pd
+import json
+
+pedidos = pd.read_csv("dataset/pedidos_sabor_caseiro.csv")
+primeiro_pedido = pedidos.iloc[0]
+
+documento = {
+    "id_pedido": int(primeiro_pedido["id_pedido"]),
+    "cliente": primeiro_pedido["cliente"],
+    "filial": primeiro_pedido["filial"],
+    "item": primeiro_pedido["item"],
+    "valor": float(primeiro_pedido["valor"]),
+    "data_hora": primeiro_pedido["data_hora"],
+}
+
+print(json.dumps(documento, indent=2, ensure_ascii=False))</pre>
+
+    <div class="box tip">
+      <strong>💡 Relacional x documento, em uma frase:</strong> o modelo relacional evita repetir dado (menos espaço, mais consistência), mas exige juntar tabelas para ver tudo junto (JOIN, Semana 10); o modelo documento já entrega tudo junto (leitura rápida), mas repete o nome do cliente em cada pedido que ele fizer.
+    </div>
+
+    <div class="ex">
+      <strong>✏️ Agora é sua vez:</strong> <strong>Contextualização:</strong> o dono do Restaurante Sabor Caseiro está avaliando dois sistemas para substituir o caderno de pedidos: um usa banco relacional, o outro usa banco de documentos. <strong>Comando:</strong> no notebook, usando <code>pedidos_sabor_caseiro.csv</code>, filtre o pedido de <code>id_pedido</code> igual a 5 e monte as duas representações — relacional e documento — para comparar lado a lado.
+    </div>
+  </section>
+  <div class="checagem">
+    <strong>✅ Checagem rápida — antes de avançar:</strong>
+    Você consegue explicar, com suas palavras, a diferença entre banco relacional e NoSQL, e entre OLTP e OLAP?
+  </div>
+
+  <section>
+    <h2>2. PostgreSQL e pgAdmin — Instalação, Configuração e Primeira Conexão</h2>
+    <p>Até aqui você só instalou <strong>bibliotecas</strong> Python (<code>pandas</code>, <code>openpyxl</code>...) — bastava um <code>%pip install</code> e pronto, dentro do próprio notebook. O PostgreSQL é diferente: é um <strong>programa completo</strong>, separado do Python, que fica rodando sozinho em segundo plano na sua máquina (chamado de <strong>servidor</strong>, porque "serve" pedidos de outros programas) esperando alguém — o pgAdmin, o Python, ou qualquer outro programa — se conectar nele. Se esse programa não estiver rodando, nada mais nesta seção funciona.</p>
+    <ul>
+      <li><strong>PostgreSQL</strong> — o SGBD (Sistema Gerenciador de Banco de Dados): o programa que guarda e organiza os dados de verdade. Um único PostgreSQL pode hospedar <strong>vários bancos de dados diferentes</strong> ao mesmo tempo — é por isso que ele já vem, por padrão, com um banco chamado <code>postgres</code>, e você ainda vai criar um outro, separado, chamado <code>sabor_caseiro</code>.</li>
+      <li><strong>pgAdmin</strong> — um programa à parte, com tela e botões, que te deixa ver e mexer no PostgreSQL sem digitar comando nenhum.</li>
+      <li><strong>psycopg2</strong> — a biblioteca Python que serve de ponte entre o seu código e o PostgreSQL.</li>
+      <li><strong>SQL</strong> — a linguagem usada para pedir e alterar dado dentro de um banco relacional. Você já viu uma prévia dela no fechamento da Semana 07 (<code>SELECT * FROM despesas WHERE valor > 30000</code>); aqui você só confirma que consegue "conversar" com o banco, e aprofunda a sintaxe de verdade nas Semanas 09-10.</li>
+    </ul>
+
+    <h3>Passo a passo — instalação do PostgreSQL (fora do notebook, Windows)</h3>
+    <ol>
+      <li><strong>Baixe o instalador oficial</strong> em <code>https://www.postgresql.org/download/windows/</code> — clique em "Download the installer" (site da EDB, mantenedora do instalador oficial para Windows). Escolha a versão mais recente disponível.</li>
+      <li><strong>Rode o instalador</strong> e siga o assistente ("Setup Wizard"). Mantenha marcados os componentes padrão: PostgreSQL Server, pgAdmin 4 e Command Line Tools.</li>
+      <li>Numa das telas, o instalador pede uma <strong>senha para o usuário <code>postgres</code></strong> — o administrador padrão. Anote com cuidado: você vai digitá-la toda vez que conectar.</li>
+      <li>Mantenha a <strong>porta padrão, <code>5432</code></strong> — o número que identifica onde o PostgreSQL espera conexões (como um ramal de telefone).</li>
+      <li>Ao final, o instalador pode abrir o <strong>Stack Builder</strong>, oferecendo drivers extras — você não precisa de nada dali; pode fechar sem problema.</li>
+      <li>O PostgreSQL já fica rodando automaticamente como um <strong>serviço do Windows</strong>. Para confirmar: abra o menu Iniciar, digite <strong>Serviços</strong> (ou <code>services.msc</code>), procure <code>postgresql-x64-...</code> e confira se o Status diz <strong>"Em execução"</strong>. Sempre que a conexão falhar mais adiante, volte aqui primeiro.</li>
+    </ol>
+
+    <div class="box">
+      <strong>⚠️ Confusão comum:</strong> o PostgreSQL vem, por padrão, com um usuário chamado <code>postgres</code> <strong>e</strong>, separadamente, com um banco de dados que também já se chama <code>postgres</code> — são 2 coisas diferentes com o mesmo nome. Neste curso você não vai usar esse banco <code>postgres</code> padrão: no próximo passo, você cria um banco novo, com outro nome (<code>sabor_caseiro</code>).
+    </div>
+
+    <h3>Primeiro acesso ao pgAdmin e criação do banco <code>sabor_caseiro</code></h3>
+    <ol>
+      <li>Abra o <strong>pgAdmin 4</strong> (instalado junto, no passo 2 acima).</li>
+      <li><strong>Na primeira vez que abrir</strong>, ele pede uma <strong>Master Password</strong> — uma senha NOVA, exclusiva do próprio pgAdmin. É diferente da senha do usuário <code>postgres</code> definida na instalação — crie uma e guarde; ela só serve para abrir o pgAdmin, sem relação com o Python.</li>
+      <li>No painel esquerdo ("Object Explorer"), expanda <strong>Servers</strong> → clique no servidor pré-cadastrado ("PostgreSQL 1x") → digite a senha do usuário <code>postgres</code> quando for pedida.</li>
+      <li>Com o servidor conectado, clique com o <strong>botão direito em "Databases"</strong> → <strong>Create</strong> → <strong>Database...</strong> → em "Database", digite <code>sabor_caseiro</code> → <strong>Save</strong>.</li>
+      <li><strong>Confira visualmente antes de continuar:</strong> o banco <code>sabor_caseiro</code> precisa aparecer na árvore à esquerda, dentro de "Databases". Só depois disso, siga para os exemplos de código abaixo.</li>
+    </ol>
+
+    <div class="box">
+      <strong>⚠️</strong> Se a instalação travar ou você não conseguir instalar localmente a tempo, avise o professor — existe uma alternativa de PostgreSQL gratuito na nuvem (Supabase, Neon) para continuar acompanhando a aula.
+    </div>
+
+    <h3>Exemplo 1 — Testando a conexão com Python</h3>
+    <div class="box tip">
+      <strong>💡 Antes do código:</strong> <code>psycopg2</code> não vem instalada por padrão, por isso a primeira linha instala a variante <code>psycopg2-binary</code>. <code>psycopg2.connect(...)</code> abre uma conexão recebendo <code>host</code> (<code>localhost</code>, porque o banco está na sua própria máquina), <code>dbname</code> (<code>sabor_caseiro</code>, não o banco <code>postgres</code> padrão), <code>user</code> e <code>password</code>. <code>conexao.cursor()</code> cria um <strong>cursor</strong> — o objeto usado para executar comandos SQL. <code>cursor.execute("SELECT version();")</code> roda esse comando (só para confirmar que a conexão funciona), e <code>cursor.fetchone()</code> busca a primeira linha do resultado. Repare que o <code>import psycopg2</code> está DENTRO do <code>try</code>: se você esqueceu de rodar a célula <code>%pip install</code>, o Python levanta um <code>ModuleNotFoundError</code> ali mesmo — por isso também é capturado, junto com o <code>OperationalError</code> que aparece quando o PostgreSQL não está rodando ou algum dado de conexão está errado.
+    </div>
+    <pre class="codeblock">%pip install psycopg2-binary
+
+try:
+    import psycopg2
+
+    conexao = psycopg2.connect(
+        host="localhost",
+        dbname="sabor_caseiro",
+        user="postgres",
+        password="SUA_SENHA_AQUI",
+    )
+    cursor = conexao.cursor()
+    cursor.execute("SELECT version();")
+    print("Conectado! Versão do PostgreSQL:", cursor.fetchone()[0])
+    conexao.close()
+except ModuleNotFoundError:
+    print("psycopg2 ainda não foi instalado nesta sessão — rode a célula %pip install acima e execute de novo.")
+except psycopg2.OperationalError as erro:
+    print("Ainda não conectou. Confira, nos Serviços do Windows, se 'postgresql-x64-...' está 'Em execução', e se host/usuário/senha/banco estão corretos.")
+    print(f"Erro real do Python: {erro}")</pre>
+
+    <div class="box">
+      <strong>⚠️ Veja como é um erro real do Python.</strong> O <code>except psycopg2.OperationalError</code> existe porque, sem o PostgreSQL rodando (ou com a senha errada), é exatamente esse erro que aparece — algo como <code>connection to server at "localhost" (...), port 5432 failed: Connection refused</code>. Rodar essa célula sem o PostgreSQL instalado ainda é normal: é assim que você confirma, mais tarde, que o setup funcionou — quando a mensagem virar "Conectado!".
+    </div>
+
+    <h3>Exemplo 2 — Listando as tabelas que já existem no banco</h3>
+    <div class="box tip">
+      <strong>💡 Antes do código:</strong> todo banco PostgreSQL guarda, automaticamente, um catálogo interno — chamado <code>information_schema</code>. A consulta <code>SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';</code> pede os nomes de todas as tabelas do "esquema público" — aqui, "esquema" tem um sentido um pouco diferente do "esquema" da Seção 1 (lá era a estrutura de colunas de uma tabela; aqui é mais como uma pasta dentro do banco, que agrupa tabelas). Não se preocupe em decorar essa diferença agora. <code>cursor.fetchall()</code> busca <strong>todas</strong> as linhas do resultado (diferente do <code>fetchone()</code> do Exemplo 1).
+    </div>
+    <pre class="codeblock">try:
+    import psycopg2
+
+    conexao = psycopg2.connect(
+        host="localhost", dbname="sabor_caseiro", user="postgres", password="SUA_SENHA_AQUI",
+    )
+    cursor = conexao.cursor()
+    cursor.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';")
+    tabelas = cursor.fetchall()
+    print("Tabelas encontradas:", tabelas if tabelas else "nenhuma ainda (você cria a primeira na Semana 09)")
+    conexao.close()
+except ModuleNotFoundError:
+    print("psycopg2 ainda não foi instalado nesta sessão.")
+except psycopg2.OperationalError as erro:
+    print("Ainda não conectou. Confira o serviço do PostgreSQL e os dados de conexão.")
+    print(f"Erro real do Python: {erro}")</pre>
+
+    <div class="ex">
+      <strong>✏️ Agora é sua vez:</strong> <strong>Contextualização:</strong> antes de seguir para a modelagem, o dono do restaurante quer ter certeza de que o ambiente técnico está pronto — sem isso, nenhuma das próximas semanas do Bloco 5 funciona. <strong>Comando:</strong> no notebook, instale o PostgreSQL e o pgAdmin, crie o banco <code>sabor_caseiro</code>, e rode a célula de conexão trocando <code>"SUA_SENHA_AQUI"</code> pela sua senha, até ver "Conectado!".
+    </div>
+
+    <div class="box tip">
+      <strong>✅ Antes de seguir para a Seção 3, confirme:</strong>
+      <ul class="checklist">
+        <li>Nos Serviços do Windows, <code>postgresql-x64-...</code> aparece como "Em execução"</li>
+        <li>O pgAdmin conecta no servidor sem erro de senha</li>
+        <li>O banco <code>sabor_caseiro</code> aparece na árvore do pgAdmin, dentro de "Databases"</li>
+        <li>A célula da Atividade Prática 2 (no notebook) imprimiu "Conectado! Versão do PostgreSQL: ..."</li>
+      </ul>
+    </div>
+  </section>
+  <div class="checagem">
+    <strong>✅ Checagem rápida — antes de avançar:</strong>
+    Você consegue explicar, com suas palavras, o que é um "servidor" e como conferir se o PostgreSQL está rodando na sua máquina?
+  </div>
+
+  <section>
+    <h2>3. Modelagem Conceitual — Entidades, Atributos, Relacionamentos, Cardinalidade e DER</h2>
+
+    <table>
+      <tr><th>Termo</th><th>O que é</th><th>Exemplo no Sabor Caseiro</th></tr>
+      <tr><td>Entidade</td><td>Um "tipo de coisa" sobre a qual o negócio precisa guardar informação</td><td>Cliente, Pedido, Filial</td></tr>
+      <tr><td>Atributo</td><td>Uma característica de uma entidade</td><td>Cliente tem <code>nome</code>, <code>telefone</code>; Pedido tem <code>valor</code>, <code>data_hora</code></td></tr>
+      <tr><td>Relacionamento</td><td>Como 2 entidades se conectam</td><td>Um Cliente FAZ um Pedido</td></tr>
+      <tr><td>Cardinalidade</td><td>Quantas vezes cada lado do relacionamento pode se repetir</td><td>Um Cliente pode fazer VÁRIOS Pedidos</td></tr>
+    </table>
+
+    <p>Cada <strong>atributo</strong> tem um <strong>tipo de dado</strong> — o que aquela coluna pode guardar. Você já usa essa mesma ideia em Python (<code>int</code>, <code>float</code>, <code>str</code>, <code>bool</code>); um banco relacional formaliza isso: a coluna só aceita aquele tipo, sempre, porque o esquema (Seção 1) é fixo.</p>
+
+    <table>
+      <tr><th>Tipo de dado</th><th>O que guarda</th><th>Exemplo no Sabor Caseiro</th></tr>
+      <tr><td>Texto</td><td>Letras, palavras, texto livre</td><td><code>nome</code>, <code>filial</code>, <code>item</code></td></tr>
+      <tr><td>Número inteiro</td><td>Números sem casa decimal</td><td><code>id_pedido</code>, <code>id_cliente</code></td></tr>
+      <tr><td>Número decimal</td><td>Números com casa decimal (dinheiro, medidas)</td><td><code>valor</code></td></tr>
+      <tr><td>Data/hora</td><td>Uma data e/ou um horário</td><td><code>data_hora</code></td></tr>
+      <tr><td>Booleano</td><td>Verdadeiro ou falso, sem meio-termo</td><td><em>pedido_entregue</em> (exemplo hipotético — não está no CSV)</td></tr>
+    </table>
+
+    <p>Você declara o tipo de cada coluna na hora de criar a tabela de verdade, no comando <code>CREATE TABLE</code> (isso começa na Semana 09) — por enquanto, é só reconhecer que todo atributo tem um tipo, mesmo antes de qualquer SQL.</p>
+
+    <p>Existem 3 tipos de cardinalidade:</p>
+    <table>
+      <tr><th>Cardinalidade</th><th>Significado</th><th>Exemplo</th></tr>
+      <tr><td>1:1</td><td>Um registro de A se relaciona com no máximo 1 registro de B</td><td>Uma Filial tem 1 endereço</td></tr>
+      <tr><td>1:N</td><td>Um registro de A se relaciona com vários de B, mas cada B pertence a só 1 A</td><td>Um Cliente faz vários Pedidos; cada Pedido é de 1 só Cliente</td></tr>
+      <tr><td>N:N</td><td>Vários registros de A se relacionam com vários registros de B</td><td>Uma Filial compra de vários Fornecedores; um Fornecedor vende para várias Filiais</td></tr>
+    </table>
+
+    <p>As 3 cardinalidades, visualmente:</p>
+    <img src="../img/diagrama_cardinalidades.svg" alt="Diagrama das cardinalidades 1:1, 1:N e N:N" style="max-width:100%;height:auto;">
+
+    <p>O <strong>DER</strong> (Diagrama Entidade-Relacionamento) é o desenho que representa entidades (retângulos), atributos e relacionamentos com a cardinalidade marcada — normalmente feito no próprio <strong>pgAdmin, no menu Tools → ERD Tool</strong> (desenha o diagrama visualmente, com o mouse), ou numa ferramenta online como o dbdiagram.io, antes de escrever qualquer <code>CREATE TABLE</code> (isso começa na Semana 09). É assim que ele se parece de verdade:</p>
+
+    <img src="../img/diagrama_der_cliente_pedido.svg" alt="DER simplificado das tabelas Cliente e Pedido" style="max-width:100%;height:auto;">
+    <p style="text-align:center;font-size:.92rem;color:#555;margin-top:-8px;">Leitura: um <strong>Cliente</strong> (1) pode <strong>FAZER</strong> vários <strong>Pedidos</strong> (N); cada Pedido pertence a um único Cliente. O sublinhado marca a chave primária (PK); a cor azul marca a chave estrangeira (FK), que aponta de volta para a PK de Cliente.</p>
+
+    <h3>Exemplo 1 — Descrevendo as entidades do Sabor Caseiro em código</h3>
+    <div class="box tip">
+      <strong>💡 Antes do código:</strong> <code>PK</code> (chave primária, de <em>Primary Key</em>) é o atributo que identifica de forma única cada linha da própria tabela — como o <code>id_cliente</code> que você criou na Seção 1. <code>FK</code> (chave estrangeira, de <em>Foreign Key</em>) é uma coluna que aponta para a PK de outra tabela, criando o relacionamento entre elas.
+    </div>
+    <pre class="codeblock">entidades = {
+    "Cliente": {
+        "atributos": ["id_cliente (PK)", "nome", "telefone"],
+    },
+    "Pedido": {
+        "atributos": ["id_pedido (PK)", "id_cliente (FK)", "filial", "item", "valor", "data_hora"],
+    },
+}
+
+for nome_entidade, detalhes in entidades.items():
+    print(f"Entidade: {nome_entidade}")
+    for atributo in detalhes["atributos"]:
+        print(f"  - {atributo}")</pre>
+
+    <h3>Exemplo 2 — Descrevendo o relacionamento e a cardinalidade</h3>
+    <div class="box tip">
+      <strong>💡 Antes do código:</strong> o dicionário <code>relacionamento</code> guarda quem participa, como o relacionamento se chama e a cardinalidade. O <code>print()</code> monta, a partir desses valores, a mesma frase que você diria olhando para um DER desenhado.
+    </div>
+    <pre class="codeblock">relacionamento = {
+    "entidade_origem": "Cliente",
+    "entidade_destino": "Pedido",
+    "verbo": "FAZ",
+    "verbo_infinitivo": "fazer",
+    "cardinalidade": "1:N",
+}
+
+print(f"{relacionamento['entidade_origem']} (1) --{relacionamento['verbo']}--> (N) {relacionamento['entidade_destino']}")
+print(
+    f"Leitura: um(a) {relacionamento['entidade_origem']} pode {relacionamento['verbo_infinitivo']} vários(as) "
+    f"{relacionamento['entidade_destino']}(s); cada {relacionamento['entidade_destino']} pertence a um(a) único(a) "
+    f"{relacionamento['entidade_origem']}."
+)</pre>
+
+    <div class="ex">
+      <strong>✏️ Agora é sua vez:</strong> <strong>Contextualização:</strong> o restaurante quer passar a registrar também os fornecedores de cada filial — retomando o <code>fornecedores_despesas.csv</code> da Semana 06. Cada filial compra de vários fornecedores, e cada fornecedor pode vender para mais de uma filial. <strong>Comando:</strong> no notebook, monte as entidades <code>Filial</code> e <code>Fornecedor</code> (com atributos) e o relacionamento entre elas, com a cardinalidade correta.
+    </div>
+  </section>
+  <div class="checagem">
+    <strong>✅ Checagem rápida — antes de avançar:</strong>
+    Você consegue explicar a diferença entre chave primária (PK) e chave estrangeira (FK), e dar um exemplo de cardinalidade 1:N?
+  </div>
+
+  <section>
+    <h2>4. Modelagem NoSQL — Documento, Chave-Valor, Colunar e Grafos</h2>
+
+    <table>
+      <tr><th>Modelo</th><th>Como guarda o dado</th><th>Quando usar</th><th>Exemplo real</th></tr>
+      <tr><td>Documento</td><td>Um registro inteiro, aninhado, num único arquivo (geralmente JSON)</td><td>Registros com estrutura flexível, que mudam de um item para outro</td><td>MongoDB</td></tr>
+      <tr><td>Chave-valor</td><td>Uma chave única aponta direto para um valor</td><td>Buscas muito rápidas por 1 identificador (cache, sessão)</td><td>Redis</td></tr>
+      <tr><td>Colunar</td><td>Os dados organizados por coluna, não por linha</td><td>Agregações rápidas sobre muitos registros (somar, contar)</td><td>Cassandra</td></tr>
+      <tr><td>Grafo</td><td>Nós (entidades) e conexões (relacionamentos) entre eles</td><td>Quando o que importa é a rede de relacionamentos em si</td><td>Neo4j</td></tr>
+    </table>
+    <p>MongoDB, Redis, Cassandra e Neo4j não são conceitos abstratos — são <strong>produtos de banco de dados reais</strong>, cada um especializado num desses 4 modelos, usados por empresas de todos os tamanhos no mercado (do mesmo jeito que PostgreSQL e MySQL são produtos reais de banco relacional).</p>
+
+    <img src="../img/diagrama_4_modelos_nosql.svg" alt="Diagrama dos 4 modelos NoSQL: documento, chave-valor, colunar e grafo" style="max-width:100%;height:auto;">
+    <p style="text-align:center;font-size:.9rem;color:#555;margin-top:-10px;">Documento: registro inteiro aninhado · Chave-valor: busca direta por id · Colunar: cada coluna guardada junto (agregação rápida) · Grafo: nós (clientes) e conexões (indicações) entre eles.</p>
+
+    <h3>Exemplo 1 — Documento e Chave-Valor</h3>
+    <div class="box tip">
+      <strong>💡 Antes do código:</strong> <code>.to_dict()</code>, numa linha de um DataFrame, converte aquela linha num dicionário Python. O dicionário <code>cache_pedidos</code> é um exemplo de chave-valor: <code>{chave: valor for ...}</code> é uma <strong>dict comprehension</strong> — o mesmo padrão de list comprehension que você já usa desde o Bloco 2, construindo um dicionário. <code>pedidos.iterrows()</code> percorre o DataFrame linha por linha.
+    </div>
+    <pre class="codeblock">import pandas as pd
+import json
+
+pedidos = pd.read_csv("dataset/pedidos_sabor_caseiro.csv")
+
+pedido_documento = pedidos.iloc[2].to_dict()
+print(json.dumps(pedido_documento, indent=2, ensure_ascii=False))
+
+cache_pedidos = {int(linha["id_pedido"]): linha["item"] for _, linha in pedidos.iterrows()}
+print(cache_pedidos)</pre>
+
+    <h3>Exemplo 2 — Colunar e Grafos</h3>
+    <div class="box tip">
+      <strong>💡 Antes do código:</strong> <code>.to_dict(orient="list")</code>, num DataFrame inteiro, monta 1 lista por coluna — a mesma ideia de "organizar por coluna" que um banco colunar usa para agregar rápido sobre milhões de registros. <code>grafo_indicacoes</code> é um dado <strong>inventado, só para ilustrar o formato</strong>: cada cliente aponta para uma lista de clientes que ele indicou.
+    </div>
+    <pre class="codeblock">import pandas as pd
+
+pedidos = pd.read_csv("dataset/pedidos_sabor_caseiro.csv")
+
+armazenamento_colunar = pedidos[["item", "valor"]].to_dict(orient="list")
+print(armazenamento_colunar)
+
+grafo_indicacoes = {
+    "Marcos Silva": ["Juliana Alves"],
+    "Juliana Alves": ["Ricardo Nunes", "Fernanda Costa"],
+    "Ricardo Nunes": [],
+    "Fernanda Costa": ["Patrícia Gomes"],
+}
+for cliente, indicados in grafo_indicacoes.items():
+    print(f"{cliente} indicou: {indicados if indicados else 'ninguém ainda'}")</pre>
+
+    <div class="ex">
+      <strong>✏️ Agora é sua vez:</strong> <strong>Contextualização:</strong> o time de tecnologia do restaurante quer avaliar se vale a pena guardar o cardápio num banco de documentos — alguns itens têm atributos que outros não têm. <strong>Comando:</strong> no notebook, monte uma lista de dicionários representando o cardápio como documentos, com pelo menos 1 item tendo uma chave a mais que os outros.
+    </div>
+  </section>
+  <div class="checagem">
+    <strong>✅ Checagem rápida — antes de avançar:</strong>
+    Você consegue explicar, com suas palavras, os 4 modelos de banco NoSQL e dar 1 exemplo de quando usar cada um?
+  </div>
+
+  <section>
+    <h2>5. Treino em Squads — Sexta-feira (Encontro 3)</h2>
+    <p>Cada squad recebe um cenário de negócio diferente, com uma amostra de registros. O desafio: decidir se o cenário pede um banco <strong>relacional</strong> ou <strong>NoSQL</strong>, justificando, e modelar as entidades, atributos e o relacionamento principal (com cardinalidade) — repare que cada squad tem, propositalmente, uma cardinalidade diferente.</p>
+    <table>
+      <tr><th>Squad</th><th>Cenário</th><th>Cardinalidade a identificar</th></tr>
+      <tr><td>B</td><td>Loja de Roupas Online — clientes e pedidos</td><td>1:N</td></tr>
+      <tr><td>C</td><td>Streaming de Música — playlists e músicas</td><td>N:N</td></tr>
+      <tr><td>D</td><td>Clínica Médica — pacientes e prontuários</td><td>1:1</td></tr>
+      <tr><td>E</td><td>Aplicativo de Delivery — usuários e restaurantes</td><td>N:N</td></tr>
+    </table>
+    <div class="box">
+      <strong>🗣️ Depois das apresentações:</strong> participe do debate — algum squad ficou em dúvida sobre a cardinalidade do próprio cenário? Se o cenário do seu squad crescesse para milhões de registros, a decisão relacional x NoSQL mudaria?
+    </div>
+  </section>
+
+  <div class="fechamento">
+    <h3>🏁 Fechamento — Semana 08</h3>
+    <p><strong>Nesta semana você aprendeu:</strong></p>
+    <ul>
+      <li>A diferença entre banco relacional e NoSQL, entre OLTP e OLAP, e a organização em fato e dimensão</li>
+      <li>Instalar e configurar o PostgreSQL e o pgAdmin, testando a conexão a partir do Python</li>
+      <li>Modelar entidades, atributos (e seus tipos de dado), relacionamentos e cardinalidade — a base de um DER</li>
+      <li>Os 4 modelos de banco NoSQL: documento, chave-valor, colunar e grafo</li>
+    </ul>
+    <p style="margin-top:14px;"><strong>Próxima semana:</strong> com o modelo pronto na cabeça, a Semana 09 transforma tudo isso em tabelas de verdade — normalização, chaves primárias/estrangeiras, e os primeiros comandos SQL (<code>CREATE TABLE</code>, <code>INSERT</code>, <code>SELECT</code>).</p>
+  </div>
+
+  <section>
+    <h2>Quiz de Fixação</h2>
+    <p>Responda e clique em <strong>Verificar</strong> para ver o feedback de cada questão.</p>
+
+    <div class="qs" data-correct="b">
+      <p><strong>1.</strong> Qual a principal diferença entre um banco de dados relacional e um NoSQL?</p>
+      <label><input type="radio" name="q1" value="a"> Relacional usa Python, NoSQL usa SQL</label>
+      <label><input type="radio" name="q1" value="b"> Relacional guarda em tabelas com esquema fixo; NoSQL guarda em formatos mais flexíveis (documento, chave-valor...)</label>
+      <label><input type="radio" name="q1" value="c"> NoSQL é sempre mais rápido, em qualquer situação</label>
+      <label><input type="radio" name="q1" value="d"> Não existe diferença real entre os dois</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="b">
+      <p><strong>2.</strong> Um sistema OLTP é mais indicado para:</p>
+      <label><input type="radio" name="q2" value="a"> Gerar relatórios mensais consolidados</label>
+      <label><input type="radio" name="q2" value="b"> Registrar operações do dia a dia, uma de cada vez, rápido</label>
+      <label><input type="radio" name="q2" value="c"> Guardar arquivos de imagem</label>
+      <label><input type="radio" name="q2" value="d"> Substituir o pgAdmin</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="c">
+      <p><strong>3.</strong> O que é uma chave estrangeira (FK)?</p>
+      <label><input type="radio" name="q3" value="a"> A senha de acesso ao banco</label>
+      <label><input type="radio" name="q3" value="b"> Uma coluna que identifica de forma única cada linha da própria tabela</label>
+      <label><input type="radio" name="q3" value="c"> Uma coluna que aponta para a chave primária de outra tabela, criando um relacionamento</label>
+      <label><input type="radio" name="q3" value="d"> Um tipo de índice usado só em bancos NoSQL</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="b">
+      <p><strong>4.</strong> Numa cardinalidade N:N (ex.: Filial e Fornecedor), o que isso significa?</p>
+      <label><input type="radio" name="q4" value="a"> Cada Filial só pode ter 1 Fornecedor</label>
+      <label><input type="radio" name="q4" value="b"> Vários registros de uma entidade podem se relacionar com vários registros da outra</label>
+      <label><input type="radio" name="q4" value="c"> É um erro de modelagem que deve ser evitado</label>
+      <label><input type="radio" name="q4" value="d"> Só existe em bancos NoSQL</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="b">
+      <p><strong>5.</strong> Numa tabela fato (banco OLAP), o que normalmente é guardado?</p>
+      <label><input type="radio" name="q5" value="a"> Descrições fixas, como o nome do cliente ou a categoria do produto</label>
+      <label><input type="radio" name="q5" value="b"> Os eventos/métricas que você quer medir, como o valor de cada pedido</label>
+      <label><input type="radio" name="q5" value="c"> Só as senhas de acesso ao banco</label>
+      <label><input type="radio" name="q5" value="d"> Nada — a tabela fato é sempre vazia</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="a">
+      <p><strong>6.</strong> Por que um atributo precisa ter um tipo de dado definido?</p>
+      <label><input type="radio" name="q6" value="a"> Porque o banco relacional não deixa misturar tipos numa mesma coluna, já que o esquema é fixo</label>
+      <label><input type="radio" name="q6" value="b"> Só para deixar o código mais bonito</label>
+      <label><input type="radio" name="q6" value="c"> Porque o Python exige isso antes de qualquer banco de dados</label>
+      <label><input type="radio" name="q6" value="d"> Tipo de dado só existe em bancos NoSQL</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Exercícios da Semana</h2>
+    <div class="ex">
+      <strong>Fácil:</strong> Liste 3 diferenças entre guardar dado num arquivo CSV e guardar dado num banco de dados relacional.
+    </div>
+    <div class="ex">
+      <strong>Médio:</strong> Modele, em texto (Entidade → Atributos → Relacionamento → Cardinalidade), um cenário de biblioteca: um Livro tem 1 Autor principal, mas um Autor pode ter escrito vários Livros.
+    </div>
+    <div class="ex">
+      <strong>Avançado:</strong> Instale o PostgreSQL e o pgAdmin, crie o banco <code>sabor_caseiro</code>, e rode a célula de conexão do notebook até ver "Conectado!".
+    </div>
+    <p>Lista completa (formativa, sem nota) em <code>04_exercicios.md</code>.</p>
+  </section>
+
+</main>
+
+<footer>
+  Curso: Análise de Dados com Python — SENAI (Turma T5) · Semana 08<br>
+  <strong>Professor: Cláudio Ferreira Neves - Especialista em Dados</strong>
+</footer>
+
+<script>
+function check(btn){
+  const qs = btn.closest('.qs');
+  const correct = qs.getAttribute('data-correct');
+  const name = qs.querySelector('input').name;
+  const selected = qs.querySelector('input[name="' + name + '"]:checked');
+  const fb = qs.querySelector('.feedback');
+
+  if(!selected){
+    fb.className = 'feedback wrong';
+    fb.textContent = '⚠️ Selecione uma alternativa antes de verificar.';
+    return;
+  }
+
+  if(selected.value === correct){
+    fb.className = 'feedback correct';
+    fb.textContent = '✅ Correto! Muito bem.';
+  } else {
+    const correctLabel = qs.querySelector('input[value="' + correct + '"]').closest('label').textContent.trim();
+    fb.className = 'feedback wrong';
+    fb.textContent = '❌ Incorreto. A resposta certa é: ' + correctLabel;
+  }
+}
+</script>
+
+</body>
+</html>

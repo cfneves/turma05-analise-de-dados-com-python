@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 820 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:820px;height:auto;display:block;margin:10px auto 24px;font-family:Consolas,monospace;">
+      <text x="130" y="22" text-anchor="middle" font-size="14" font-weight="bold" fill="#CC0000" font-family="'Segoe UI',Arial,sans-serif">RELACIONAL (2 tabelas)</text>
+      <rect x="20" y="36" width="220" height="70" fill="#ffffff" stroke="#1a1a2e" stroke-width="2" rx="4"/>
+      <rect x="20" y="36" width="220" height="22" fill="#1a1a2e"/>
+      <text x="130" y="51" text-anchor="middle" fill="#fff" font-size="11">clientes</text>
+      <text x="30" y="76" font-size="10.5" fill="#1a1a2e">id_cliente | nome</text>
+      <text x="30" y="94" font-size="10.5" fill="#333">1 | Marcos Silva</text>
+      <rect x="20" y="150" width="220" height="90" fill="#ffffff" stroke="#1a1a2e" stroke-width="2" rx="4"/>
+      <rect x="20" y="150" width="220" height="22" fill="#1a1a2e"/>
+      <text x="130" y="165" text-anchor="middle" fill="#fff" font-size="11">pedidos</text>
+      <text x="30" y="188" font-size="10" fill="#1a1a2e">id_pedido | id_cliente | item</text>
+      <text x="30" y="206" font-size="10" fill="#1565C0">1 | 1 | Marmita</text>
+      <line x1="130" y1="106" x2="130" y2="150" stroke="#1565C0" stroke-width="2"/>
+      <text x="138" y="130" font-size="10" fill="#1565C0">FK</text>
+
+      <line x1="420" y1="10" x2="420" y2="250" stroke="#eee" stroke-width="2"/>
+
+      <text x="630" y="22" text-anchor="middle" font-size="14" font-weight="bold" fill="#CC0000" font-family="'Segoe UI',Arial,sans-serif">DOCUMENTO (1 registro)</text>
+      <rect x="490" y="36" width="280" height="204" fill="#1a1a2e" stroke="#1a1a2e" stroke-width="2" rx="6"/>
+      <text x="504" y="60" font-size="11" fill="#E0E0E0">{</text>
+      <text x="518" y="84" font-size="10.5" fill="#9CDCFE">"id_pedido"</text>
+      <text x="606" y="84" font-size="10.5" fill="#E0E0E0">: 1,</text>
+      <text x="518" y="108" font-size="10.5" fill="#9CDCFE">"cliente"</text>
+      <text x="590" y="108" font-size="10.5" fill="#CE9178">: "Marcos Silva",</text>
+      <text x="518" y="132" font-size="10.5" fill="#9CDCFE">"item"</text>
+      <text x="576" y="132" font-size="10.5" fill="#CE9178">: "Marmita",</text>
+      <text x="518" y="156" font-size="10.5" fill="#9CDCFE">"valor"</text>
+      <text x="584" y="156" font-size="10.5" fill="#E0E0E0">: 32.9</text>
+      <text x="504" y="180" font-size="11" fill="#E0E0E0">}</text>
+    </svg>

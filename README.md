@@ -81,7 +81,13 @@ turma05-analise-de-dados-com-python/
 │   └── Aluno/
 │       ├── html/aula_teorica.html          ← teoria + quiz interativo
 │       └── notebook_colab.ipynb            ← notebook prático (abra no Google Colab)
-└── 08_..._ a 12_..._ (Semanas 08–12, liberadas ao longo do curso)
+├── 08_Banco_de_Dados_Relacionais_e_Nao_Relacionais/
+│   └── Aluno/
+│       ├── dataset/                        ← arquivos reais usados no notebook (CSV)
+│       ├── img/                            ← diagramas (SVG) de modelagem relacional e NoSQL
+│       ├── html/aula_teorica.html          ← teoria + quiz interativo
+│       └── notebook_colab_aluno.ipynb      ← notebook prático (abra no Google Colab)
+└── 09_..._ a 12_..._ (Semanas 09–12, liberadas ao longo do curso)
 ```
 
 ---
@@ -99,7 +105,7 @@ Escolha a forma que preferir para acessar o material de cada semana:
 | 05 | Pandas e NumPy | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/05_Pandas_e_NumPy/Aluno/notebook_colab.ipynb) | [⬇ Semana05.ipynb](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/05_Pandas_e_NumPy/Aluno/notebook_colab.ipynb) | [⬇ Semana05.html](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/05_Pandas_e_NumPy/Aluno/html/aula_teorica.html) |
 | 06 | Limpeza e Transformação de Dados | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/06_Limpeza_e_Transformacao_de_Dados/Aluno/notebook_colab.ipynb) | [⬇ Semana06.ipynb](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/06_Limpeza_e_Transformacao_de_Dados/Aluno/notebook_colab.ipynb) | [⬇ Semana06.html](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/06_Limpeza_e_Transformacao_de_Dados/Aluno/html/aula_teorica.html) |
 | 07 | Visualização e Pipelines | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/07_Visualizacao_e_Pipelines/Aluno/notebook_colab.ipynb) | [⬇ Semana07.ipynb](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/07_Visualizacao_e_Pipelines/Aluno/notebook_colab.ipynb) | [⬇ Semana07.html](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/07_Visualizacao_e_Pipelines/Aluno/html/aula_teorica.html) |
-| 08 | Banco de Dados Relacionais e Não Relacionais | *em breve* | *em breve* | *em breve* |
+| 08 | Banco de Dados Relacionais e Não Relacionais | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/08_Banco_de_Dados_Relacionais_e_Nao_Relacionais/Aluno/notebook_colab_aluno.ipynb) | [⬇ Semana08.ipynb](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/08_Banco_de_Dados_Relacionais_e_Nao_Relacionais/Aluno/notebook_colab_aluno.ipynb) | [⬇ Semana08.html](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/08_Banco_de_Dados_Relacionais_e_Nao_Relacionais/Aluno/html/aula_teorica.html) |
 | 09 | Modelagem de Dados e SQL | *em breve* | *em breve* | *em breve* |
 | 10 | SQL Avançado | *em breve* | *em breve* | *em breve* |
 | 11 | Python + PostgreSQL | *em breve* | *em breve* | *em breve* |
