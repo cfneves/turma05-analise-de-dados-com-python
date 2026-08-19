@@ -22,11 +22,18 @@
 # Exceção: infográfico de Git/GitHub da Semana 03, publicado para os alunos
 !03_Versionamento_e_Python_Local/Aluno/html/github.png
 
+# Exceção: fluxogramas/pseudocódigo da Semana 02, publicados para os alunos
+# (extraídos de base64 embutido no notebook/html para arquivo externo em 2026-08-16)
+!02_Logica_de_Programacao/Aluno/img/**
+
 # Ficha de produto e demais PDFs internos
 *.pdf
 
 # Exceção: versão em PDF do infográfico de Git/GitHub da Semana 03, publicada para os alunos
 !03_Versionamento_e_Python_Local/Aluno/html/Fluxo_Git_GitHub_VSCode_HD.pdf
+
+# Exceção: apostilas de PostgreSQL da Semana 08, publicadas para os alunos
+!08_Banco_de_Dados_Relacionais_e_Nao_Relacionais/Aluno/pdf/**
 
 # Apresentações de slide (template oficial e decks gerados por semana) -
 # material de apoio do professor para a aula em vivo, nao publicado ao aluno
