@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 10 — SQL Avançado</title>
+<style>
+  :root{ --red:#CC0000; --red-dark:#990000; --ink:#1a1a2e; --bg:#f7f7fa; }
+  *{box-sizing:border-box;}
+  body{ margin:0; font-family:'Segoe UI', Roboto, Arial, sans-serif; background:var(--bg); color:#222; line-height:1.6; }
+  .hero{ background:linear-gradient(135deg,#0d1b2a,#1b263b,var(--red)); color:#fff; padding:60px 24px; text-align:center; }
+  .hero h1{ margin:0 0 10px; font-size:2.2rem; }
+  .hero h1 span{ color:#FFD60A; }
+  .hero p{ max-width:760px; margin:14px auto 0; font-size:1.05rem; opacity:.92; }
+  .badge{ display:inline-block; background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.4); border-radius:20px; padding:6px 16px; margin-top:18px; font-size:.9rem; }
+  main{ max-width:980px; margin:0 auto; padding:40px 20px 80px; }
+  section{ margin-bottom:48px; }
+  h2{ color:var(--red-dark); border-bottom:3px solid var(--red); padding-bottom:8px; font-size:1.5rem; }
+  h3{ color:var(--ink); }
+  table{ width:100%; border-collapse:collapse; margin:18px 0; box-shadow:0 1px 4px rgba(0,0,0,.08); }
+  th, td{ border:1px solid #ddd; padding:10px 12px; text-align:left; font-size:.95rem; }
+  th{ background:var(--red); color:#fff; }
+  tr:nth-child(even){ background:#fafafa; }
+  .box{ background:#fff3f3; border-left:5px solid var(--red); padding:16px 20px; border-radius:6px; margin:18px 0; }
+  .box.tip{ background:#F0F7FF; border-left-color:#1565C0; }
+  .qs{ background:var(--ink); color:#eee; border-radius:10px; padding:20px 22px; margin:16px 0; }
+  .qs code{ background:rgba(255,255,255,.15); color:#E0E0E0; padding:2px 6px; border-radius:4px; font-family:Consolas, monospace; }
+  .qs label{ display:block; background:rgba(255,255,255,.06); padding:8px 12px; margin:6px 0; border-radius:6px; cursor:pointer; }
+  .qs label:hover{ background:rgba(255,255,255,.12); }
+  .qs button{ background:var(--red); color:#fff; border:none; padding:8px 18px; border-radius:6px; cursor:pointer; margin-top:10px; font-weight:bold; }
+  .qs button:hover{ background:var(--red-dark); }
+  .feedback{ margin-top:10px; padding:10px 14px; border-radius:6px; display:none; font-weight:bold; }
+  .feedback.correct{ background:#1b5e20; display:block; }
+  .feedback.wrong{ background:#7a1f1f; display:block; }
+  .ex{ background:#F0F7FF; border:1px solid #BBDEFB; border-radius:8px; padding:16px 20px; margin:14px 0; }
+  pre.codeblock{ background:var(--ink); color:#E0E0E0; padding:16px 20px; border-radius:8px; overflow-x:auto; font-family:Consolas, monospace; font-size:.9rem; margin:14px 0; }
+  pre.codeblock .c{ color:#8a8aa0; }
+  footer{ background:var(--ink); color:#ccc; text-align:center; padding:26px 16px; font-size:.9rem; }
+  footer strong{ color:#fff; }
+  @media (max-width:768px){ .hero h1{ font-size:1.6rem; } }
+  .abertura{background:#E8F5E9;border-left:5px solid #1B5E20;border-radius:8px;padding:20px 24px;margin:0 0 32px;}
+  .abertura h3{color:#1B5E20;margin:0 0 10px;font-size:1.05rem;}
+  .abertura ul,.fechamento ul{margin:8px 0 0;padding-left:22px;line-height:1.8;}
+  .checagem{background:#FFF3E0;border-left:5px solid #E65100;border-radius:6px;padding:14px 18px;margin:0 0 28px;font-size:.95rem;}
+  .checagem strong{color:#BF360C;display:block;margin-bottom:6px;}
+  .fechamento{background:#E3F2FD;border-left:5px solid #0D47A1;border-radius:8px;padding:20px 24px;margin:0 0 32px;}
+  .fechamento h3{color:#0D47A1;margin:0 0 10px;font-size:1.05rem;}
+  .topo-autor { background: #0d1b2a; color: rgba(255,255,255,0.72); font-size: 0.82em; font-weight: 500; padding: 7px 28px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.08); letter-spacing: 0.01em; }
+  .checklist{margin:8px 0 0;padding-left:22px;line-height:1.9;}
+</style>
+</head>
+<body>
+
+<div class="topo-autor">Professor: Cláudio Ferreira Neves - Especialista em Dados</div>
+<div class="hero">
+  <h1>Semana 10 · <span>SQL Avançado</span></h1>
+  <p>Unidade Curricular: <strong>Manipulação de Dados com Python e SQL</strong> (150h) — Bloco 5, Semana 10. Você aprende CRUD completo (INSERT, UPDATE, DELETE), funções de número/texto/data, subconsultas, e conhece variáveis, functions e transactions.</p>
+  <span class="badge">3 encontros · 9h · CRUD, Funções, Subqueries, Functions</span>
+</div>
+
+<main>
+
+  <section>
+    <h2>Competência da Unidade Curricular</h2>
+    <div class="box tip">
+      "Desenvolver competências em lógica de programação com Python, modelagem de dados com SQL e NoSQL e utilização de bibliotecas específicas para manipulação, transformação e visualização de dados, apoiando processos de análise de dados."
+    </div>
+    <p>Nas Semanas 08 e 09 você aprendeu a consultar, filtrar, resumir e relacionar tabelas. Esta semana fecha o ciclo de SQL do curso: alterar dados de verdade, usar funções prontas, escrever consultas dentro de consultas, e conhecer (numa primeira olhada) variáveis, functions e transactions.</p>
+  </section>
+
+  <div class="abertura">
+    <h3>🟢 Abertura — o que você vai aprender nesta semana</h3>
+    <ul>
+      <li>Operações CRUD completas: INSERT, UPDATE e DELETE (com WHERE, sempre)</li>
+      <li>Funções de número, texto e data prontas do PostgreSQL</li>
+      <li>Subconsultas (subqueries): uma consulta dentro de outra</li>
+      <li>Uma primeira olhada em variáveis/blocos anônimos, functions e transactions</li>
+    </ul>
+  </div>
+
+  <section>
+    <h2>1. Operações CRUD no PostgreSQL</h2>
+    <p>CRUD é a sigla para as 4 operações básicas sobre dado: <strong>C</strong>reate (INSERT), <strong>R</strong>ead (SELECT), <strong>U</strong>pdate (UPDATE) e <strong>D</strong>elete (DELETE).</p>
+    <table>
+      <tr><th>Comando</th><th>O que faz</th></tr>
+      <tr><td><code>INSERT INTO tabela (...) VALUES (...)</code></td><td>Adiciona uma nova linha</td></tr>
+      <tr><td><code>UPDATE tabela SET col = valor WHERE ...</code></td><td>Altera linhas que já existem</td></tr>
+      <tr><td><code>DELETE FROM tabela WHERE ...</code></td><td>Remove linhas</td></tr>
+    </table>
+    <div class="box">
+      <strong>⚠️ Sem WHERE, UPDATE e DELETE afetam TODAS as linhas da tabela</strong> — sem exceção, sem confirmação. Sempre confira o WHERE antes de rodar.
+    </div>
+    <pre class="codeblock"><span class="c">-- adiciona um pedido novo</span>
+INSERT INTO pedidos (cliente, filial, item, valor, data_hora)
+VALUES ('Beatriz Ramos', 'Centro', 'Suco Natural', 9.50, NOW());</pre>
+  </section>
+
+  <section>
+    <h2>2. Funções de Número, Texto e Data</h2>
+    <table>
+      <tr><th>Categoria</th><th>Função</th><th>O que faz</th></tr>
+      <tr><td>Número</td><td><code>ROUND(valor, casas)</code></td><td>Arredonda com N casas decimais</td></tr>
+      <tr><td>Texto</td><td><code>UPPER(texto)</code> / <code>LOWER(texto)</code></td><td>Deixa maiúsculo / minúsculo</td></tr>
+      <tr><td>Texto</td><td><code>CONCAT(a, b, ...)</code></td><td>Junta textos</td></tr>
+      <tr><td>Data</td><td><code>EXTRACT(MONTH FROM data)</code></td><td>Extrai uma parte da data</td></tr>
+    </table>
+    <pre class="codeblock"><span class="c">-- nome em maiúsculas, valor arredondado</span>
+SELECT UPPER(cliente) AS cliente_maiusculo, ROUND(valor, 0) AS valor_arredondado
+FROM pedidos;</pre>
+  </section>
+
+  <section>
+    <h2>3. Subqueries</h2>
+    <p>Uma <strong>subconsulta</strong> é uma consulta escrita DENTRO de outra. Ela roda primeiro, produz uma lista de valores, e essa lista vira filtro da consulta principal.</p>
+    <pre class="codeblock"><span class="c">-- pedidos de itens da categoria Prato Principal</span>
+SELECT cliente, item, valor
+FROM pedidos
+WHERE item IN (
+    SELECT item FROM produtos WHERE categoria = 'Prato Principal'
+);</pre>
+  </section>
+
+  <section>
+    <h2>4. Uma Primeira Olhada: Variáveis, Functions e Transactions</h2>
+    <p>Esta seção é introdutória — o objetivo é reconhecer esses recursos, não dominá-los ainda.</p>
+    <table>
+      <tr><th>Recurso</th><th>O que é</th></tr>
+      <tr><td>Bloco anônimo (<code>DO $$ ... $$</code>)</td><td>Roda lógica com variável, sem salvar como função</td></tr>
+      <tr><td>Function</td><td>Bloco de lógica reutilizável, chamado dentro de um SELECT</td></tr>
+      <tr><td>Transaction</td><td>Agrupa vários comandos: ou todos aplicam (COMMIT), ou nenhum (ROLLBACK)</td></tr>
+    </table>
+    <pre class="codeblock"><span class="c">-- function que aplica desconto</span>
+CREATE OR REPLACE FUNCTION valor_com_desconto(preco NUMERIC, pct NUMERIC)
+RETURNS NUMERIC AS $$
+BEGIN
+    RETURN preco - (preco * pct / 100);
+END;
+$$ LANGUAGE plpgsql;</pre>
+  </section>
+
+  <div class="checagem">
+    <strong>✅ Antes de seguir para a Semana 11, confirme:</strong>
+    Você sabe escrever INSERT/UPDATE/DELETE com WHERE, usar pelo menos 2 funções prontas do PostgreSQL, e escrever uma subconsulta simples com IN.
+  </div>
+
+  <section>
+    <h2>Quiz de Fixação</h2>
+    <p>Responda e clique em <strong>Verificar</strong> para ver o feedback de cada questão.</p>
+
+    <div class="qs" data-correct="a">
+      <p><strong>1.</strong> O que acontece se você rodar um UPDATE sem WHERE?</p>
+      <label><input type="radio" name="q1" value="a"> Todas as linhas da tabela são alteradas</label>
+      <label><input type="radio" name="q1" value="b"> O comando dá erro e não executa</label>
+      <label><input type="radio" name="q1" value="c"> Só a primeira linha é alterada</label>
+      <label><input type="radio" name="q1" value="d"> Nada acontece</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="c">
+      <p><strong>2.</strong> Qual função deixa um texto em maiúsculas?</p>
+      <label><input type="radio" name="q2" value="a"> ROUND</label>
+      <label><input type="radio" name="q2" value="b"> LOWER</label>
+      <label><input type="radio" name="q2" value="c"> UPPER</label>
+      <label><input type="radio" name="q2" value="d"> EXTRACT</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="b">
+      <p><strong>3.</strong> Numa subconsulta com WHERE ... IN (SELECT ...), o que roda primeiro?</p>
+      <label><input type="radio" name="q3" value="a"> A consulta de fora</label>
+      <label><input type="radio" name="q3" value="b"> A subconsulta (a de dentro)</label>
+      <label><input type="radio" name="q3" value="c"> As duas ao mesmo tempo</label>
+      <label><input type="radio" name="q3" value="d"> Nenhuma — IN não aceita subconsulta</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="a">
+      <p><strong>4.</strong> Numa transaction, o que o ROLLBACK faz?</p>
+      <label><input type="radio" name="q4" value="a"> Desfaz todos os comandos daquela transaction</label>
+      <label><input type="radio" name="q4" value="b"> Confirma e salva as alterações</label>
+      <label><input type="radio" name="q4" value="c"> Cria uma nova tabela</label>
+      <label><input type="radio" name="q4" value="d"> Apaga o banco de dados inteiro</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Exercícios da Semana</h2>
+    <div class="ex"><strong>Fácil:</strong> Escreva um INSERT que adicione um novo produto na tabela produtos.</div>
+    <div class="ex"><strong>Médio:</strong> Escreva uma consulta com CONCAT juntando o nome do cliente e o item do pedido numa única coluna de texto.</div>
+    <div class="ex"><strong>Avançado:</strong> Crie uma function que receba um valor e devolva esse valor com 10% de acréscimo, e teste ela num SELECT sobre a tabela pedidos.</div>
+    <p>Lista completa (formativa, sem nota) em <code>04_exercicios.md</code>.</p>
+  </section>
+
+  <div class="fechamento">
+    <h3>🏁 Fechamento — Semana 10</h3>
+    <p><strong>Nesta semana você aprendeu:</strong></p>
+    <ul>
+      <li>CRUD completo: INSERT, UPDATE e DELETE, sempre com WHERE</li>
+      <li>Funções prontas de número, texto e data</li>
+      <li>Subconsultas com IN e NOT IN</li>
+      <li>Uma primeira olhada em variáveis, functions e transactions</li>
+    </ul>
+    <p><strong>Próxima semana:</strong> a Semana 11 conecta Python diretamente ao PostgreSQL para automatizar consultas e relatórios.</p>
+  </div>
+
+</main>
+
+<footer>
+  Curso: Análise de Dados com Python — SENAI (Turma T5) · Semana 10<br>
+  <strong>Professor: Cláudio Ferreira Neves - Especialista em Dados</strong>
+</footer>
+
+<script>
+function check(btn){
+  const qs = btn.closest('.qs');
+  const correct = qs.getAttribute('data-correct');
+  const name = qs.querySelector('input').name;
+  const selected = qs.querySelector('input[name="' + name + '"]:checked');
+  const fb = qs.querySelector('.feedback');
+  if(!selected){ fb.className = 'feedback wrong'; fb.textContent = '⚠️ Selecione uma alternativa antes de verificar.'; return; }
+  if(selected.value === correct){ fb.className = 'feedback correct'; fb.textContent = '✅ Correto! Muito bem.'; }
+  else {
+    const correctLabel = qs.querySelector('input[value="' + correct + '"]').closest('label').textContent.trim();
+    fb.className = 'feedback wrong'; fb.textContent = '❌ Incorreto. A resposta certa é: ' + correctLabel;
+  }
+}
+</script>
+
+</body>
+</html>

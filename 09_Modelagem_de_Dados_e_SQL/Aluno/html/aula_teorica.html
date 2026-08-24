@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 09 — Modelagem de Dados e SQL</title>
+<style>
+  :root{ --red:#CC0000; --red-dark:#990000; --ink:#1a1a2e; --bg:#f7f7fa; }
+  *{box-sizing:border-box;}
+  body{ margin:0; font-family:'Segoe UI', Roboto, Arial, sans-serif; background:var(--bg); color:#222; line-height:1.6; }
+  .hero{ background:linear-gradient(135deg,#0d1b2a,#1b263b,var(--red)); color:#fff; padding:60px 24px; text-align:center; }
+  .hero h1{ margin:0 0 10px; font-size:2.2rem; }
+  .hero h1 span{ color:#FFD60A; }
+  .hero p{ max-width:760px; margin:14px auto 0; font-size:1.05rem; opacity:.92; }
+  .badge{ display:inline-block; background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.4); border-radius:20px; padding:6px 16px; margin-top:18px; font-size:.9rem; }
+  main{ max-width:980px; margin:0 auto; padding:40px 20px 80px; }
+  section{ margin-bottom:48px; }
+  h2{ color:var(--red-dark); border-bottom:3px solid var(--red); padding-bottom:8px; font-size:1.5rem; }
+  h3{ color:var(--ink); }
+  table{ width:100%; border-collapse:collapse; margin:18px 0; box-shadow:0 1px 4px rgba(0,0,0,.08); }
+  th, td{ border:1px solid #ddd; padding:10px 12px; text-align:left; font-size:.95rem; }
+  th{ background:var(--red); color:#fff; }
+  tr:nth-child(even){ background:#fafafa; }
+  .box{ background:#fff3f3; border-left:5px solid var(--red); padding:16px 20px; border-radius:6px; margin:18px 0; }
+  .box.tip{ background:#F0F7FF; border-left-color:#1565C0; }
+  .qs{ background:var(--ink); color:#eee; border-radius:10px; padding:20px 22px; margin:16px 0; }
+  .qs code{ background:rgba(255,255,255,.15); color:#E0E0E0; padding:2px 6px; border-radius:4px; font-family:Consolas, monospace; }
+  .qs label{ display:block; background:rgba(255,255,255,.06); padding:8px 12px; margin:6px 0; border-radius:6px; cursor:pointer; }
+  .qs label:hover{ background:rgba(255,255,255,.12); }
+  .qs button{ background:var(--red); color:#fff; border:none; padding:8px 18px; border-radius:6px; cursor:pointer; margin-top:10px; font-weight:bold; }
+  .qs button:hover{ background:var(--red-dark); }
+  .feedback{ margin-top:10px; padding:10px 14px; border-radius:6px; display:none; font-weight:bold; }
+  .feedback.correct{ background:#1b5e20; display:block; }
+  .feedback.wrong{ background:#7a1f1f; display:block; }
+  .ex{ background:#F0F7FF; border:1px solid #BBDEFB; border-radius:8px; padding:16px 20px; margin:14px 0; }
+  pre.codeblock{ background:var(--ink); color:#E0E0E0; padding:16px 20px; border-radius:8px; overflow-x:auto; font-family:Consolas, monospace; font-size:.9rem; margin:14px 0; }
+  pre.codeblock .c{ color:#8a8aa0; }
+  footer{ background:var(--ink); color:#ccc; text-align:center; padding:26px 16px; font-size:.9rem; }
+  footer strong{ color:#fff; }
+  @media (max-width:768px){ .hero h1{ font-size:1.6rem; } }
+  .abertura{background:#E8F5E9;border-left:5px solid #1B5E20;border-radius:8px;padding:20px 24px;margin:0 0 32px;}
+  .abertura h3{color:#1B5E20;margin:0 0 10px;font-size:1.05rem;}
+  .abertura ul,.fechamento ul{margin:8px 0 0;padding-left:22px;line-height:1.8;}
+  .checagem{background:#FFF3E0;border-left:5px solid #E65100;border-radius:6px;padding:14px 18px;margin:0 0 28px;font-size:.95rem;}
+  .checagem strong{color:#BF360C;display:block;margin-bottom:6px;}
+  .fechamento{background:#E3F2FD;border-left:5px solid #0D47A1;border-radius:8px;padding:20px 24px;margin:0 0 32px;}
+  .fechamento h3{color:#0D47A1;margin:0 0 10px;font-size:1.05rem;}
+  .topo-autor { background: #0d1b2a; color: rgba(255,255,255,0.72); font-size: 0.82em; font-weight: 500; padding: 7px 28px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.08); letter-spacing: 0.01em; }
+  .checklist{margin:8px 0 0;padding-left:22px;line-height:1.9;}
+</style>
+</head>
+<body>
+
+<div class="topo-autor">Professor: Cláudio Ferreira Neves - Especialista em Dados</div>
+<div class="hero">
+  <h1>Semana 09 · <span>Modelagem de Dados e SQL</span></h1>
+  <p>Unidade Curricular: <strong>Manipulação de Dados com Python e SQL</strong> (150h) — Bloco 5, Semana 09. Você aprende a juntar tabelas diferentes com JOIN e a salvar consultas prontas com VIEW.</p>
+  <span class="badge">3 encontros · 9h · INNER JOIN, VIEW</span>
+</div>
+
+<main>
+
+  <section>
+    <h2>Competência da Unidade Curricular</h2>
+    <div class="box tip">
+      "Desenvolver competências em lógica de programação com Python, modelagem de dados com SQL e NoSQL e utilização de bibliotecas específicas para manipulação, transformação e visualização de dados, apoiando processos de análise de dados."
+    </div>
+    <p>Na Semana 08 você criou sua primeira tabela real (<code>pedidos</code>) e escreveu SELECT, WHERE e GROUP BY. Esta semana você aprende a juntar tabelas diferentes com JOIN, e a salvar consultas prontas com VIEW.</p>
+  </section>
+
+  <div class="abertura">
+    <h3>🟢 Abertura — o que você vai aprender nesta semana</h3>
+    <ul>
+      <li>Relacionar tabelas diferentes com INNER JOIN, combinando JOIN com WHERE e GROUP BY</li>
+      <li>Salvar consultas prontas como VIEW, pra não reescrever a mesma consulta toda vez</li>
+    </ul>
+  </div>
+
+  <section>
+    <h2>1. Joins no PostgreSQL</h2>
+    <p>Os JOINs relacionam diferentes tabelas do banco de dados — o mesmo tipo de combinação que você já fazia com <code>.merge()</code> no Pandas desde a Semana 05. Para criar um JOIN, o primeiro passo é descobrir qual coluna as duas tabelas têm em comum.</p>
+    <table>
+      <tr><th>Tipo de JOIN</th><th>O que faz</th></tr>
+      <tr><td><code>INNER JOIN</code></td><td>Traz só as linhas que têm correspondência nas DUAS tabelas</td></tr>
+      <tr><td><code>LEFT JOIN</code></td><td>Traz TODAS as linhas da tabela da esquerda, mesmo sem correspondência na direita</td></tr>
+    </table>
+    <p>Nesta semana você pratica o <code>INNER JOIN</code>; os outros tipos você aprofunda na Semana 10.</p>
+    <pre class="codeblock"><span class="c">-- pedidos com o nome da categoria do produto</span>
+SELECT pedidos.cliente, pedidos.item, produtos.categoria, produtos.preco
+FROM pedidos
+INNER JOIN produtos ON pedidos.item = produtos.item;</pre>
+    <div class="box">
+      <strong>🛠 JOIN + WHERE + GROUP BY:</strong> um JOIN pode ser combinado com qualquer outro comando que você já conhece — filtrar com WHERE, resumir com GROUP BY. A ordem de leitura continua a mesma: primeiro junta, depois filtra/agrupa.
+    </div>
+  </section>
+
+  <section>
+    <h2>2. Views no PostgreSQL</h2>
+    <p>Cada <code>SELECT</code> que você roda é perdido assim que você executa outro — nada fica salvo. Uma <strong>VIEW</strong> resolve isso: ela salva uma consulta (a consulta em si, não o resultado) com um nome, pra você não precisar reescrevê-la toda vez.</p>
+    <pre class="codeblock"><span class="c">-- salva a consulta com nome</span>
+CREATE OR REPLACE VIEW vw_pedidos_completos AS
+SELECT pedidos.id_pedido, pedidos.cliente, pedidos.filial,
+       produtos.item, produtos.categoria, produtos.preco
+FROM pedidos
+INNER JOIN produtos ON pedidos.item = produtos.item;
+
+<span class="c">-- consulta a VIEW como se fosse uma tabela</span>
+SELECT * FROM vw_pedidos_completos WHERE filial = 'Centro';</pre>
+    <div class="box">
+      <strong>💡 Uma VIEW não guarda dado</strong> — ela guarda a CONSULTA. Toda vez que você a consulta, o PostgreSQL roda a pergunta original de novo, trazendo o dado sempre atualizado.
+    </div>
+  </section>
+
+  <div class="checagem">
+    <strong>✅ Antes de seguir para a Semana 10, confirme:</strong>
+    Você sabe explicar por que um JOIN precisa de uma coluna em comum entre as tabelas, e sabe a diferença entre rodar um SELECT direto e consultar uma VIEW.
+  </div>
+
+  <section>
+    <h2>Quiz de Fixação</h2>
+    <p>Responda e clique em <strong>Verificar</strong> para ver o feedback de cada questão.</p>
+
+    <div class="qs" data-correct="b">
+      <p><strong>1.</strong> O que um INNER JOIN precisa pra relacionar duas tabelas?</p>
+      <label><input type="radio" name="q1" value="a"> Que as duas tabelas tenham o mesmo número de linhas</label>
+      <label><input type="radio" name="q1" value="b"> Uma coluna em comum entre as duas tabelas</label>
+      <label><input type="radio" name="q1" value="c"> Que uma das tabelas esteja vazia</label>
+      <label><input type="radio" name="q1" value="d"> Nada — o JOIN funciona sempre, mesmo sem coluna em comum</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="a">
+      <p><strong>2.</strong> O que uma VIEW guarda?</p>
+      <label><input type="radio" name="q2" value="a"> A consulta (o SELECT), não o resultado</label>
+      <label><input type="radio" name="q2" value="b"> Uma cópia fixa dos dados no momento da criação</label>
+      <label><input type="radio" name="q2" value="c"> Só o nome das colunas, sem os dados</label>
+      <label><input type="radio" name="q2" value="d"> Nada — VIEW é só um apelido de tabela</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="c">
+      <p><strong>3.</strong> Você pode combinar JOIN com WHERE e GROUP BY na mesma consulta?</p>
+      <label><input type="radio" name="q3" value="a"> Não, JOIN sempre precisa vir sozinho</label>
+      <label><input type="radio" name="q3" value="b"> Só com WHERE, nunca com GROUP BY</label>
+      <label><input type="radio" name="q3" value="c"> Sim, os três podem aparecer juntos na mesma consulta</label>
+      <label><input type="radio" name="q3" value="d"> Só em bancos NoSQL</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="b">
+      <p><strong>4.</strong> Uma VIEW é consultada com:</p>
+      <label><input type="radio" name="q4" value="a"> Um comando especial, diferente do SELECT</label>
+      <label><input type="radio" name="q4" value="b"> SELECT normal, como se fosse uma tabela</label>
+      <label><input type="radio" name="q4" value="c"> Só pelo pgAdmin, nunca por código</label>
+      <label><input type="radio" name="q4" value="d"> Não é possível consultar uma VIEW</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Exercícios da Semana</h2>
+    <div class="ex"><strong>Fácil:</strong> Explique com suas palavras por que um JOIN precisa de uma coluna em comum entre as duas tabelas.</div>
+    <div class="ex"><strong>Médio:</strong> Escreva a consulta que faz INNER JOIN entre <code>pedidos</code> e <code>produtos</code>, trazendo só os itens da categoria "Bebida".</div>
+    <div class="ex"><strong>Avançado:</strong> Crie uma VIEW que resuma o total gasto por cada cliente (JOIN + GROUP BY dentro da VIEW).</div>
+    <p>Lista completa (formativa, sem nota) em <code>04_exercicios.md</code>.</p>
+  </section>
+
+  <div class="fechamento">
+    <h3>🏁 Fechamento — Semana 09</h3>
+    <p><strong>Nesta semana você aprendeu:</strong></p>
+    <ul>
+      <li>Relacionar tabelas diferentes com INNER JOIN</li>
+      <li>Combinar JOIN com WHERE e GROUP BY</li>
+      <li>Salvar consultas prontas com VIEW</li>
+    </ul>
+    <p><strong>Próxima semana:</strong> a Semana 10 traz Operações CRUD completas, funções de número/texto/data, subconsultas, e uma primeira olhada em variáveis, functions e transactions.</p>
+  </div>
+
+</main>
+
+<footer>
+  Curso: Análise de Dados com Python — SENAI (Turma T5) · Semana 09<br>
+  <strong>Professor: Cláudio Ferreira Neves - Especialista em Dados</strong>
+</footer>
+
+<script>
+function check(btn){
+  const qs = btn.closest('.qs');
+  const correct = qs.getAttribute('data-correct');
+  const name = qs.querySelector('input').name;
+  const selected = qs.querySelector('input[name="' + name + '"]:checked');
+  const fb = qs.querySelector('.feedback');
+  if(!selected){ fb.className = 'feedback wrong'; fb.textContent = '⚠️ Selecione uma alternativa antes de verificar.'; return; }
+  if(selected.value === correct){ fb.className = 'feedback correct'; fb.textContent = '✅ Correto! Muito bem.'; }
+  else {
+    const correctLabel = qs.querySelector('input[value="' + correct + '"]').closest('label').textContent.trim();
+    fb.className = 'feedback wrong'; fb.textContent = '❌ Incorreto. A resposta certa é: ' + correctLabel;
+  }
+}
+</script>
+
+</body>
+</html>
