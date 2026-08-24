@@ -35,6 +35,12 @@
 # Exceção: apostilas de PostgreSQL da Semana 08, publicadas para os alunos
 !08_Banco_de_Dados_Relacionais_e_Nao_Relacionais/Aluno/pdf/**
 
+# Exceção: apostilas de PostgreSQL da Semana 09, publicadas para os alunos
+!09_Modelagem_de_Dados_e_SQL/Aluno/pdf/**
+
+# Exceção: apostilas de PostgreSQL da Semana 10, publicadas para os alunos
+!10_SQL_Avancado/Aluno/pdf/**
+
 # Apresentações de slide (template oficial e decks gerados por semana) -
 # material de apoio do professor para a aula em vivo, nao publicado ao aluno
 *.pptx
