@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Semana 11 — Integração Python + PostgreSQL</title>
+<title>Semana 11 — Integração Python e SQL</title>
 <style>
   :root{ --red:#CC0000; --red-dark:#990000; --ink:#1a1a2e; --bg:#f7f7fa; }
   *{box-sizing:border-box;}
@@ -53,9 +53,9 @@
 
 <div class="topo-autor">Professor: Cláudio Ferreira Neves - Especialista em Dados</div>
 <div class="hero">
-  <h1>Semana 11 · <span>Integração Python + PostgreSQL</span></h1>
-  <p>Unidade Curricular: <strong>Manipulação de Dados com Python e SQL</strong> (150h) — Bloco 5, Semana 11. Você conecta o Python direto ao PostgreSQL, executa SELECT/INSERT/UPDATE por código, e conhece o ORM (SQLAlchemy) como alternativa ao SQL direto.</p>
-  <span class="badge">3 encontros · 9h · psycopg2, SQL via Python, ORM, SQLAlchemy</span>
+  <h1>Semana 11 · <span>Integração Python e SQL</span></h1>
+  <p>Unidade Curricular: <strong>Manipulação de Dados com Python e SQL</strong> (150h) — Bloco 5, Semana 11. Você instala e configura o ambiente do zero, conecta o Python direto a um banco de dados com <code>pyodbc</code>, e executa o CRUD completo (Create, Read, Update, Delete) por código.</p>
+  <span class="badge">3 encontros · 9h · pyodbc, driver ODBC, CRUD via Python</span>
 </div>
 
 <main>
@@ -65,169 +65,212 @@
     <div class="box tip">
       "Desenvolver competências em lógica de programação com Python, modelagem de dados com SQL e NoSQL e utilização de bibliotecas específicas para manipulação, transformação e visualização de dados, apoiando processos de análise de dados."
     </div>
-    <p>Nas Semanas 08 a 10 você dominou o SQL dentro do PostgreSQL — consultas, filtros, agregações, joins, views e operações CRUD. Esta semana muda a pergunta: como uma <strong>aplicação Python</strong> conversa com esse mesmo banco de forma confiável, sem que o código vire uma bagunça de comandos SQL espalhados?</p>
+    <p>Nas Semanas 08 a 10 você dominou o SQL dentro do PostgreSQL usando <code>psycopg2</code> — uma biblioteca específica para esse banco. Esta semana muda a pergunta: existe uma forma de conectar Python a <strong>qualquer</strong> banco relacional (SQL Server, MySQL, Oracle, SQLite), sem trocar de biblioteca a cada projeto? A resposta é o padrão <strong>ODBC</strong>, acessado pelo Python através da biblioteca <code>pyodbc</code>.</p>
     <div class="box">
-      <strong>🧠 Situação profissional:</strong> a Vetor Distribuidora vende produtos de diversas categorias para clientes cadastrados, através de fornecedores parceiros. Os dados já estão organizados no PostgreSQL (clientes, produtos, categorias, fornecedores, pedidos) — mas o time de tecnologia precisa que os sistemas internos, escritos em Python, leiam e alterem esses dados diretamente, sem depender de alguém abrindo o pgAdmin manualmente toda vez.
+      <strong>🧠 Por que praticar com SQLite?</strong> Para focar na técnica de conexão (que é igual pra qualquer banco), esta semana usa dois bancos SQLite reais e prontos: um catálogo de loja de mídia digital (<strong>Chinook</strong> — álbuns, artistas, clientes) e uma base pública de salários municipais (<strong>SF Salaries</strong>). São bancos de verdade, com dados de verdade — só não exigem instalar um servidor completo pra você praticar.
     </div>
   </section>
 
   <div class="abertura">
     <h3>🟢 Abertura — o que você vai aprender nesta semana</h3>
     <ul>
-      <li>Conectar o Python ao PostgreSQL de ponta a ponta: parâmetros, cursor, execução e encerramento</li>
-      <li>Executar SELECT, INSERT e UPDATE controlados por código Python, com parâmetros seguros</li>
-      <li>Entender o problema que o ORM resolve, e o que é o SQLAlchemy</li>
-      <li>Comparar SQL direto e ORM, e decidir qual usar em cada situação profissional</li>
+      <li>Instalar e configurar do zero o que o Python precisa pra conversar com um banco de dados (biblioteca + driver)</li>
+      <li>Entender quando faz sentido integrar Python e SQL, em vez de usar só um dos dois</li>
+      <li>Conectar o Python a um banco com <code>pyodbc</code> de ponta a ponta: conexão → cursor → execução → encerramento</li>
+      <li>Fazer o CRUD completo por código: <code>INSERT</code>, duas formas de <code>SELECT</code>, <code>UPDATE</code> e <code>DELETE</code></li>
     </ul>
   </div>
 
   <section>
-    <h2>1. Python + PostgreSQL: a conexão de ponta a ponta</h2>
-    <p>Desde a Semana 08 você já testa a conexão com <code>psycopg2</code>. Esta semana você domina o fluxo completo: <strong>Python → conexão → PostgreSQL → tabela → resultado → Python</strong>.</p>
+    <h2>1. Instalação e Configuração: preparando seu computador</h2>
+    <p>Diferente de semanas anteriores, aqui não basta um <code>pip install</code>. Você precisa de <strong>2 coisas</strong> antes de escrever qualquer código de conexão:</p>
+    <table>
+      <tr><th>O quê</th><th>Como se instala</th></tr>
+      <tr><td>Biblioteca <code>pyodbc</code></td><td><code>%pip install pyodbc</code> — normal, como qualquer biblioteca Python</td></tr>
+      <tr><td>Driver ODBC do SQLite</td><td>Um programa do <strong>Windows</strong>, baixado do site do fabricante e instalado como qualquer outro programa — <code>pip</code> não instala isso</td></tr>
+    </table>
+    <div class="box">
+      <strong>⚠️ Erro real que você vai ver antes de instalar:</strong> se você rodar <code>import pyodbc</code> sem ter instalado a biblioteca, o Python devolve exatamente isto:
+    </div>
+    <pre class="codeblock"><span class="c">&gt;&gt;&gt; import pyodbc</span>
+ModuleNotFoundError: No module named 'pyodbc'</pre>
+    <p>Isso não é um bug — é o Python te dizendo, com precisão, que aquela biblioteca ainda não existe no seu computador. Resolve-se instalando, nunca "corrigindo" o código.</p>
+    <p>O driver ODBC do SQLite se baixa em <strong>http://www.ch-werner.de/sqliteodbc/</strong> (escolha a versão de <strong>64 bits</strong> — o nome do arquivo de 32 bits tem "_w32", é o erro mais comum aqui). Depois de instalar e reiniciar o VS Code, confirme com:</p>
+    <pre class="codeblock"><span class="c">-- deve aparecer "SQLite3 ODBC Driver" na lista</span>
+import pyodbc
+print(pyodbc.drivers())</pre>
+    <div class="box tip">
+      <strong>💡 Isso é trabalho de uma vez só.</strong> Depois que o driver aparece na lista, você não precisa reinstalar em nenhum outro notebook desta semana — é uma configuração do computador, não do projeto.
+    </div>
+  </section>
+
+  <section>
+    <h2>2. Por que integrar Python e SQL?</h2>
+    <p>A integração entre Python e SQL permite executar comandos SQL diretamente pelo seu código, dentro do banco de dados — e já trazer o resultado pronto pra dentro de uma análise, sem sair do script.</p>
+    <table>
+      <tr><th>Situação</th><th>O que usar</th></tr>
+      <tr><td>Só consultar/alterar dados manualmente</td><td>SQL direto numa ferramenta de banco</td></tr>
+      <tr><td>Um sistema, automação ou análise precisa ler/escrever sozinho</td><td>Python + SQL</td></tr>
+    </table>
+    <div class="box tip">
+      <strong>💡 Guarde esta ideia:</strong> o <code>pyodbc</code> funciona com a mesma estrutura de código pra vários bancos diferentes (SQL Server, MySQL, Oracle, SQLite) — só o driver muda. O que você aprender aqui vale pra qualquer um deles.
+    </div>
+  </section>
+
+  <section>
+    <h2>3. Conectando ao banco com pyodbc</h2>
+    <p>Toda conexão com <code>pyodbc</code> segue o mesmo caminho, em 3 etapas: <strong>conectar → criar um cursor → executar comandos SQL</strong>.</p>
+    <pre class="codeblock"><span class="c">-- modelo genérico de conexão</span>
+dados_conexao = ("Driver={Seu_Driver};"
+                "Server=SeuServidor;"
+                "Database=NomeDoBanco;")</pre>
     <table>
       <tr><th>Peça</th><th>Papel</th></tr>
-      <tr><td><code>psycopg2.connect(...)</code></td><td>Abre a conexão (host, dbname, user, password)</td></tr>
-      <tr><td><code>conexao.cursor()</code></td><td>Cria o cursor — o objeto que executa comandos SQL</td></tr>
-      <tr><td><code>cursor.execute(sql)</code></td><td>Envia o comando SQL pro banco</td></tr>
-      <tr><td><code>cursor.fetchall() / fetchone()</code></td><td>Recupera o resultado de volta pro Python</td></tr>
-      <tr><td><code>conexao.close()</code></td><td>Encerra a conexão — sempre, ao final</td></tr>
+      <tr><td><code>Driver={...}</code></td><td>Só este campo usa chaves <code>{ }</code> — exigência do ODBC, porque nomes de driver costumam ter espaço (ex: "SQLite3 ODBC Driver")</td></tr>
+      <tr><td><code>Server</code></td><td>Em bancos com servidor (como o PostgreSQL), é o endereço da máquina. No SQLite (sem servidor) o campo existe só porque o formato exige, mas não tem efeito real</td></tr>
+      <tr><td><code>Database</code></td><td>No SQLite, é o caminho do arquivo <code>.sqlite</code>/<code>.db</code></td></tr>
     </table>
-    <div class="box">
-      <strong>⚠️ Sempre trate o erro de conexão.</strong> Um <code>try/except psycopg2.OperationalError</code> evita que a aplicação quebre feio se o PostgreSQL estiver desligado ou a senha estiver errada — o mesmo padrão que você já usa desde a Semana 08.
-    </div>
-    <pre class="codeblock"><span class="c">-- fluxo completo: conectar, consultar, encerrar</span>
-import psycopg2
-conexao = psycopg2.connect(host="localhost", dbname="distribuidora", user="postgres", password="...")
+    <pre class="codeblock"><span class="c">-- conexão real, cursor e primeira consulta</span>
+import pyodbc
+
+dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+            "Server=localhost;"
+            "Database=dataset/salarios.sqlite;")
+
+conexao = pyodbc.connect(dados_conexao)
 cursor = conexao.cursor()
-cursor.execute("SELECT company_name, country FROM customers LIMIT 5;")
-resultado = cursor.fetchall()
-conexao.close()</pre>
-  </section>
 
-  <section>
-    <h2>2. Executando SQL pelo Python</h2>
-    <p>O Python não substitui o SQL — ele CONTROLA quando e como o SQL roda. O fluxo é sempre: <strong>necessidade → SQL → Python → PostgreSQL → resultado → Python</strong>.</p>
-    <pre class="codeblock"><span class="c">-- consulta com filtro, controlada por código</span>
-cursor.execute("SELECT company_name, city FROM customers WHERE country = %s;", ("Brazil",))
-clientes_brasil = cursor.fetchall()</pre>
-    <div class="box tip">
-      <strong>💡 Por que <code>%s</code> em vez de colar o valor direto no texto?</strong> Usar um parâmetro (<code>%s</code> + uma tupla de valores) protege contra erro de sintaxe com aspas e, principalmente, contra <em>SQL Injection</em> — nunca monte SQL concatenando texto do usuário direto na string.
+cursor.execute("SELECT * FROM Salaries")
+valores = cursor.fetchall()
+
+cursor.close()
+conexao.close()</pre>
+    <div class="box">
+      <strong>⚠️ Sempre feche cursor e conexão</strong> ao terminar — isso libera o arquivo do banco pra outros programas e evita erros de "arquivo em uso" na próxima conexão.
     </div>
   </section>
 
   <section>
-    <h2>3. Manipulação de Dados: INSERT e UPDATE programáticos</h2>
-    <p>As mesmas regras de SQL que você já conhece (Semana 10) valem aqui — só que agora quem decide QUANDO rodar é o código Python, não você digitando manualmente.</p>
-    <pre class="codeblock"><span class="c">-- inserindo um novo produto, com parâmetros seguros</span>
-cursor.execute(
-    "INSERT INTO products (product_name, category_id, unit_price) VALUES (%s, %s, %s);",
-    ("Café Especial 500g", 1, 28.90),
-)
-conexao.commit()
+    <h2>4. Create — inserindo dados (INSERT)</h2>
+    <p>O C do CRUD. O comando <code>INSERT INTO</code> cria uma linha nova numa tabela — aqui, um álbum novo no banco <code>chinook.db</code> (catálogo de uma loja de mídia digital).</p>
+    <pre class="codeblock"><span class="c">-- inserindo um álbum novo, associado a um artista já cadastrado</span>
+cursor.execute('''
+INSERT INTO albums (Title, ArtistId)
+VALUES
+('Lira Rock', 4)
+''')
 
-<span class="c">-- atualizando um preço, com WHERE sempre presente</span>
-cursor.execute("UPDATE products SET unit_price = %s WHERE product_name = %s;", (32.50, "Café Especial 500g"))
 conexao.commit()</pre>
     <div class="box">
-      <strong>⚠️ <code>conexao.commit()</code> é obrigatório</strong> depois de INSERT/UPDATE/DELETE — sem ele, a alteração fica só na sessão aberta e não é salva de verdade no banco.
+      <strong>⚠️ <code>conexao.commit()</code> é obrigatório</strong> depois de qualquer INSERT/UPDATE/DELETE — sem ele, a alteração fica só na memória e nunca é salva de verdade no arquivo do banco. (O <code>pyodbc</code> também aceita <code>cursor.commit()</code>, que faz exatamente a mesma coisa — este material usa sempre <code>conexao.commit()</code>, pra não ter dúvida de qual dos dois usar.)
     </div>
   </section>
 
   <section>
-    <h2>4. Surge um novo problema: o projeto cresceu</h2>
-    <p>O banco da Vetor Distribuidora já tem várias tabelas relacionadas — <code>customers</code>, <code>products</code>, <code>categories</code>, <code>suppliers</code>, <code>orders</code>. Cada nova operação (SELECT, INSERT, UPDATE, JOIN) vira mais um trecho de SQL espalhado pelo código Python, cada um com sua própria string de comando. Isso levanta uma pergunta: <strong>existe uma forma de aproximar o mundo dos objetos Python do mundo relacional do banco?</strong></p>
-    <p>A resposta é o <strong>ORM</strong> — <em>Object-Relational Mapping</em>: uma camada que representa cada tabela como uma classe Python, e cada linha como um objeto — sem eliminar o SQL por baixo, só evitando que você precise escrevê-lo à mão toda vez.</p>
+    <h2>5. Read — duas formas de consultar</h2>
+    <p>Existem 2 formas de trazer um resultado de volta pro Python:</p>
+    <table>
+      <tr><th>Forma</th><th>Como funciona</th></tr>
+      <tr><td>Manual</td><td><code>cursor.execute()</code> + <code>cursor.fetchall()</code> — você monta o DataFrame a partir do resultado, usando <code>cursor.description</code> pra pegar os nomes das colunas</td></tr>
+      <tr><td>Direto com Pandas</td><td><code>pd.read_sql("SQL", conexao)</code> — o Pandas já devolve um DataFrame pronto, numa linha só</td></tr>
+    </table>
+    <pre class="codeblock"><span class="c">-- forma manual</span>
+cursor.execute("SELECT * FROM customers")
+valores = cursor.fetchall()
+descricao = cursor.description
+cursor.close()
+
+colunas = [tupla[0] for tupla in descricao]
+tabela = pd.DataFrame.from_records(valores, columns=colunas)</pre>
+    <pre class="codeblock"><span class="c">-- forma direta, com o modulo nativo sqlite3 (sem precisar do driver ODBC)</span>
+import sqlite3
+conexao = sqlite3.connect("dataset/chinook.db")
+tabela = pd.read_sql("SELECT * FROM customers", conexao)</pre>
+    <div class="box tip">
+      <strong>💡 Se o <code>sqlite3</code> nativo já lê o arquivo sem instalar nada, por que instalar <code>pyodbc</code> + driver?</strong> Esse atalho só existe porque o banco É um arquivo SQLite. Num SQL Server, MySQL ou no PostgreSQL das Semanas 08-10, esse módulo nativo não serve — você precisaria do <code>pyodbc</code> (ou do <code>psycopg2</code>, específico do Postgres) do mesmo jeito. O Passo de instalação vale pra qualquer banco real que você usar depois do curso.
+    </div>
   </section>
 
   <section>
-    <h2>5. SQLAlchemy: tabela vira classe</h2>
-    <p><strong>SQLAlchemy</strong> é o ORM mais usado em Python. Ele mapeia:</p>
-    <table>
-      <tr><th>Banco de Dados</th><th>Python</th></tr>
-      <tr><td>Tabela</td><td>Classe</td></tr>
-      <tr><td>Coluna</td><td>Atributo</td></tr>
-      <tr><td>Registro (linha)</td><td>Objeto</td></tr>
-    </table>
-    <pre class="codeblock"><span class="c">-- mapeando a tabela products como uma classe</span>
-from sqlalchemy import create_engine, Column, Integer, String, Numeric
-from sqlalchemy.orm import declarative_base, Session
+    <h2>6. Update — atualizando registros</h2>
+    <p>O comando <code>UPDATE</code> altera valores de linhas que já existem.</p>
+    <pre class="codeblock"><span class="c">-- corrigindo o e-mail de um cliente</span>
+cursor.execute('''
+UPDATE customers SET Email='lira@embraer.com.br' WHERE Email='luisg@embraer.com.br'
+''')
 
-Base = declarative_base()
-
-class Product(Base):
-    __tablename__ = "products"
-    product_id = Column(Integer, primary_key=True)
-    product_name = Column(String)
-    unit_price = Column(Numeric)
-
-engine = create_engine("postgresql://postgres:senha@localhost/distribuidora")
-with Session(engine) as sessao:
-    produtos = sessao.query(Product).all()
-    for p in produtos:
-        print(p.product_name, p.unit_price)  <span class="c"># acessando coluna como atributo do objeto</span></pre>
-    <p>Repare: em nenhum momento você escreveu <code>SELECT * FROM products</code> — o SQLAlchemy monta esse SQL por trás, a partir da classe <code>Product</code>.</p>
+conexao.commit()</pre>
   </section>
 
   <section>
-    <h2>6. SQL Direto x ORM</h2>
-    <table>
-      <tr><th></th><th>SQL Direto (psycopg2)</th><th>ORM (SQLAlchemy)</th></tr>
-      <tr><td>Controle sobre a consulta</td><td>Total — você escreve exatamente o SQL</td><td>Menor — o ORM decide o SQL gerado</td></tr>
-      <tr><td>Produtividade</td><td>Mais código repetitivo</td><td>Mais rápido pra operações comuns</td></tr>
-      <tr><td>Organização do código</td><td>SQL espalhado pela aplicação</td><td>Dado representado como objeto</td></tr>
-      <tr><td>Flexibilidade para consultas complexas</td><td>Alta</td><td>Pode exigir SQL "cru" mesmo assim</td></tr>
-    </table>
+    <h2>7. Delete — removendo registros</h2>
+    <p>O comando <code>DELETE</code> remove linhas inteiras de uma tabela.</p>
+    <pre class="codeblock"><span class="c">-- removendo um álbum pelo Id</span>
+cursor.execute('''
+DELETE FROM albums WHERE AlbumId=2
+''')
+
+conexao.commit()</pre>
     <div class="box">
-      <strong>⚠️ ORM NÃO elimina a necessidade de conhecer SQL.</strong> Toda consulta gerada pelo ORM ainda é SQL por baixo — entender o que está sendo executado continua sendo essencial pra depurar e otimizar.
+      <strong>⚠️ Cuidado com o <code>DELETE</code> sem <code>WHERE</code></strong> — sem essa cláusula, o comando apaga a tabela inteira, não só uma linha.
     </div>
-    <p>A escolha entre SQL direto e ORM depende do contexto: complexidade da consulta, necessidade de controle fino, produtividade da equipe, e características do próprio projeto — não existe uma resposta "sempre certa".</p>
   </section>
 
   <div class="checagem">
     <strong>✅ Antes de seguir para a Semana 12, confirme:</strong>
-    Você sabe rodar um SELECT/INSERT/UPDATE via Python com parâmetros seguros, e sabe explicar o que o SQLAlchemy faz quando mapeia uma tabela como classe.
+    Você sabe instalar/configurar o `pyodbc` + driver do zero, conectar num banco SQLite de ponta a ponta, e rodar Create, Read (das 2 formas), Update e Delete por código.
   </div>
 
   <section>
     <h2>Quiz de Fixação</h2>
     <p>Responda e clique em <strong>Verificar</strong> para ver o feedback de cada questão.</p>
 
+    <div class="qs" data-correct="b">
+      <p><strong>1.</strong> Por que o erro <code>ModuleNotFoundError: No module named 'pyodbc'</code> aparece antes da instalação?</p>
+      <label><input type="radio" name="q1" value="a"> Porque o código tem um erro de sintaxe</label>
+      <label><input type="radio" name="q1" value="b"> Porque a biblioteca ainda não foi instalada nesse computador</label>
+      <label><input type="radio" name="q1" value="c"> Porque o banco de dados está desligado</label>
+      <label><input type="radio" name="q1" value="d"> Porque falta o driver ODBC, não a biblioteca</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
     <div class="qs" data-correct="c">
-      <p><strong>1.</strong> Por que usar <code>%s</code> como parâmetro em vez de colar o valor direto na string do SQL?</p>
-      <label><input type="radio" name="q1" value="a"> Porque o Python não aceita aspas dentro de strings</label>
-      <label><input type="radio" name="q1" value="b"> Só por estética, não muda nada na prática</label>
-      <label><input type="radio" name="q1" value="c"> Protege contra erro de sintaxe e contra SQL Injection</label>
-      <label><input type="radio" name="q1" value="d"> É obrigatório em qualquer linguagem de programação</label>
+      <p><strong>2.</strong> Por que só o campo <code>Driver</code> fica entre chaves <code>{ }</code> na string de conexão?</p>
+      <label><input type="radio" name="q2" value="a"> É só um estilo, poderia ser em qualquer campo</label>
+      <label><input type="radio" name="q2" value="b"> Porque o SQLite exige isso</label>
+      <label><input type="radio" name="q2" value="c"> Porque nomes de driver costumam ter espaço, e as chaves marcam onde ele começa e termina</label>
+      <label><input type="radio" name="q2" value="d"> Porque é um valor obrigatório, diferente dos outros</label>
       <button type="button" onclick="check(this)">Verificar</button>
       <div class="feedback"></div>
     </div>
 
     <div class="qs" data-correct="b">
-      <p><strong>2.</strong> O que acontece se você esquecer o <code>conexao.commit()</code> depois de um INSERT?</p>
-      <label><input type="radio" name="q2" value="a"> O Python trava</label>
-      <label><input type="radio" name="q2" value="b"> A alteração não é salva de verdade no banco</label>
-      <label><input type="radio" name="q2" value="c"> A tabela é apagada</label>
-      <label><input type="radio" name="q2" value="d"> Nada — commit é opcional</label>
-      <button type="button" onclick="check(this)">Verificar</button>
-      <div class="feedback"></div>
-    </div>
-
-    <div class="qs" data-correct="a">
-      <p><strong>3.</strong> O que o ORM (como o SQLAlchemy) faz, na essência?</p>
-      <label><input type="radio" name="q3" value="a"> Mapeia tabelas como classes e registros como objetos</label>
-      <label><input type="radio" name="q3" value="b"> Substitui o PostgreSQL por outro banco</label>
-      <label><input type="radio" name="q3" value="c"> Elimina a necessidade de qualquer SQL</label>
-      <label><input type="radio" name="q3" value="d"> Só funciona com bancos NoSQL</label>
+      <p><strong>3.</strong> O que acontece se você esquecer o <code>commit()</code> depois de um <code>INSERT</code>?</p>
+      <label><input type="radio" name="q3" value="a"> O Python trava</label>
+      <label><input type="radio" name="q3" value="b"> A alteração não é salva de verdade no arquivo do banco</label>
+      <label><input type="radio" name="q3" value="c"> A tabela é apagada</label>
+      <label><input type="radio" name="q3" value="d"> Nada — commit é opcional no pyodbc</label>
       <button type="button" onclick="check(this)">Verificar</button>
       <div class="feedback"></div>
     </div>
 
     <div class="qs" data-correct="d">
-      <p><strong>4.</strong> Qual afirmação sobre SQL direto x ORM está correta?</p>
-      <label><input type="radio" name="q4" value="a"> ORM é sempre melhor que SQL direto</label>
-      <label><input type="radio" name="q4" value="b"> SQL direto é sempre melhor que ORM</label>
-      <label><input type="radio" name="q4" value="c"> ORM elimina a necessidade de conhecer SQL</label>
-      <label><input type="radio" name="q4" value="d"> A escolha depende do contexto — controle, complexidade e produtividade</label>
+      <p><strong>4.</strong> Qual comando é perigoso rodar sem uma cláusula <code>WHERE</code>?</p>
+      <label><input type="radio" name="q4" value="a"> SELECT</label>
+      <label><input type="radio" name="q4" value="b"> INSERT</label>
+      <label><input type="radio" name="q4" value="c"> Nenhum, o WHERE é só opcional</label>
+      <label><input type="radio" name="q4" value="d"> DELETE (e também UPDATE)</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="a">
+      <p><strong>5.</strong> Qual a diferença entre ler com <code>cursor.fetchall()</code> e com <code>pd.read_sql()</code>?</p>
+      <label><input type="radio" name="q5" value="a"> fetchall() devolve uma lista de tuplas; read_sql() já devolve um DataFrame pronto</label>
+      <label><input type="radio" name="q5" value="b"> São exatamente a mesma coisa, com nomes diferentes</label>
+      <label><input type="radio" name="q5" value="c"> fetchall() só funciona com PostgreSQL</label>
+      <label><input type="radio" name="q5" value="d"> read_sql() não aceita comandos SELECT</label>
       <button type="button" onclick="check(this)">Verificar</button>
       <div class="feedback"></div>
     </div>
@@ -235,22 +278,23 @@ with Session(engine) as sessao:
 
   <section>
     <h2>Exercícios da Semana</h2>
-    <div class="ex"><strong>Fácil:</strong> Escreva o código Python (psycopg2) que conecta ao banco e traz todos os produtos de uma categoria específica.</div>
-    <div class="ex"><strong>Médio:</strong> Escreva o código que insere um novo cliente na tabela <code>customers</code>, usando parâmetros (<code>%s</code>), não concatenação de texto.</div>
-    <div class="ex"><strong>Avançado:</strong> Usando SQLAlchemy, mapeie a tabela <code>customers</code> como uma classe Python e liste todos os clientes de um país através de um objeto (não de SQL direto).</div>
-    <p>Lista completa (formativa, sem nota) em <code>04_exercicios.md</code>.</p>
+    <div class="ex"><strong>Create:</strong> a Chinook Records fechou uma parceria para remasterizar álbuns antigos. Insira em <code>albums</code> um registro com <code>Title = 'Back in Black (Remaster)'</code> e <code>ArtistId = 1</code> (AC/DC), e confirme com um SELECT.</div>
+    <div class="ex"><strong>Read:</strong> o time de suporte quer uma lista de nome e e-mail de todos os clientes brasileiros. Consulte <code>FirstName</code>, <code>LastName</code> e <code>Email</code> em <code>customers</code> onde <code>Country = 'Brazil'</code>.</div>
+    <div class="ex"><strong>Update:</strong> o cliente de <code>CustomerId</code> 2 mudou de cidade para <code>'Berlin'</code>. Atualize a coluna <code>City</code> e confirme.</div>
+    <div class="ex"><strong>Delete:</strong> a parceria de remasterização foi cancelada — remova o álbum <code>'Back in Black (Remaster)'</code> que você criou no exercício de Create.</div>
+    <p>Essas 4 atividades estão no <code>notebook_colab_aluno.ipynb</code> desta semana, prontas pra você resolver direto no código.</p>
   </section>
 
   <div class="fechamento">
     <h3>🏁 Fechamento — Semana 11</h3>
     <p><strong>Nesta semana você aprendeu:</strong></p>
     <ul>
-      <li>Controlar a conexão Python-PostgreSQL de ponta a ponta</li>
-      <li>Executar SELECT, INSERT e UPDATE via Python, com parâmetros seguros</li>
-      <li>O problema que o ORM resolve, e como o SQLAlchemy mapeia tabela → classe → objeto</li>
-      <li>Comparar SQL direto e ORM, e decidir qual usar conforme o contexto</li>
+      <li>Instalar e configurar do zero o que o Python precisa pra falar com um banco de dados</li>
+      <li>Por que integrar Python e SQL, e quando vale a pena</li>
+      <li>Conectar com <code>pyodbc</code> de ponta a ponta: conexão → cursor → execução → encerramento</li>
+      <li>Fazer o CRUD completo por código: Create, Read (2 formas), Update e Delete</li>
     </ul>
-    <p><strong>Próxima semana:</strong> a Semana 12 usa essa integração pra construir um pipeline ETL completo com Python e PostgreSQL.</p>
+    <p><strong>Próxima semana:</strong> a Semana 12 usa essa mesma técnica de conexão para consolidar dados de fontes diferentes num pipeline de ETL completo.</p>
   </div>
 
 </main>

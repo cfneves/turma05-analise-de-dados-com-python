@@ -56,6 +56,10 @@
 !notebook_colab.ipynb
 !notebook_colab_aluno.ipynb
 
+# Exceção: notebook bônus opcional do aluno (ex: Semana 11 - CRUD com
+# PostgreSQL real), publicado junto com o notebook principal da semana.
+!notebook_bonus_*.ipynb
+
 # Exceção: gabarito oficial das atividades e squads de cada semana já encerrada,
 # publicado para os alunos por pedido explícito (não é o notebook do professor
 # nem contém material de semanas ainda em andamento).
